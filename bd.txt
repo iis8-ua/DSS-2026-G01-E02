@@ -2,6 +2,12 @@ Para tener la BD en cada equipo hay que modificar el .env poniendo lo siguiente 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=dss
-DB_USERNAME=dss
-DB_PASSWORD=dss
+DB_DATABASE=dss2026
+DB_USERNAME=dss2026
+DB_PASSWORD=dss2026
+
+Luego crear la BD en local:
+CREATE DATABASE dss2026 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'dss2026'@'localhost' IDENTIFIED BY 'dss2026';
+GRANT ALL PRIVILEGES ON dss2026.* TO 'dss2026'@'localhost';
+FLUSH PRIVILEGES;
