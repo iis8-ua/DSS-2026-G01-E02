@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('localizacions', function (Blueprint $table) {
-            $table->id();
+            $table->float('latitud');
+            $table->float('longitud');
+            $table->integer('piso');
             $table->timestamps();
+
+            $table->primary(['latitud', 'longitud', 'piso']);
         });
     }
 
