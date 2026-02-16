@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Notificacion extends Model
 {
+    private $uuid = null;
     // Texto que aparece en la notificación
     private $texto = "";
     // Estado de la notificación (vista/no vista)
