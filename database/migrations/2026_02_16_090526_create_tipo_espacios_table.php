@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipo_espacios', function (Blueprint $table) {
-            $table->id();
+            $table->uuid()->primary();
+            $table->string("nombre");
             $table->timestamps();
         });
     }
