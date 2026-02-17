@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TipoEspacioSeeder::class,
             LocalizacionSeeder::class,
-            //EspacioSeeder::class,
+            EspacioSeeder::class,
         ]);
     }
 }
