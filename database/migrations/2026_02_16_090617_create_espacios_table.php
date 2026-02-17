@@ -24,6 +24,7 @@ return new class extends Migration
             $table->float('loc_longitud');
             $table->integer('loc_piso');
 
+            //Relacion con Localizacion
             $table->foreign(['loc_latitud', 'loc_longitud', 'loc_piso'])
                 ->references(['latitud', 'longitud', 'piso'])
                 ->on('localizacions')
@@ -31,6 +32,16 @@ return new class extends Migration
 
             //Relacion con el tipo espacio
             $table->foreignUuid('tipo_espacio_id')->constrained('tipo_espacios');
+
+            //Relacion con el horario
+            $table->dateTime('horario_inicio');
+            $table->dateTime('horario_fin');
+
+            //con restrict impide borrar el horario si el espacio lo usa ya que la relacion representa eso
+            $table->foreign(['horario_inicio', 'horario_fin'])
+                ->references(['inicio', 'fin'])
+                ->on('horarios')
+                ->onDelete('restrict');
         });
     }
 

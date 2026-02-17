@@ -20,7 +20,8 @@ class Espacio extends Model
         'loc_latitud',
         'loc_longitud',
         'loc_piso',
-        'tipo_espacio_id'
+        'tipo_espacio_id',
+        'horario_id'
     ];
 
     protected $casts = ['estado' => EstadoEspacio::class,];
