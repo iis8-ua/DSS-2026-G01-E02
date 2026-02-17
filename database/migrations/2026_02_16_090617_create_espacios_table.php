@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('espacios', function (Blueprint $table) {
-            $table->uuid()->primary();
+            $table->uuid('id')->primary();
             $table->string('nombre');
             $table->integer('aforo');
             $table->string('estado')->default('HABILITADO');
@@ -37,11 +37,13 @@ return new class extends Migration
             $table->dateTime('horario_inicio');
             $table->dateTime('horario_fin');
 
+            /*
             //con restrict impide borrar el horario si el espacio lo usa ya que la relacion representa eso
             $table->foreign(['horario_inicio', 'horario_fin'])
                 ->references(['inicio', 'fin'])
                 ->on('horarios')
                 ->onDelete('restrict');
+            */
         });
     }
 
