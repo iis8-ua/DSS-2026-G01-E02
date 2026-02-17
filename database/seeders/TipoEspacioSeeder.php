@@ -12,6 +12,8 @@ class TipoEspacioSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        TipoEspacio::create(['nombre' => 'Aula Teoría']);
+        TipoEspacio::create(['nombre' => 'Laboratorio']);
+        TipoEspacio::create(['nombre' => 'Despacho']);
     }
 }
