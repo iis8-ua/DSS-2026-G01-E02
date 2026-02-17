@@ -12,6 +12,7 @@ class TipoEspacio extends Model
     //se pone para que se eviten errores, luego se ve si se puede suprimir
     protected $table = 'tipo_espacios';
 
+    //esta variable fillable es la que nos da los campos a rellenar
     protected $fillable = ['nombre'];
 
     /**
