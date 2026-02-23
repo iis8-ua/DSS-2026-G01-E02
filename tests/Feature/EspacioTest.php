@@ -123,4 +123,17 @@ class EspacioTest extends TestCase
         //act
         Espacio::factory()->create(['tipo_espacio_id' => null,]);
     }
+
+    /**
+     * Test para validar que el tipo solo acepta valores del enumerado
+     * @test
+     */
+    public function T06_estado_should_throwException_when_value_is_not_in_enum()
+    {
+        //Assert
+        $this->expectException(\ValueError::class);
+
+        //act
+        Espacio::factory()->create(['estado' => 'INVALIDO',]);
+    }
 }
