@@ -33,11 +33,11 @@ class Espacio extends Model
     /**
      * Relacion con localización, tiene que tener una obligatoria
      */
-    public function loacalizacion()
+    public function localizacion()
     {
         return $this->belongsTo(Localizacion::class, 'loc_latitud', 'latitud')
-                    ->where('loc_longitud', '=', 'longitud')
-                    ->where('loc_piso', '=', 'piso');
+                    ->where('longitud', '=', $this->loc_longitud)
+                    ->where('piso', '=', $this->loc_piso);
     }
 
     /***
@@ -56,4 +56,6 @@ class Espacio extends Model
         return $this->belongsTo(Horario::class, 'horario_inicio', 'inicio')
             ->where('fin', 'horario_fin');
     }
+
+
 }
