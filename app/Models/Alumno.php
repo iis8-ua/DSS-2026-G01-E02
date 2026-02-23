@@ -12,7 +12,7 @@ class Alumno extends Usuario{
     protected static function boot(){
         parent::boot();
 
-        //global scope para poner solo lo de los alumnos
+        //global scope para po ner solo lo de los alumnos
         static::addGlobalScope('alumnos', function(Builder $builder){
             $builder->where('tipo_usuario', self::class);
         });
