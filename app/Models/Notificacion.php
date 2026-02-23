@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,21 +12,26 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Notificacion extends Model
 {
-    public $uuid = null;
-    // Texto que aparece en la notificación
-    public $texto = "";
-    // Estado de la notificación (vista/no vista)
-    public $vista = false;
-    // Incidencia relacionada
-    public $incidencia = null;
-    // Usuario destino
-    public $usuario = null;
+    use HasUuids;
 
-    public function __construct($texto, $usuario){
-        $this->texto = $texto;
-        $this->usuario = $usuario;
-        $this->incidencia = null;
-        $this->vista = false;
+    protected $table = 'notificaciones';
+    protected $primaryKey = 'id';
+    protected $timestamps = false;
+
+    protected $fillable = [
+        'id',
+        'texto',
+        'vista',
+        'incidencia',
+        'usuario'
+    ];
+
+    protected function incidencias(){
+        return $this->belongsTo(Incidencia::class);
+    }
+
+    protected function hasIncidencia(){
+        return $this->incidencia !== null;
     }
 
 }

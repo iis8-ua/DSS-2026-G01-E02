@@ -12,13 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('incidencias', function (Blueprint $table) {
-            $table->uuid();
-            $table->string('descripcion');
-            $table->string('foto');
-            $table->string('usuario_uuid');
+            $table->uuid('id')->primary();
+            $table->text('descripcion');
+            $table->string('foto')->nullable();
 
-            //$table->foreignUuid(column: 'usuario_uuid')->constrained()->noActionOnDelete();
-            $table->timestamps();
+            //$table->foreignUuid(column: 'usuario_uuid')->constrained('usuarios')->noActionOnDelete();
         });
     }
 
