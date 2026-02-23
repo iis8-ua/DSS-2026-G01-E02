@@ -12,7 +12,8 @@ class Usuario extends User{
         'apellidos',
         'email',
         'password',
-        'dni'
+        'dni',
+        'tipo_usuario'
         
     ];
 
@@ -32,5 +33,12 @@ class Usuario extends User{
     public function getFullName(): string {
         return $this->name . ' ' . $this->apellidos;
     }
-    
+    //relacion con notificacion
+    public function notificaciones(){
+        return $this->hasMany(Notificacion::class, 'usuario_id');
+    }
+    //relacion con incidencias
+    public function incidencias(){
+        return $this->hasMany(Incidencia::class, 'usuario_id');
+    }
 }
