@@ -18,14 +18,12 @@ class ReservaGrupal extends Model
 
     // relación inversa con Reserva
     // reserva es el padre
-    public function reserva()
-    {
+    public function reserva(){
         return $this->belongsTo(Reserva::class, 'reserva_id');
     }
 
     // relación Muchos a Muchos para los miembros del grupo.
-    public function miembros()
-    {
+    public function miembros(){
         return $this->belongsToMany(User::class, 'reserva_grupal_user', 'reserva_grupal_id', 'user_id')
                     ->withTimestamps();
     }
