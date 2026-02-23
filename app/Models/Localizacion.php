@@ -8,11 +8,13 @@ class Localizacion extends Model
 {
     protected $table = 'localizacions';
 
+    protected $primaryKey = 'latitud';
+
     //para que no se incremente ya que no es un id
     public $incrementing = false;
 
     //aqui se le dice que la clave primaria no es un entero como espera ya que no es un id
-    protected $keyType = 'array';
+    protected $keyType = 'string';
 
     protected $fillable = ['latitud', 'longitud', 'piso'];
 
@@ -35,7 +37,7 @@ class Localizacion extends Model
     public function espacio()
     {
         return $this->hasOne(Espacio::class, 'loc_latitud', 'latitud')
-            ->where('loc_longitud', '=', $this->getAttribute('longitud'))
-            ->where('loc_piso', '=', $this->getAttribute('piso'));
+            ->where('loc_longitud', '=', $this->longitud)
+            ->where('loc_piso', '=', $this->piso);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\TipoEspacio;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -19,16 +20,23 @@ class LocalizacionTest extends TestCase
     public function T01_espacio_should_return_Espacio_when_localizacion_has_espacio_assigned()
     {
         //Arrange
-        $localizacion = Localizacion::factory()->create([
+        $localizacion = Localizacion::create([
             'latitud' => 40.5,
             'longitud' => -3.5,
             'piso' => 2,
         ]);
 
-        $espacio = Espacio::factory()->create([
+        $tipo = TipoEspacio::create(['nombre' => 'Aula']);
+
+        $espacio = Espacio::create([
+            'nombre' => 'Aula 1',
+            'aforo' => 30,
+            'tipo_espacio_id' => $tipo->id,
             'loc_latitud' => $localizacion->latitud,
             'loc_longitud' => $localizacion->longitud,
             'loc_piso' => $localizacion->piso,
+            'horario_inicio' => '2026-02-27 08:00:00',
+            'horario_fin' => '2026-02-27 10:00:00',
         ]);
 
         //Act
@@ -46,7 +54,7 @@ class LocalizacionTest extends TestCase
     public function T02_create_should_throwException_when_primaryKey_is_duplicated()
     {
         //Arrange
-        Localizacion::factory()->create([
+        Localizacion::create([
             'latitud' => 10.5,
             'longitud' => -1.2,
             'piso' => 1,
@@ -56,7 +64,7 @@ class LocalizacionTest extends TestCase
         $this->expectException(\Illuminate\Database\QueryException::class);
 
         //act
-        Localizacion::factory()->create([
+        Localizacion::create([
             'latitud' => 10.5,
             'longitud' => -1.2,
             'piso' => 1,
@@ -71,7 +79,7 @@ class LocalizacionTest extends TestCase
     public function T03_espacio_should_return_Null_when_localizacion_has_no_espacio()
     {
         //Arrange
-        $localizacion = Localizacion::factory()->create([
+        $localizacion = Localizacion::create([
             'latitud' => 40.5,
             'longitud' => -3.5,
             'piso' => 2,
@@ -91,18 +99,22 @@ class LocalizacionTest extends TestCase
     public function T04_update_should_modify_Record_when_localizacion_keys_are_valid()
     {
         //Arrange
-        $localizacion = Localizacion::factory()->create([
+        $localizacion = Localizacion::create([
             'latitud' => 10.0,
             'longitud' => 20.0,
             'piso' => 1,
         ]);
 
         //Act
-        $localizacion->update(['piso' => 5]);
+        Localizacion::where('latitud', 10.0)
+            ->where('longitud', 20.0)
+            ->where('piso', 1)
+            ->update(['piso' => 5]);
 
         //Assert
-        $localizacionActualizada = Localizacion::where('latitud', 10.0)
-            ->where('longitud', 20.0)
+        $localizacionActualizada = Localizacion::where('latitud', 10)
+            ->where('longitud', 20)
+            ->where('piso', 5)
             ->first();
 
         $this->assertEquals(5, $localizacionActualizada->piso);
