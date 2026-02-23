@@ -14,17 +14,25 @@ class Reserva extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['espacio_id', 'user_id', 'fecha_hora_inicio', 'fecha_hora_fin', 'estado'];
+    protected $fillable = [
+        'espacio_id', 
+        'user_id', 
+        'fecha_hora_inicio', 
+        'fecha_hora_fin', 
+        'estado'];
 
     // Relación con el detalle grupal
-    public function reservaGrupal()
-    {
+    public function reservaGrupal(){
         return $this->hasOne(ReservaGrupal::class, 'reserva_id');
     }
 
-    // creador de la reserva
-    public function user()
-    {
+    // usuario asociado a la reserva
+    public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    // espacio asociado a la reserva
+    public function espacio(){
+        return $this->belongsTo(Espacio::class);
     }
 }
