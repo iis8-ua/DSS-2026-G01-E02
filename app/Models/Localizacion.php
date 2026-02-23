@@ -28,4 +28,14 @@ class Localizacion extends Model
 
         return $query;
     }
+
+    /**
+     * Relacion con el espacio para que podamos ver el espacio desde una localizacion
+     */
+    public function espacio()
+    {
+        return $this->hasOne(Espacio::class, 'loc_latitud', 'latitud')
+            ->where('loc_longitud', '=', $this->getAttribute('longitud'))
+            ->where('loc_piso', '=', $this->getAttribute('piso'));
+    }
 }
