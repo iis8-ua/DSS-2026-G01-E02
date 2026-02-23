@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ReservaGrupal extends Model
-{
+class ReservaGrupal extends Model{
     use HasFactory;
 
     // La clave primaria es reserva_id y no autoincremental
