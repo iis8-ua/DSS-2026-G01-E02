@@ -10,9 +10,9 @@ class Espacio extends Model
 {
     use HasUuids;
 
-    protected $table = 'espacios';
+    public $table = 'espacios';
 
-    protected $fillable = [
+    public $fillable = [
         'nombre',
         'aforo',
         'estado',
@@ -26,7 +26,7 @@ class Espacio extends Model
     ];
 
     //Para castear el estado al enumerado y los horarios a DateTime
-    protected $casts = ['estado' => EstadoEspacio::class,
+    public $casts = ['estado' => EstadoEspacio::class,
                         'horario_inicio' => 'datetime',
                         'horario_fin' => 'datetime',];
 

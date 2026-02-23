@@ -10,10 +10,10 @@ class TipoEspacio extends Model
     use HasUuids; //esto lo que hace es activar la generacion auto de los uuid
 
     //se pone para que se eviten errores, luego se ve si se puede suprimir
-    protected $table = 'tipo_espacios';
+    public $table = 'tipo_espacios';
 
     //esta variable fillable es la que nos da los campos a rellenar
-    protected $fillable = ['nombre'];
+    public $fillable = ['nombre'];
 
     /**
      * Devuelve los espacios que tienen ese tipo de espacio asociado

@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Localizacion extends Model
 {
-    protected $table = 'localizacions';
+    public $table = 'localizacions';
 
     //para que no se incremente ya que no es un id
     public $incrementing = false;
 
     //aqui se le dice que la clave primaria no es un entero como espera ya que no es un id
-    protected $keyType = 'array';
+    public $keyType = 'array';
 
-    protected $fillable = ['latitud', 'longitud', 'piso'];
+    public $fillable = ['latitud', 'longitud', 'piso'];
 
     /**
      * Se sobreescribe el metodo de Laravel para indicarle que la clave primaria es una combinacion
