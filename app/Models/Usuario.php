@@ -28,23 +28,9 @@ class Usuario extends User{
             }
         });
     }
-    //metodos del usuario
-    public function getDNI(): string{
-        return (string) $this->dni;
-    }
     //get nombre completo
     public function getFullName(): string {
         return $this->name . ' ' . $this->apellidos;
     }
-    //get email
-    public function getEmail(): string{
-        return (string) $this->email;
-    }
-    public function setEmail(string $email): void{
-        $this->email = $email;
-    }
-    public function setPassword(string $email): void{
-        $this->password = $password;
-        $this->save();
-    }
+    
 }

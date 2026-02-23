@@ -6,6 +6,7 @@ use App\Models\Espacio;
 use Illuminate\Database\Eloquent\Builder;
 
 class GestorEspacios extends Usuario{
+    protected $table = 'usuarios';
     protected static function boot(){
         parent::boot();
 

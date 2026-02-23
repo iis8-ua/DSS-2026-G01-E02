@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Alumno extends Usuario{
+    protected $table = 'usuarios';
     protected static function boot(){
         parent::boot();
 
@@ -23,11 +24,11 @@ class Alumno extends Usuario{
 
     }
     public function reservas(): HasMany{
-            return $this->hasMany(Reserva::class, 'user_id');
+        return $this->hasMany(Reserva::class, 'user_id');
     }
 
-        public function reservasGrupales(): BelongsToMany{
-            return $this->belongsToMany(ReservaGrupal::class, 'alumno_reserva_grupal', 'alumno_id', 'reserva_id');
+    public function reservasGrupales(): BelongsToMany{
+        return $this->belongsToMany(ReservaGrupal::class, 'alumno_reserva_grupal', 'alumno_id', 'reserva_id');
     }
 
     public function reservar(Espacio $espacio, $fechaInicio, $fechaFin): Reserva{
