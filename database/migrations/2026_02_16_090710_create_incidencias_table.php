@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('foto');
             $table->string('usuario_uuid');
 
-            $table->foreignUuid(column: 'usuario_uuid')->constrained()->noActionOnDelete();
+            //$table->foreignUuid(column: 'usuario_uuid')->constrained()->noActionOnDelete();
             $table->timestamps();
         });
     }

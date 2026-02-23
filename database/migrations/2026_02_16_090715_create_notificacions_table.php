@@ -19,8 +19,8 @@ return new class extends Migration
             $table->uuid('incidencia_uuid');
             $table->uuid('usuario_uuid');
 
-            $table->foreignUuid('incidencia_uuid')->constrained('')->cascadeOnDelete();
-            $table->foreignUuid('usuario_uuid')->constrained('')->noActionOnDelete();
+            //$table->foreignUuid('incidencia_uuid')->constrained('')->cascadeOnDelete();
+            //$table->foreignUuid('usuario_uuid')->constrained('')->noActionOnDelete();
 
         });
     }
