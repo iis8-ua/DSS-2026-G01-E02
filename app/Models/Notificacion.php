@@ -11,15 +11,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Notificacion extends Model
 {
-    private $uuid = null;
+    public $uuid = null;
     // Texto que aparece en la notificación
-    private $texto = "";
+    public $texto = "";
     // Estado de la notificación (vista/no vista)
-    private $vista = false;
+    public $vista = false;
     // Incidencia relacionada
-    private $incidencia = null;
+    public $incidencia = null;
     // Usuario destino
-    private $usuario = null;
+    public $usuario = null;
 
     public function __construct($texto, $usuario){
         $this->texto = $texto;
@@ -28,24 +28,5 @@ class Notificacion extends Model
         $this->vista = false;
     }
 
-    public function setIncidencia($incidencia): void {
-        $this->incidencia = $incidencia;
-    }
-
-    public function getIncidencia(): Incidencia {
-        return $this->incidencia;
-    }
-
-    public function getUsuario(): Usuario {
-        return $this->usuario;
-    }
-
-    public function setVista($vista): void{
-        $this->vista = $vista;
-    }
-
-    public function vista(): bool {
-        return $this->vista;
-    }
 }
 
