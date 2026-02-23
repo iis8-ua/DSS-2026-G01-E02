@@ -30,6 +30,8 @@ return new class extends Migration
                 ->on('localizacions')
                 ->onDelete('cascade');
 
+            $table->unique(['loc_latitud', 'loc_longitud', 'loc_piso'], 'localizacion_espacio');
+
             //Relacion con el tipo espacio
             $table->foreignUuid('tipo_espacio_id')->constrained('tipo_espacios');
 

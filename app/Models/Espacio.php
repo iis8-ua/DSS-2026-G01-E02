@@ -33,7 +33,7 @@ class Espacio extends Model
     /**
      * Relacion con localización, tiene que tener una obligatoria
      */
-    public function loacalizacion()
+    public function localizacion()
     {
         return $this->belongsTo(Localizacion::class, 'loc_latitud', 'latitud')
                     ->where('loc_longitud', '=', 'longitud')
