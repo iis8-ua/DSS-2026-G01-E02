@@ -46,7 +46,7 @@ class ReservaTest extends TestCase
             'user_id' => $user->id,
             'fecha_inicio' => now(),
             'fecha_fin' => now()->addHours(1),
-            'estado' => 'pendiente'
+            'estado' => EstadoReserva::PENDIENTE
         ]);
 
         // assert
@@ -66,7 +66,7 @@ class ReservaTest extends TestCase
             'user_id' => $user->id,
             'fecha_inicio' => now(),
             'fecha_fin' => now()->addHours(1),
-            'estado' => 'pendiente'
+            'estado' => EstadoReserva::PENDIENTE
         ]);
 
         // assert
@@ -86,7 +86,7 @@ class ReservaTest extends TestCase
             'user_id' => $user->id,
             'fecha_inicio' => now(),
             'fecha_fin' => now()->addHours(1),
-            'estado' => 'pendiente'
+            'estado' => EstadoReserva::PENDIENTE
         ]);
 
         $grupal = ReservaGrupal::create([
