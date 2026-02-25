@@ -21,7 +21,7 @@ class ReservaSeeder extends Seeder{
             'user_id' => $user->id,
             'fecha_inicio' => now()->addDays(1),
             'fecha_fin' => now()->addDays(1)->addHours(2),
-            'estado' => 'confirmada',
+            'estado' =>  EstadoReserva::ACEPTADA,
         ]);
 
         // creamos una reserva grupal asociada a la reserva
