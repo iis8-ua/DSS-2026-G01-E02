@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use App\Enums\EstadoReserva;
 
 class Reserva extends Model{
     use HasFactory, HasUuids;
@@ -39,6 +40,7 @@ class Reserva extends Model{
         return [
             'fecha_inicio' => 'datetime',
             'fecha_fin' => 'datetime',
+            'estado' => EstadoReserva::class,
         ];
     }
 }
