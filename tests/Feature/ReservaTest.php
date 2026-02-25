@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Espacio;
 use App\Models\TipoEspacio;
 use App\Models\Localizacion;
+use App\Enums\EstadoReserva;
 
 class ReservaTest extends TestCase
 {
