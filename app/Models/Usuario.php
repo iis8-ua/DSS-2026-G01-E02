@@ -1,13 +1,14 @@
 <?php
 namespace App\Models;
-use Illuminate\Database\Eloquent\Concers\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Usuario extends User{
     use HasUuids;
+    protected $primaryKey = 'uuid';
     protected $table = 'usuarios';
 
     protected $fillable = [
-        'id',
+        'uuid',
         'name',
         'apellidos',
         'email',
@@ -24,7 +25,7 @@ class Usuario extends User{
 
         // Asignar el tipo de usuario automáticamente al crear un nuevo usuario
         static::creating(function ($model) {
-            if ($empty($model->tipo_usuario)) {
+            if (empty($model->tipo_usuario)) {
                 $model->tipo_usuario = self::class;
             }
         });

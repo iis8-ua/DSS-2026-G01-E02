@@ -16,21 +16,20 @@ class Notificacion extends Model
 
     protected $table = 'notificaciones';
     protected $primaryKey = 'id';
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'id',
         'texto',
         'vista',
-        'incidencia',
-        'usuario'
+        'incidencia_id',
     ];
 
-    protected function incidencias(){
-        return $this->belongsTo(Incidencia::class);
+    public function incidencia(){
+        return $this->belongsTo(Incidencia::class,'incidencia_id','id');
     }
 
-    protected function hasIncidencia(){
+    public function hasIncidencia(){
         return $this->incidencia !== null;
     }
 
