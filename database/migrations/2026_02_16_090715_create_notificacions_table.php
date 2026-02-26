@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notificacions', function (Blueprint $table) {
+        Schema::create('notificaciones', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('texto');
-            $table->boolean('vista');
+            $table->boolean('vista')->default(false);
 
-            $table->foreignUuid('incidencia_uuid')->constrained('incidencias')->cascadeOnDelete();
-            //$table->foreignUuid('usuario_uuid')->constrained('usuarios')->noActionOnDelete();
-
+            $table->foreignUuid('incidencia_id')
+                ->nullable()
+                ->constrained('incidencias')
+                ->cascadeOnDelete();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notificacions');
+        Schema::dropIfExists('notificaciones');
     }
 };
