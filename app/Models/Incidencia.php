@@ -13,13 +13,12 @@ class Incidencia extends Model
     use HasUuids;
     protected $table = 'incidencias';
     protected $primaryKey = 'id';
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'id',
         'descripcion',
-        'foto',
-        'autor'
+        'foto'
     ];
 
 
