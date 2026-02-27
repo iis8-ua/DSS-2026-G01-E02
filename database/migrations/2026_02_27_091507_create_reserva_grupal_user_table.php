@@ -11,12 +11,12 @@ return new class extends Migration{
     public function up(){
         Schema::create('reserva_grupal_user', function (Blueprint $table) {
             $table->id();
-            
+
             // vinculamos una reserva grupal con un usuario
             // atributo de la lista de miembros
             $table->foreignUuid('reserva_grupal_id')->constrained('reserva_grupals', 'reserva_id')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            
+            $table->foreignUuid('user_id')->constrained('usuarios')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

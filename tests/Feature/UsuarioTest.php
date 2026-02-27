@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class UsuarioTest extends TestCase
 {
-    
+
 use RefreshDatabase;
 
     /**
@@ -32,16 +32,16 @@ use RefreshDatabase;
         ]);
 
         $notificacion1 = Notificacion::create([
-            'usuario_id' => $usuario->id,
+            'user_id' => $usuario->id,
             'vista' => false,
             'texto' => 'Tu reserva ha sido cancelada'
         ]);
         $notificacion2 = Notificacion::create([
-            'usuario_id' => $usuario->id,
+            'user_id' => $usuario->id,
             'vista' => false,
             'texto' => 'Tu reserva ha sido aceptada'
         ]);
-        
+
         //Act
         //se llama a la relacion
         $resultado = $usuario->notificaciones;
@@ -57,7 +57,11 @@ use RefreshDatabase;
         $this->assertTrue($resultado->contains($notificacion1));
         $this->assertTrue($resultado->contains($notificacion2));
     }
-    //@test incidencias
+
+    /**
+     * Incidencias
+     * @test
+     */
     public function T02_incidencias_should_return_collection_of_Incidencia_when_usuario_has_incidencias(){
         //Arrange
         $usuario = Usuario::create([
@@ -70,7 +74,7 @@ use RefreshDatabase;
         ]);
 
         $incidencia1 = Incidencia::create([
-            'usuario_id' => $usuario->id,
+            'user_id' => $usuario->id,
             'estado' => 'abierta',
             'descripcion' => 'El proyector no funciona'
         ]);
@@ -83,7 +87,7 @@ use RefreshDatabase;
         $this->assertCount(1, $resultado);
         $this->assertInstanceOf(Incidencia::class, $resultado->first());
         $this->assertTrue($resultado->contains($incidencia1));
-    
+
     }
 }
 

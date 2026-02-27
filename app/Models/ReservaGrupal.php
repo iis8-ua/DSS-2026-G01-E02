@@ -23,7 +23,7 @@ class ReservaGrupal extends Model{
 
     // relación Muchos a Muchos para los miembros del grupo.
     public function miembros(){
-        return $this->belongsToMany(User::class, 'reserva_grupal_user', 'reserva_grupal_id', 'user_id')
+        return $this->belongsToMany(Usuario::class, 'reserva_grupal_user', 'reserva_grupal_id', 'user_id')
                     ->withTimestamps();
     }
 }
