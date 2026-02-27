@@ -4,18 +4,20 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Usuario extends User{
     use HasUuids;
-    protected $primaryKey = 'uuid';
+    protected $primaryKey = 'id';
     protected $table = 'usuarios';
 
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
-        'uuid',
         'name',
         'apellidos',
         'email',
         'password',
         'dni',
         'tipo_usuario'
-        
+
     ];
 
     //se inicializa el modelo y la herencia a sigle
@@ -36,10 +38,10 @@ class Usuario extends User{
     }
     //relacion con notificacion
     public function notificaciones(){
-        return $this->hasMany(Notificacion::class, 'usuario_id');
+        return $this->hasMany(Notificacion::class, 'user_id');
     }
     //relacion con incidencias
     public function incidencias(){
-        return $this->hasMany(Incidencia::class, 'usuario_id');
+        return $this->hasMany(Incidencia::class, 'user_id');
     }
 }

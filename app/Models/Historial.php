@@ -20,32 +20,31 @@ class Historial extends Model{
         'user_id',
     ];
 
-    public function user(): BelongsTo
+    public function usuario(): BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'user_id');
     }
 
     public function reservas(): HasMany
     {
-        return $this->hasMany(Reserva::class, 'historial_id');
+        return $this->hasMany(Reserva::class, 'user_id', 'user_id');
     }
 
     public function addReserva(Reserva $reserva): void
     {
-        $reserva->historial_id = $this->id;
+        $reserva->user_id = $this->user_id;
         $reserva->save();
     }
 
     public function deleteReserva(Reserva $reserva): void
     {
-        if ($reserva->historial_id === $this->id) {
-            $reserva->historial_id = null;
-            $reserva->save();
+        if ($reserva->user_id === $this->user_id) {
+            $reserva->delete();
         }
     }
 
     public function clearReservas(): void
     {
-        $this->reservas()->update(['historial_id' => null]);
+        $this->reservas()->delete();
     }
 }
