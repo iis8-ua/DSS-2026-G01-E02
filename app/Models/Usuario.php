@@ -44,4 +44,9 @@ class Usuario extends User{
     public function incidencias(){
         return $this->hasMany(Incidencia::class, 'user_id');
     }
+
+    //relacion con reservas
+    public function reservas(){
+        return $this->hasMany(Reserva::class, 'user_id');
+    }
 }

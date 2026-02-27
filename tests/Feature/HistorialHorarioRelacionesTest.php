@@ -2,11 +2,16 @@
 
 namespace Tests\Feature;
 
+use App\Enums\EstadoEspacio;
+use App\Enums\EstadoReserva;
 use App\Models\Historial;
 use App\Models\Horario;
 use App\Models\Reserva;
+use App\Models\Usuario;
+use App\Models\Espacio;
+use App\Models\TipoEspacio;
+use App\Models\Localizacion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -14,109 +19,106 @@ class HistorialHorarioRelacionesTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function crearUsuarioAlumno(): string
-    {
-        $userId = (string) Str::uuid();
+    private $hInicio = '08:00:00';
+    private $hFin = '10:00:00';
 
-        DB::table('usuarios')->insert([
-            'id' => $userId,
-            'nombre' => 'Ada',
+    private function crearUsuarioAlumno(): Usuario
+    {
+        return Usuario::create([
+            'name' => 'Ada',
             'apellidos' => 'Lovelace',
             'email' => 'ada'.Str::random(6).'@example.com',
-            'contrasena' => bcrypt('secret123'), 
+            'password' => bcrypt('secret123'),
             'dni' => 'X'.random_int(10000000, 99999999),
-            'tipo_usuario' => \App\Models\Alumno::class,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'tipo_usuario' => 'ALUMNO'
         ]);
 
-        return $userId;
     }
 
-    private function crearEspacio(): string
+    private function crearEspacio(): Espacio
     {
-        $espacioId = (string) Str::uuid();
+        $tipo = TipoEspacio::create(['nombre' => 'Teoría']);
+        $loc = Localizacion::create(['latitud' => rand(1,100), 'longitud' => rand(1,100), 'piso' => 1]);
 
-        DB::table('espacios')->insert([
-            'id' => $espacioId,
+        $hor=Horario::create(['inicio' => $this->hInicio, 'fin' => $this->hFin]);
+
+        return Espacio::create([
             'nombre' => 'Aula 101',
             'aforo' => 30,
-            'estado' => 'HABILITADO',
-            'caracteristicas' => 'Proyector',
-            'created_at' => now(),
-            'updated_at' => now(),
+            'tipo_espacio_id' => $tipo->id,
+            'loc_latitud' => $loc->latitud,
+            'loc_longitud' => $loc->longitud,
+            'loc_piso' => $loc->piso,
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
+            'estado' => EstadoEspacio::HABILITADO,
         ]);
-
-        return $espacioId;
     }
 
+    /**
+     * @test
+     */
     public function historial_pertenece_a_un_usuario_alumno()
     {
-        $userId = $this->crearUsuarioAlumno();
+        $user = $this->crearUsuarioAlumno();
 
         $historial = Historial::create([
-            'user_id' => $userId,
+            'user_id' => $user->id,
         ]);
 
-        $this->assertNotNull($historial->user);
-        $this->assertEquals($userId, $historial->user->id);
+        $this->assertNotNull($historial->usuario);
+        $this->assertInstanceOf(Usuario::class, $historial->usuario);
+        $this->assertEquals($user->id, $historial->usuario->id);
     }
 
+    /**
+     * @test
+     */
     public function historial_tiene_muchas_reservas()
     {
-        $userId = $this->crearUsuarioAlumno();
-        $espacioId = $this->crearEspacio();
-
-        $historial = Historial::create(['user_id' => $userId]);
+        $user = $this->crearUsuarioAlumno();
+        $espacio = $this->crearEspacio();
+        $historial = Historial::create(['user_id' => $user->id]);
 
         Reserva::create([
-            'id' => (string) Str::uuid(),
-            'user_id' => $userId,
-            'espacio_id' => $espacioId,
-            'fecha_inicio' => now()->addDay(),
-            'fecha_fin' => now()->addDay()->addHour(),
-            'estado' => 'pendiente',
-            'historial_id' => $historial->id,
+            'user_id' => $user->id,
+            'espacio_id' => $espacio->id,
+            'fecha_inicio' => $this->hInicio,
+            'fecha_fin' => $this->hFin,
+            'estado' => EstadoReserva::PENDIENTE,
         ]);
 
         Reserva::create([
-            'id' => (string) Str::uuid(),
-            'user_id' => $userId,
-            'espacio_id' => $espacioId,
-            'fecha_inicio' => now()->addDays(2),
-            'fecha_fin' => now()->addDays(2)->addHour(),
-            'estado' => 'pendiente',
-            'historial_id' => $historial->id,
+            'user_id' => $user->id,
+            'espacio_id' => $espacio->id,
+            'fecha_inicio' => $this->hInicio,
+            'fecha_fin' => $this->hFin,
+            'estado' => EstadoReserva::PENDIENTE,
         ]);
 
-        $this->assertCount(2, $historial->reservas()->get());
-
-        $unaReserva = $historial->reservas()->first();
-        $this->assertEquals($historial->id, $unaReserva->historial->id);
+        $this->assertCount(2, $user->reservas);
     }
 
+    /**
+     * @test
+     */
     public function horario_se_relaciona_con_reservas()
     {
-        $userId = $this->crearUsuarioAlumno();
-        $espacioId = $this->crearEspacio();
+        $user = $this->crearUsuarioAlumno();
+        $espacio = $this->crearEspacio();
 
-        $horario = Horario::create([
-            'inicio' => now()->addDays(3),
-            'fin' => now()->addDays(3)->addHours(2),
-        ]);
+        // El horario ya se creó en crearEspacio()
+        $horario =Horario::first();
 
         $reserva = Reserva::create([
-            'id' => (string) Str::uuid(),
-            'user_id' => $userId,
-            'espacio_id' => $espacioId,
+            'user_id' => $user->id,
+            'espacio_id' => $espacio->id,
             'fecha_inicio' => $horario->inicio,
             'fecha_fin' => $horario->fin,
-            'estado' => 'pendiente',
-            'horario_id' => $horario->id,
+            'estado' => EstadoReserva::PENDIENTE,
         ]);
 
         $this->assertCount(1, $horario->reservas()->get());
-
         $this->assertNotNull($reserva->horario);
         $this->assertEquals($horario->id, $reserva->horario->id);
     }

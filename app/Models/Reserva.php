@@ -15,10 +15,10 @@ class Reserva extends Model{
     protected $keyType = 'string';
 
     protected $fillable = [
-        'espacio_id', 
-        'user_id', 
-        'fecha_inicio', 
-        'fecha_fin', 
+        'espacio_id',
+        'user_id',
+        'fecha_inicio',
+        'fecha_fin',
         'estado'];
 
     // Relación con el detalle grupal
@@ -27,13 +27,19 @@ class Reserva extends Model{
     }
 
     // usuario asociado a la reserva
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function usuario(){
+        return $this->belongsTo(Usuario::class, 'user_id');
     }
 
     // espacio asociado a la reserva
     public function espacio(){
         return $this->belongsTo(Espacio::class);
+    }
+
+    //relacion con el horario
+    public function horario(){
+        return $this->belongsTo(Horario::class, 'fecha_inicio', 'inicio')
+            ->where('fin', $this->fecha_fin);
     }
 
     protected function casts(): array{

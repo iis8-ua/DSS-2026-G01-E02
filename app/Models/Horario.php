@@ -36,7 +36,7 @@ class Horario extends Model
 
     public function reservas(): HasMany
     {
-        return $this->hasMany(Reserva::class, 'horario_id');
+        return $this->hasMany(Reserva::class, 'fecha_inicio', 'inicio');
     }
 
 
