@@ -16,6 +16,10 @@ return new class extends Migration
             $table->text('texto');
             $table->boolean('vista')->default(false);
 
+            $table->foreignUuid('user_id')
+                ->constrained('usuarios')
+                ->cascadeOnDelete();
+
             $table->foreignUuid('incidencia_id')
                 ->nullable()
                 ->constrained('incidencias')

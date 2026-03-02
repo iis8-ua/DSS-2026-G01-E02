@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Localizacion;
 use App\Models\Espacio;
+use App\Models\Horario;
 
 class LocalizacionTest extends TestCase
 {
@@ -28,6 +29,11 @@ class LocalizacionTest extends TestCase
 
         $tipo = TipoEspacio::create(['nombre' => 'Aula']);
 
+        $hor =Horario::create([
+            'inicio' => '08:00:00',
+            'fin' => '10:00:00'
+        ]);
+
         $espacio = Espacio::create([
             'nombre' => 'Aula 1',
             'aforo' => 30,
@@ -35,8 +41,8 @@ class LocalizacionTest extends TestCase
             'loc_latitud' => $localizacion->latitud,
             'loc_longitud' => $localizacion->longitud,
             'loc_piso' => $localizacion->piso,
-            'horario_inicio' => '2026-02-27 08:00:00',
-            'horario_fin' => '2026-02-27 10:00:00',
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
         ]);
 
         //Act

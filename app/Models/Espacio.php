@@ -54,7 +54,7 @@ class Espacio extends Model
     public function horario()
     {
         return $this->belongsTo(Horario::class, 'horario_inicio', 'inicio')
-            ->where('fin', 'horario_fin');
+            ->where('fin', $this->horario_fin);
     }
 
 

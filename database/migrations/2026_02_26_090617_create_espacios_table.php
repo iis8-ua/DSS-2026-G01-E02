@@ -39,13 +39,13 @@ return new class extends Migration
             $table->dateTime('horario_inicio');
             $table->dateTime('horario_fin');
 
-            /*
+
             //con restrict impide borrar el horario si el espacio lo usa ya que la relacion representa eso
             $table->foreign(['horario_inicio', 'horario_fin'])
                 ->references(['inicio', 'fin'])
                 ->on('horarios')
                 ->onDelete('restrict');
-            */
+
         });
     }
 
