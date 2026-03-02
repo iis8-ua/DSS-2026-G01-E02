@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('dni')->unique();
             $table->string('tipo_usuario');
-            
+
             $table->timestamps();
         });
     }

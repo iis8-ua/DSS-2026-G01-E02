@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('descripcion');
             $table->string('foto')->nullable();
 
-            //$table->foreignUuid(column: 'usuario_uuid')->constrained('usuarios')->noActionOnDelete();
+            $table->foreignUuid('user_id')->constrained('usuarios')->onDelete('cascade');
         });
     }
 

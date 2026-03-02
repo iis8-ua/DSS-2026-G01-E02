@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Horario;
 use App\Models\Localizacion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -26,6 +27,8 @@ class TipoEspacioTest extends TestCase
         $loc1 = Localizacion::create(['latitud' => 10.0, 'longitud' => 10.0, 'piso' => 1]);
         $loc2 = Localizacion::create(['latitud' => 20.0, 'longitud' => 20.0, 'piso' => 2]);
 
+        $hor=Horario::create(['inicio' => '08:00:00', 'fin' => '10:00:00']);
+
         $espacio1 = Espacio::create([
             'nombre' => 'Lab 1',
             'aforo' => 15,
@@ -44,8 +47,8 @@ class TipoEspacioTest extends TestCase
             'loc_latitud' => $loc2->latitud,
             'loc_longitud' => $loc2->longitud,
             'loc_piso' => $loc2->piso,
-            'horario_inicio' => '2026-02-27 11:00:00',
-            'horario_fin' => '2026-02-27 13:00:00',
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
         ]);
 
         //Act
@@ -69,6 +72,7 @@ class TipoEspacioTest extends TestCase
         //Arrange
         $tipo = TipoEspacio::create(['nombre' => 'Despacho']);
         $loc = Localizacion::create(['latitud' => 5.0, 'longitud' => 5.0, 'piso' => 0]);
+        $hor=Horario::create(['inicio' => '08:00:00', 'fin' => '10:00:00']);
 
         Espacio::create([
             'nombre' => 'Despacho 1',
@@ -77,8 +81,8 @@ class TipoEspacioTest extends TestCase
             'loc_latitud' => $loc->latitud,
             'loc_longitud' => $loc->longitud,
             'loc_piso' => $loc->piso,
-            'horario_inicio' => '2026-02-27 08:00:00',
-            'horario_fin' => '2026-02-27 20:00:00',
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
         ]);
 
         //Assert

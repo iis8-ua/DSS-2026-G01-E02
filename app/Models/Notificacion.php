@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Representa una notificación a un usuario.
- * 
+ *
  * Puede estar asociada opcionalmente a una incidencia.
  */
 class Notificacion extends Model
@@ -16,21 +16,26 @@ class Notificacion extends Model
 
     protected $table = 'notificaciones';
     protected $primaryKey = 'id';
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'id',
         'texto',
         'vista',
-        'incidencia',
-        'usuario'
+        'incidencia_id',
+        'user_id',
     ];
 
-    protected function incidencias(){
-        return $this->belongsTo(Incidencia::class);
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'user_id');
     }
 
-    protected function hasIncidencia(){
+    public function incidencia(){
+        return $this->belongsTo(Incidencia::class,'incidencia_id','id');
+    }
+
+    public function hasIncidencia(){
         return $this->incidencia !== null;
     }
 

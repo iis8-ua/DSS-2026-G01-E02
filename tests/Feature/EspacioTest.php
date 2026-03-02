@@ -33,6 +33,8 @@ class EspacioTest extends TestCase
             'latitud' => 10.0, 'longitud' => 10.0, 'piso' => 1
         ]);
 
+        $hor= Horario::create(['inicio' => '08:00:00', 'fin' => '10:00:00']);
+
         $espacio = Espacio::create([
             'nombre' => 'Lab Química',
             'aforo' => 20,
@@ -40,8 +42,8 @@ class EspacioTest extends TestCase
             'loc_latitud' => $loc->latitud,
             'loc_longitud' => $loc->longitud,
             'loc_piso' => $loc->piso,
-            'horario_inicio' => '2025-01-01 08:00:00',
-            'horario_fin' => '2025-01-01 10:00:00',
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
         ]);
         //Act
         $resultado=$espacio->tipo;
@@ -64,6 +66,7 @@ class EspacioTest extends TestCase
         ]);
 
         $tipo = TipoEspacio::create(['nombre' => 'Aula']);
+        $hor= Horario::create(['inicio' => '08:00:00', 'fin' => '10:00:00']);
 
         $espacio = Espacio::create([
             'nombre' => 'Aula Magna',
@@ -72,8 +75,8 @@ class EspacioTest extends TestCase
             'loc_latitud' => $localizacion->latitud,
             'loc_longitud' => $localizacion->longitud,
             'loc_piso' => $localizacion->piso,
-            'horario_inicio' => '2025-01-01 08:00:00',
-            'horario_fin' => '2025-01-01 10:00:00',
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
         ]);
 
         //Act
@@ -91,8 +94,21 @@ class EspacioTest extends TestCase
      * @test
      */
     public function T03_horario_should_return_Horario_when_espacio_has_horario_dates(){
-        $this->markTestIncomplete('El modelo Horario aún no está implementado.');
         //Arrange
+        $tipo = TipoEspacio::create(['nombre' => 'Despacho']);
+        $loc = Localizacion::create(['latitud' => 5.0, 'longitud' => 5.0, 'piso' => 0]);
+        $horario = Horario::create(['inicio' => '09:00:00', 'fin' => '14:00:00']);
+
+        $espacio = Espacio::create([
+            'nombre' => 'Despacho 1',
+            'aforo' => 2,
+            'tipo_espacio_id' => $tipo->id,
+            'loc_latitud' => $loc->latitud,
+            'loc_longitud' => $loc->longitud,
+            'loc_piso' => $loc->piso,
+            'horario_inicio' => $horario->inicio,
+            'horario_fin' => $horario->fin,
+        ]);
 
 
         //Act
@@ -114,6 +130,9 @@ class EspacioTest extends TestCase
         $loc = Localizacion::create(['latitud' => 1.0, 'longitud' => 1.0, 'piso' => 1]);
         $tipo = TipoEspacio::create(['nombre' => 'Tipo A']);
 
+        $hor1=Horario::create(['inicio' => '08:00:00', 'fin' => '10:00:00']);
+        $hor2=Horario::create(['inicio' => '12:00:00', 'fin' => '14:00:00']);
+
         Espacio::create([
             'nombre' => 'Espacio 1',
             'aforo' => 10,
@@ -121,8 +140,8 @@ class EspacioTest extends TestCase
             'loc_latitud' => $loc->latitud,
             'loc_longitud' => $loc->longitud,
             'loc_piso' => $loc->piso,
-            'horario_inicio' => '2025-01-01 08:00:00',
-            'horario_fin' => '2025-01-01 10:00:00',
+            'horario_inicio' => $hor1->inicio,
+            'horario_fin' => $hor1->fin,
         ]);
 
         //Assert
@@ -136,8 +155,8 @@ class EspacioTest extends TestCase
             'loc_latitud' => $loc->latitud,
             'loc_longitud' => $loc->longitud,
             'loc_piso' => $loc->piso,
-            'horario_inicio' => '2025-01-01 12:00:00',
-            'horario_fin' => '2025-01-01 14:00:00',
+            'horario_inicio' => $hor2->inicio,
+            'horario_fin' => $hor2->fin,
         ]);
     }
 
@@ -149,6 +168,7 @@ class EspacioTest extends TestCase
     {
         //Arrange
         $loc = Localizacion::create(['latitud' => 2.0, 'longitud' => 2.0, 'piso' => 1]);
+        $hor=Horario::create(['inicio' => '08:00:00', 'fin' => '10:00:00']);
 
         //Assert
         $this->expectException(\Illuminate\Database\QueryException::class);
@@ -161,8 +181,8 @@ class EspacioTest extends TestCase
             'loc_latitud' => $loc->latitud,
             'loc_longitud' => $loc->longitud,
             'loc_piso' => $loc->piso,
-            'horario_inicio' => '2025-01-01 08:00:00',
-            'horario_fin' => '2025-01-01 10:00:00',
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
         ]);
     }
 
@@ -175,6 +195,7 @@ class EspacioTest extends TestCase
         //Arrange
         $tipo = TipoEspacio::create(['nombre' => 'Tipo B']);
         $loc = Localizacion::create(['latitud' => 3.0, 'longitud' => 3.0, 'piso' => 1]);
+        $hor=Horario::create(['inicio' => '08:00:00', 'fin' => '10:00:00']);
 
         //Assert
         $this->expectException(\ValueError::class);
@@ -188,8 +209,8 @@ class EspacioTest extends TestCase
             'loc_latitud' => $loc->latitud,
             'loc_longitud' => $loc->longitud,
             'loc_piso' => $loc->piso,
-            'horario_inicio' => '2025-01-01 08:00:00',
-            'horario_fin' => '2025-01-01 10:00:00',
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
         ]);
     }
 }
