@@ -57,7 +57,10 @@ use RefreshDatabase;
         $this->assertTrue($resultado->contains($notificacion1));
         $this->assertTrue($resultado->contains($notificacion2));
     }
-    //@test incidencias
+    /**
+     * Test que prueba que la relacion con Incidencia funcione correctamente
+     * @test
+     */
     public function T02_incidencias_should_return_collection_of_Incidencia_when_usuario_has_incidencias(){
         //Arrange
         $usuario = Usuario::create([
