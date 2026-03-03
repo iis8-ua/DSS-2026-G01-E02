@@ -20,6 +20,7 @@
 
     <main class="flex-1 p-8">
 
+        {{-- lista de incidencias --}}
         @forelse ($incidencias as $incidencia)
         <div class="bg-white rounded shadow p-6 mb-4 border-l-4 border-blue-400">
 
@@ -29,9 +30,9 @@
                         {{ $incidencia->usuario->getFullName() }}
                     </p>
                     <p class="text-xs text-gray-400">
-                        Espacio: {{ $incidencia->reserva->espacio->nombre }}
+                        <!-- Espacio: {{ $incidencia->reserva->espacio->nombre }} -->
                         &mdash;
-                        {{ $incidencia->reserva->horario->inicio }} / {{ $incidencia->reserva->horario->fin }}
+                        {{ $incidencia->reserva->horario()?->inicio?->format('H:i') }} / {{ $incidencia->reserva->horario()?->fin?->format('H:i') }}
                     </p>
                 </div>
                 <span class="text-xs text-gray-400">ID: {{ $incidencia->id }}</span>
