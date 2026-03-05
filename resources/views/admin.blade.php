@@ -181,5 +181,50 @@
             </div>
         </section>
     </main>
+    
+    {{-- script para ordenar las tablas --}}
+    <script>
+        function sortTable(headerElement, columnIndex) {
+            const table = headerElement.closest('table');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            // si la tabla está vacía --> ignoramos
+            if (rows.length === 1 && rows[0].querySelector('.no-sort')){
+                return;
+            }
+
+            // obtenemos la dirección a ordenar
+            const isAscending = headerElement.classList.contains('asc');
+            const direction = isAscending ? -1 : 1;
+
+            // reseteamos las flechas de ordenación del resto de cabeceras
+            table.querySelectorAll('th').forEach(th => th.classList.remove('asc', 'desc'));
+            headerElement.classList.add(isAscending ? 'desc' : 'asc');
+
+            // ordenamos las filas
+            rows.sort((a, b) => {
+                const aCol = a.querySelectorAll('td')[columnIndex];
+                const bCol = b.querySelectorAll('td')[columnIndex];
+
+                // extraemos el texto o nos quedamos con el data-value para los números
+                const aText = aCol.getAttribute('data-value') || aCol.innerText.trim();
+                const bText = bCol.getAttribute('data-value') || bCol.innerText.trim();
+
+                // Intentamos ordenar numéricamente primero y, si no, alfabéticamente
+                const aNum = parseFloat(aText);
+                const bNum = parseFloat(bText);
+
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    return (aNum - bNum) * direction;
+                }
+
+                return aText.localeCompare(bText) * direction;
+            });
+
+            // volvemos a añadir las filas a la tabla en el nuevo orden
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    </script>
 </body>
 </html>
