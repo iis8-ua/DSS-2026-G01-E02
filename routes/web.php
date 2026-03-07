@@ -3,5 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts/master');
 });
+
+Route::view('/aviso-legal', 'aviso-legal')->name('legal.aviso');
+Route::view('/privacidad', 'privacidad')->name('legal.privacidad');
+Route::view('/accesibilidad', 'accesibilidad')->name('legal.accesibilidad');
+Route::view('/cookies', 'cookies')->name('legal.cookies');
