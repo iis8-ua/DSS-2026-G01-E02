@@ -15,7 +15,7 @@
                     <a class="nav-link" href="#">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Catálogo de Espacios</a>
+                    <a class="nav-link" href="{{ route('espacios.catalogo') }}">Catálogo de Espacios</a>
                 </li>
                 @auth
                 <li class="nav-item">
