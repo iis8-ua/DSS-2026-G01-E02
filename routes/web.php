@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Espacio;
 
 Route::get('/', function () {
-    return view('layouts/master');
+    return view('main');
 });
 
 Route::get('/catalogo', function () {

@@ -2,10 +2,10 @@
 @php
     $sidebarWidth = '300px';
 @endphp
-<sidebar
+<aside
     id="notifications-sidebar"
-    class="inset-y-0 right-0 border-l border-gray-200 shadow-lg overflow-y-auto w-300 h-full absolute p-8" 
-    style="width: {{ $sidebarWidth }}; z-index: 1000; background-color:white;"
+    class="inset-y-0 right-0 border-l border-gray-200 shadow-lg overflow-y-auto w-300 p-8" 
+    style="width: {{ $sidebarWidth }}; z-index: 1000; background-color:white; position: absolute; height: 100%; right: 0;"
 >
     <div class="p-4 border-b border-gray-200">
         <h2 class="text-lg font-semibold text-gray-800">
@@ -19,4 +19,4 @@
     </x-notification>   
     
     </div>
-</sidebar>
+</aside>
