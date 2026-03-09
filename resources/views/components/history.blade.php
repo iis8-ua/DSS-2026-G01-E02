@@ -20,12 +20,13 @@
 
         {{-- Color del borde según estado de reserva --}}
         @php
-            $borderColor = match($reserva->estado->value) {
-                'PENDIENTE'  => 'border-yellow-400',
-                'ACEPTADA'   => 'border-green-400',
-                'RECHAZADA'  => 'border-red-400',
-                'CANCELADA'  => 'border-gray-400',
-                'FINALIZADA' => 'border-blue-400',
+            $estadoLower = strtolower($reserva->estado->value);
+            $borderColor = match($estadoLower){
+                'pendiente'  => 'border-yellow-400',
+                'aceptada'   => 'border-green-400',
+                'rechazada'  => 'border-red-400',
+                'cancelada'  => 'border-gray-400',
+                'finalizada' => 'border-blue-400',
                 default      => 'border-gray-200',
             };
         @endphp
@@ -37,16 +38,18 @@
             </p>
             {{-- HORARIO Reservado --}}
             <p class="text-xs text-gray-500 mt-1">
-                {{ $reserva->horario()?->inicio?->format('d/m/Y H:i') }} &mdash; {{ $reserva->horario()?->fin?->format('d/m/Y H:i') }}
+                <!-- {{ $reserva->horario()?->inicio?->format('d/m/Y H:i') }} &mdash; {{ $reserva->horario()?->fin?->format('d/m/Y H:i') }} -->
+                {{ $reserva->fecha_inicio?->format('d/m/Y H:i') }} &mdash; {{ $reserva->fecha_fin?->format('d/m/Y H:i') }}
             </p>
+            {{-- etiquetas del estado de la reserva --}}
             <span class="inline-block mt-2 text-xs font-medium px-2 py-0.5 rounded-full
-                @if($reserva->estado === 'PENDIENTE')  bg-yellow-100 text-yellow-700 @endif
-                @if($reserva->estado === 'ACEPTADA')   bg-green-100  text-green-700  @endif
-                @if($reserva->estado === 'RECHAZADA')  bg-red-100    text-red-700    @endif
-                @if($reserva->estado === 'CANCELADA')  bg-gray-100   text-gray-600   @endif
-                @if($reserva->estado === 'FINALIZADA') bg-blue-100   text-blue-700   @endif
+                @if($estadoLower === 'pendiente')  bg-yellow-100 text-yellow-700 @endif
+                @if($estadoLower === 'aceptada')   bg-green-100  text-green-700  @endif
+                @if($estadoLower === 'rechazada')  bg-red-100    text-red-700    @endif
+                @if($estadoLower === 'cancelada')  bg-gray-100   text-gray-600   @endif
+                @if($estadoLower === 'finalizada') bg-blue-100   text-blue-700   @endif
             ">
-                {{ ucfirst(strtolower($reserva->estado)) }}
+                {{ ucfirst($estadoLower) }}
             </span>
         </div>
 
