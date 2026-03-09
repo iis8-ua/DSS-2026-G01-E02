@@ -5,7 +5,7 @@ use App\Http\Controllers\EspacioController;
 
 Route::get('/', function () {
     return view('main');
-});
+})->name('inicio');
 
 Route::get('/catalogo', [EspacioController::class, 'index'])->name('espacios.catalogo');
 

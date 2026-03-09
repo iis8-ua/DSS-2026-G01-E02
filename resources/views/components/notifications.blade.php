@@ -2,21 +2,16 @@
 @php
     $sidebarWidth = '300px';
 @endphp
-<aside
-    id="notifications-sidebar"
-    class="inset-y-0 right-0 border-l border-gray-200 shadow-lg overflow-y-auto w-300 p-8" 
-    style="width: {{ $sidebarWidth }}; z-index: 1000; background-color:white; position: absolute; height: 100%; right: 0;"
->
-    <div class="p-4 border-b border-gray-200">
-        <h2 class="text-lg font-semibold text-gray-800">
-            Notificaciones
-        </h2>
-    </div>
-    <div class="p-4 space-y-4">
 
-    <x-notification >
-        <strong>Hola mundo!</strong>
-    </x-notification>   
-    
+<aside id="notifications-sidebar" style="width: {{ $sidebarWidth }}" class="closed">
+    <h2>Notificaciones</h2>
+    <hr/>
+    <div>
+        <x-notification/>
+        <x-notification/>
+        <x-notification/>
     </div>
+    <button id="aside_close" >
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#888"><path d="M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z"/></svg>
+    </button>
 </aside>
