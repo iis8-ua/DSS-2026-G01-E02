@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Incidencia;
 
-class IncidenciaController extends Controller{
+class BlogController extends Controller{
     public function index(){
         
         // obtenemos todas las incidencias
