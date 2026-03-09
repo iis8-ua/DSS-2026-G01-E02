@@ -37,9 +37,10 @@ class Reserva extends Model{
     }
 
     //relacion con el horario
-    public function horario(){
-        return $this->belongsTo(Horario::class, 'fecha_inicio', 'inicio')
-            ->where('fin', $this->fecha_fin);
+    public function horario(): ?Horario{
+        return Horario::where('inicio', $this->fecha_inicio)
+            ->where('fin', $this->fecha_fin)
+            ->first();
     }
 
     protected function casts(): array{
