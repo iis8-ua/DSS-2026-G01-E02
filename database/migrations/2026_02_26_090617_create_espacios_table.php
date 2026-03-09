@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('aforo');
             $table->string('estado')->default('HABILITADO');
             $table->text('caracteristicas')->nullable();
+            $table->string('imagen')->nullable();
             $table->timestamps();
 
             //Para la relacion de la localizacion, ya que la clave primaria alli esta compuesta por estas tres
