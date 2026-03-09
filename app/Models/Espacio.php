@@ -23,6 +23,7 @@ class Espacio extends Model
         'tipo_espacio_id',
         'horario_inicio',
         'horario_fin',
+        'imagen'
     ];
 
     //Para castear el estado al enumerado y los horarios a DateTime

@@ -36,8 +36,8 @@ class TipoEspacioTest extends TestCase
             'loc_latitud' => $loc1->latitud,
             'loc_longitud' => $loc1->longitud,
             'loc_piso' => $loc1->piso,
-            'horario_inicio' => '2026-02-27 08:00:00',
-            'horario_fin' => '2026-02-27 10:00:00',
+            'horario_inicio' => $hor->inicio,
+            'horario_fin' => $hor->fin,
         ]);
 
         $espacio2 = Espacio::create([

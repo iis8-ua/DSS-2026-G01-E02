@@ -42,6 +42,7 @@ class EspacioSeeder extends Seeder
                 'loc_piso'        => $locOriginal->piso,
                 'horario_inicio'  => $horarios[0]->inicio,
                 'horario_fin'     => $horarios[0]->fin,
+                'imagen'          => 'lab-quimica.jpg'
             ]);
         }
 
@@ -57,6 +58,7 @@ class EspacioSeeder extends Seeder
                 'loc_piso'        => $locPlantaBaja->piso,
                 'horario_inicio'  => $horarios[1]->inicio,
                 'horario_fin'     => $horarios[1]->fin,
+                'imagen'          => 'aula-magna.jpg'
             ]);
         }
 
@@ -72,6 +74,7 @@ class EspacioSeeder extends Seeder
                 'loc_piso'        => $locAulario->piso,
                 'horario_inicio'  => $horarios[2]->inicio,
                 'horario_fin'     => $horarios[2]->fin,
+                'imagen'          => 'aula-info.jpg'
             ]);
         }
 
@@ -87,6 +90,7 @@ class EspacioSeeder extends Seeder
                 'loc_piso'        => $locBiblioteca->piso,
                 'horario_inicio'  => $horarios[3]->inicio,
                 'horario_fin'     => $horarios[3]->fin,
+                'imagen'          => 'sala-estudio.jpg'
             ]);
         }
 
@@ -102,6 +106,7 @@ class EspacioSeeder extends Seeder
                 'loc_piso'        => $locFacultad->piso,
                 'horario_inicio'  => $horarios[4]->inicio,
                 'horario_fin'     => $horarios[4]->fin,
+                'imagen'          => 'despacho-tutorias.jpg'
             ]);
         }
     }
