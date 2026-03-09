@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="menuNavegacion">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Inicio</a>
+                    <a class="nav-link" href="{{ route('inicio') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('espacios.catalogo') }}">Catálogo de Espacios</a>

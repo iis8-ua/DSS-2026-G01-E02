@@ -20,6 +20,90 @@
             color: #003366 !important;
             text-decoration: underline !important;
         }
+
+        body {
+            overflow: hidden;
+            max-width: 100vw;
+        }
+
+        /*
+            SIDEBAR DE NOTIFICACIONES
+        */
+        aside {
+            padding: 20px;
+            background-color: white;
+            position: absolute;
+            height: 100%;
+            right: 0;
+            z-index: 1000;
+            box-shadow: -5px 0px 20px rgba(0,0,0, 0.2);
+            transition: all 1s ease-in-out;
+            transform: translateX(0);
+
+            & #aside_close {
+                position: absolute;
+                left: -50px;
+                width: 50px;
+                height: 50px;
+                border: none;
+                outline: none;
+                top: 10px;
+                background-color: white;
+                border-radius: 5px 0 0 5px;
+                box-shadow: -10px 0px 20px rgba(0,0,0, 0.2);
+                z-index: 999;
+            }
+
+            & svg {
+                transition: all 1s ease-in-out;
+            }
+        }
+
+        /*
+            SIDEBAR CERRADA
+        */
+        .closed {
+            transform: translateX(300px);
+
+            & svg {
+                transform:rotateY(180deg);
+            }
+        }
+
+        /*
+            NOTIFICACIONES
+        */
+        .notification {
+            border: 1px solid #888888aa;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+
+            & button {
+                position: absolute;
+                right: 15%;
+                background-color: #e6624bff;
+                border: none;
+                outline: none;
+                border-radius: 50%;
+                aspect-ratio: 1/1;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                cursor: pointer;
+                padding: auto;
+                margin: auto;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+
+                & svg {
+                    opacity: 1 !important;
+                }
+            }
+        }
+
     </style>
 
     @yield('css')
@@ -50,6 +134,36 @@
 @include('components.footer')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    /**
+     * SIDEBAR DE NOTIFICACIONES
+     */
+    let aside_open = false;
+    const button = document.getElementById("aside_close");
+    const aside = document.getElementById("notifications-sidebar");
+    button.addEventListener("click", () => {
+        if(aside_open){
+            aside.classList.add("closed");
+            aside_open = false;
+        }
+        else {
+            aside.classList.remove("closed");
+            aside_open = true;
+
+        }
+    })
+
+    /**
+     * BOTÓN DE CIERRE DE NOTIFICACIÓN
+     */
+    const notifications = document.getElementsByClassName("notification");
+    Array.from(notifications).forEach(n => {
+        let button = n.querySelector("button");
+        button.addEventListener("click", () => {
+            n.remove();
+        })
+    });
+</script>
 
 @yield('scripts')
 

@@ -5,7 +5,7 @@ use App\Models\Espacio;
 
 Route::get('/', function () {
     return view('main');
-});
+})->name('inicio');
 
 Route::get('/catalogo', function () {
     $espacios = Espacio::all();

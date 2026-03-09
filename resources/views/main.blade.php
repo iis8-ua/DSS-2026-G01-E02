@@ -6,7 +6,7 @@
 @section('css')
 
 @section('content')
-    <main class="flex-1 flex overflow-hidden absolute w-full h-full">
+    <main>
         <x-notifications/>
         <x-map/>
     </main>
