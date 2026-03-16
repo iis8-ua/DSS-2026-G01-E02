@@ -34,11 +34,11 @@ class Horario extends Model
         return $query;
     }
 
-    public function reservas(): HasMany
+    public function espacios(): HasMany
     {
-        return $this->hasMany(Reserva::class, 'fecha_inicio', 'inicio');
+        return $this->hasMany(Espacio::class, 'horario_inicio', 'inicio')
+            ->where('horario_fin', $this->fin);
     }
-
 
     public function colisiona(Horario $otro): bool
     {

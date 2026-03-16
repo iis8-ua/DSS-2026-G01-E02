@@ -32,12 +32,12 @@ class ReservaGrupal extends Model{
     }
 
     //Para añadir alumnos a la reserva
-    public function addAlumno(Alumno $alumno) {
+    public function addAlumno(Usuario $alumno) {
         $this->alumnos()->attach($alumno->id);
     }
 
     //eliminar alumnos de la reserva
-    public function removeAlumno(Alumno $alumno) {
+    public function removeAlumno(Usuario $alumno) {
         $this->alumnos()->detach($alumno->id);
     }
 }
