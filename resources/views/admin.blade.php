@@ -30,7 +30,13 @@
 
         {{-- Gestionar Usuarios --}}
         <section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-6">Gestionar Usuarios</h2>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800">Gestionar Usuarios</h2>
+                <a href="{{ route('usuarios.create') }}" class="bg-blue-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-blue-700 shadow-sm transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Añadir usuario
+                </a>
+            </div>
             {{-- contenedor con scroll --}}
             <div class="overflow-y-auto overflow-x-auto max-h-[400px] rounded-lg border border-gray-200 shadow-inner">
                 <table class="w-full text-sm text-left text-gray-600">
@@ -93,7 +99,7 @@
                         @forelse ($espacios as $espacio)
                         <tr class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 font-medium text-gray-900">{{ $espacio->nombre }}</td>
-                            <td class="px-6 py-4">{{ $espacio->tipo->nombre }}</td>
+                            <td class="px-6 py-4">{{ $espacio->tipo?->nombre ?? 'Sin tipo' }}</td>
                             <td class="px-6 py-4" data-value="{{ $espacio->aforo }}">{{ $espacio->aforo }} pers.</td>
                             <td class="px-6 py-4">
                                 @if ($espacio->estado->value === 'HABILITADO')
@@ -142,10 +148,14 @@
                     <tbody class="divide-y divide-gray-200 bg-white">
                         @forelse ($reservas as $reserva)
                         <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 font-medium text-gray-900">{{ $reserva->alumno->getFullName() }}</td>
+                            <td class="px-6 py-4 font-medium text-gray-900">{{ $reserva->alumno?->getFullName() ?? 'Usuario eliminado' }}</td>
                             <td class="px-6 py-4">{{ $reserva->espacio->nombre }}</td>
-                            <td class="px-6 py-4">{{ $reserva->hora_inicio?->format('d/m/Y H:i') }}</td>
-                            <td class="px-6 py-4">{{ $reserva->hora_fin?->format('d/m/Y H:i') }}</td>
+                            <td class="px-6 py-4" data-value="{{ $reserva->hora_inicio?->timestamp }}">
+                                {{ $reserva->hora_inicio?->format('d/m/Y H:i') }}
+                            </td>
+                            <td class="px-6 py-4" data-value="{{ $reserva->hora_fin?->timestamp }}">
+                                {{ $reserva->hora_fin?->format('d/m/Y H:i') }}
+                            </td>
                             <td class="px-6 py-4">
                                 {{-- etiquetas dinámicas según el enum de la reserva --}}
                                 @switch($reserva->estado->value)
@@ -157,7 +167,9 @@
                                         @break
                                     @case('RECHAZADA')
                                     @case('CANCELADA')
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">{{ ucfirst($reserva->estado->value) }}</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            {{ ucfirst(strtolower($reserva->estado->value)) }}
+                                        </span>
                                         @break
                                     @case('FINALIZADA')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Finalizada</span>
