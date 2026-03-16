@@ -7,8 +7,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    
-    
+
+
     {{-- -
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,7 +19,7 @@
     --}}
     <style>
         .navbar-ua {
-            background-color: #003366; 
+            background-color: #003366;
             position: sticky;
             top: 0 !important;
         }

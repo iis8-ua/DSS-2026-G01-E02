@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EspacioController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Espacio;
 use App\Models\Reserva;
