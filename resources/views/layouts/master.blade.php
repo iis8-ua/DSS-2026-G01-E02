@@ -7,9 +7,22 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    
+    {{-- -
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+    @endif
 
+    --}}
     <style>
-        .navbar-ua { background-color: #003366; }
+        .navbar-ua {
+            background-color: #003366; 
+            position: sticky;
+            top: 0 !important;
+        }
         .navbar-ua .navbar-brand, .navbar-ua .nav-link { color: #ffffff; }
         .navbar-ua .nav-link:hover { color: #cccccc; }
         .footer-ua {
@@ -22,7 +35,8 @@
         }
 
         body {
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             max-width: 100vw;
         }
 
@@ -87,12 +101,11 @@
                 border: none;
                 outline: none;
                 border-radius: 50%;
-                aspect-ratio: 1/1;
                 width: 20px;
                 height: 20px;
                 text-align: center;
                 cursor: pointer;
-                padding: auto;
+                padding: 2px;
                 margin: auto;
                 display: inline-flex;
                 justify-content: center;
@@ -100,6 +113,8 @@
 
                 & svg {
                     opacity: 1 !important;
+                    width: 100% !important;
+                    height: 100% !important;
                 }
             }
         }
