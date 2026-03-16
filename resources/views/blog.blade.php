@@ -16,9 +16,9 @@
     <header class="bg-white border-b border-gray-200 shadow-sm px-8 py-5 flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Incidencias Reportadas</h1>
-            <p class="text-sm text-gray-500 mt-1">Supervisión del estado de las instalaciones</p>
+            <p class="text-sm text-gray-500 mt-1">Comprobar el estado de las instalaciones</p>
         </div>
-        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full">Personal Docente</span>
+        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full">Usuario xd</span>
     </header>
 
     <main class="flex-1 p-8 max-w-7xl mx-auto w-full">
@@ -43,17 +43,6 @@
                 <div class="p-5 flex-1 flex flex-col">
                     <div class="flex justify-between items-start mb-3">
                         <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">ID: {{ substr($incidencia->id, 0, 8) }}</span>
-                        <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                            <!-- si la incidencia tiene reserva asociada, mostramos su horario -->
-                            @if($incidencia->reserva)
-                                {{ $incidencia->reserva->fecha_inicio?->format('H:i') }} - {{ $incidencia->reserva->fecha_fin?->format('H:i') }}
-                                <!-- si no, no -->
-                            @else
-                                Sin horario
-                            @endif
-                            <!-- {{ $incidencia->reserva->horario()?->inicio?->format('H:i') }} - {{ $incidencia->reserva->horario()?->fin?->format('H:i') }} -->
-                            <!-- {{ $incidencia->reserva->fecha_inicio?->format('H:i') }} - {{ $incidencia->reserva->fecha_fin?->format('H:i') }} -->
-                        </span>
                     </div>
 
                     <p class="text-gray-700 text-sm mb-4 flex-1">
@@ -63,11 +52,10 @@
                     <div class="border-t border-gray-100 pt-4 mt-auto">
                         <div class="text-xs font-semibold text-gray-900 flex items-center gap-2">
                             <div class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-bold">
-                                <!-- {{ substr($incidencia->usuario->nombre, 0, 1) }} -->
-                                
-                                {{ strtoupper(substr($incidencia->usuario->nombre ?? 'U', 0, 1)) }}
+                                {{-- Ponemos el usuario si existe en la DB --}}
+                                {{ strtoupper(substr($incidencia->usuario?->name ?? 'U', 0, 1)) }}
                             </div>
-                            {{ $incidencia->usuario->getFullName() ?? 'Usuario desconocido'}}
+                            {{ $incidencia->usuario?->getFullName() ?? 'Usuario desconocido' }}
                         </div>
                     </div>
                 </div>

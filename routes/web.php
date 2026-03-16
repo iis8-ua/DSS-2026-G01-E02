@@ -5,6 +5,7 @@ use App\Models\Espacio;
 use App\Models\Reserva;
 use App\Models\Usuario;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BlogController;
 
 Route::get('/', function () {
     return view('main');
@@ -17,11 +18,12 @@ Route::get('/catalogo', function () {
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
-Route::get('/blog', function () {
-    return view('blog', [
-        'incidencias' => [],
-    ]);
-});
+// Route::get('/blog', function () {
+//     return view('blog', [
+//         'incidencias' => [],
+//     ]);
+// });
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 
 Route::view('/aviso-legal', 'aviso-legal')->name('legal.aviso');
 Route::view('/privacidad', 'privacidad')->name('legal.privacidad');
