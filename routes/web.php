@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Espacio;
+use App\Models\Reserva;
+use App\Models\Usuario;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('main');
@@ -12,13 +15,7 @@ Route::get('/catalogo', function () {
     return view('reservations', ['espacios' => $espacios]);
 })->name('espacios.catalogo');
 
-Route::get('/admin', function () {
-    return view('admin', [
-        'usuarios' => [],
-        'espacios' => [],
-        'reservas' => [],
-    ]);
-});
+Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
 Route::get('/blog', function () {
     return view('blog', [
