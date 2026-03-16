@@ -13,21 +13,16 @@ return new class extends Migration{
             // el id es la clave primaria
             $table->uuid('id')->primary();
 
-            // Relaciones con usuario y el espacio
-            $table->foreignUuid('user_id')->constrained('usuarios')->onDelete('cascade');
+            // Relacion con el alumno y el espacio
+            $table->foreignUuid('alumno_id')->constrained('usuarios')->onDelete('restrict');
             $table->foreignUuid('espacio_id')->constrained('espacios')->onDelete('cascade');
 
-            // relacion con horario
-            $table->dateTime('fecha_inicio');
-            $table->dateTime('fecha_fin');
+            $table->dateTime('hora_inicio');
+            $table->dateTime('hora_fin');
 
-            $table->foreign(['fecha_inicio', 'fecha_fin'])
-                ->references(['inicio', 'fin'])
-                ->on('horarios')
-                ->onDelete('restrict');
 
             // EstadoReserva
-            $table->string('estado');
+            $table->string('estado')->default(\App\Enums\EstadoReserva::PENDIENTE);
             $table->timestamps();
         });
     }
@@ -37,7 +32,5 @@ return new class extends Migration{
      */
     public function down(): void{
         Schema::dropIfExists('reservas');
-        Schema::dropIfExists('cache');
-        Schema::dropIfExists('cache_locks');
     }
 };

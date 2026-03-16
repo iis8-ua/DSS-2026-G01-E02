@@ -38,7 +38,7 @@
                         <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="{{ route('perfil') }}">Mi Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="#" method="POST">

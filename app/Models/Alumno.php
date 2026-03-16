@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+use App\Enums\EstadoReserva;
 use App\Models\Usuario;
 use App\Models\Reserva;
 use App\Models\Espacio;
@@ -24,23 +25,29 @@ class Alumno extends Usuario{
 
     }
     public function reservas(): HasMany{
-        return $this->hasMany(Reserva::class, 'user_id');
+        return $this->hasMany(Reserva::class, 'alumno_id');
     }
 
     public function reservasGrupales(): BelongsToMany{
-        return $this->belongsToMany(ReservaGrupal::class, 'alumno_reserva_grupal', 'alumno_id', 'reserva_id');
+        return $this->belongsToMany(ReservaGrupal::class, 'alumno_reserva_grupal', 'alumno_id', 'reserva_grupal_id');
     }
 
-    public function reservar(Espacio $espacio, $fechaInicio, $fechaFin): Reserva{
+    public function reservar(Espacio $espacio, $horaInicio, $horaFin): Reserva{
         $reserva = new Reserva();
-        $reserva->user_id = $this->id;
+
+        $reserva->alumno_id = $this->id;
         $reserva->espacio_id = $espacio->id;
-        $reserva->fecha_inicio = $fechaInicio;
-        $reserva->fecha_fin = $fechaFin;
-        $reserva->estado = 'pendiente';
-        
+        $reserva->hora_inicio = $horaInicio;
+        $reserva->hora_fin = $horaFin;
+
+        $reserva->estado = EstadoReserva::PENDIENTE;
+
         $reserva->save();
 
         return $reserva;
+    }
+
+    public function obtenerHistorial(){
+        return $this->reservas()->orderBy('hora_inicio', 'desc')->get();
     }
 }
