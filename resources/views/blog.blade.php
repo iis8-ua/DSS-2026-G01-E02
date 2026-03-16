@@ -45,9 +45,9 @@
                         <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">ID: {{ substr($incidencia->id, 0, 8) }}</span>
                     </div>
 
-                    <p class="text-gray-700 text-sm mb-4 flex-1">
-                        "{{ $incidencia->descripcion }}"
-                    </p>
+                <p class="card-text small text-secondary flex-grow-1 mb-4">
+                    "{{ $incidencia->descripcion }}"
+                </p>
 
                     <div class="border-t border-gray-100 pt-4 mt-auto">
                         <div class="text-xs font-semibold text-gray-900 flex items-center gap-2">

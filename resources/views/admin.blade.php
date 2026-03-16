@@ -116,7 +116,7 @@
                 </table>
             </div>
         </section>
-        
+
         {{-- Gestionar Reservas --}}
         <!-- mismo formato de contenedor con scroll -->
         <section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
@@ -142,26 +142,24 @@
                     <tbody class="divide-y divide-gray-200 bg-white">
                         @forelse ($reservas as $reserva)
                         <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 font-medium text-gray-900">{{ $reserva->user->getFullName() }}</td>
+                            <td class="px-6 py-4 font-medium text-gray-900">{{ $reserva->alumno->getFullName() }}</td>
                             <td class="px-6 py-4">{{ $reserva->espacio->nombre }}</td>
-                            <!-- <td class="px-6 py-4">{{ $reserva->horario()?->inicio?->format('d/m/Y H:i') }}</td>
-                            <td class="px-6 py-4">{{ $reserva->horario()?->fin?->format('d/m/Y H:i') }}</td> -->
-                            <td class="px-6 py-4">{{ $reserva->fecha_inicio?->format('d/m/Y H:i') }}</td>
-                            <td class="px-6 py-4">{{ $reserva->fecha_fin?->format('d/m/Y H:i') }}</td>
+                            <td class="px-6 py-4">{{ $reserva->hora_inicio?->format('d/m/Y H:i') }}</td>
+                            <td class="px-6 py-4">{{ $reserva->hora_fin?->format('d/m/Y H:i') }}</td>
                             <td class="px-6 py-4">
                                 {{-- etiquetas dinámicas según el enum de la reserva --}}
                                 @switch($reserva->estado->value)
-                                    @case('pendiente')
+                                    @case('PENDIENTE')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pendiente</span>
                                         @break
-                                    @case('aceptada')
+                                    @case('ACEPTADA')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Aceptada</span>
                                         @break
-                                    @case('rechazada')
-                                    @case('cancelada')
+                                    @case('RECHAZADA')
+                                    @case('CANCELADA')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">{{ ucfirst($reserva->estado->value) }}</span>
                                         @break
-                                    @case('finalizada')
+                                    @case('FINALIZADA')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Finalizada</span>
                                         @break
                                 @endswitch
@@ -181,14 +179,14 @@
             </div>
         </section>
     </main>
-    
+
     {{-- script para ordenar las tablas --}}
     <script>
         function sortTable(headerElement, columnIndex) {
             const table = headerElement.closest('table');
             const tbody = table.querySelector('tbody');
             const rows = Array.from(tbody.querySelectorAll('tr'));
-            
+
             // si la tabla está vacía --> ignoramos
             if (rows.length === 1 && rows[0].querySelector('.no-sort')){
                 return;

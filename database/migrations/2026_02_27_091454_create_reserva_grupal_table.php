@@ -12,10 +12,10 @@ return new class extends Migration{
         Schema::create('reserva_grupals', function (Blueprint $table) {
             // la clave primaria es clave ajena hacia reservas
             $table->foreignUuid('reserva_id')->primary()->constrained('reservas')->onDelete('cascade');
-            
+
             // atributos
-            $table->integer('aforo_max'); 
-            
+            $table->integer('aforo_max');
+
             $table->timestamps();
         });
     }
@@ -25,7 +25,5 @@ return new class extends Migration{
      */
     public function down(): void{
         Schema::dropIfExists('reserva_grupals');
-        Schema::dropIfExists('cache');
-        Schema::dropIfExists('cache_locks');
     }
 };

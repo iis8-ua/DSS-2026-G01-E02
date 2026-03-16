@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             HorarioSeeder::class,
             EspacioSeeder::class,
             ReservaSeeder::class,
-            HistorialSeeder::class,
             IncidenciaSeeder::class,
             NotificacionSeeder::class,
         ]);

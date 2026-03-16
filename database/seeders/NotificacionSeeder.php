@@ -19,6 +19,7 @@ class NotificacionSeeder extends Seeder
                 Notificacion::create([
                     'texto' => "Hola {$user->name}, bienvenido al sistema.",
                     'vista' => true,
+                    'foto'  => 'bienvenida.jpg',
                     'user_id' => $user->id,
                 ]);
                 if ($index === 0 && $incidencia) {

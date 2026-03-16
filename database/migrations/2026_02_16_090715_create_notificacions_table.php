@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->text('texto');
             $table->boolean('vista')->default(false);
+            $table->string('foto')->nullable();
 
             $table->foreignUuid('user_id')
                 ->constrained('usuarios')

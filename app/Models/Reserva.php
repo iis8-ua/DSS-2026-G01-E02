@@ -19,9 +19,9 @@ class Reserva extends Model{
 
     protected $fillable = [
         'espacio_id',
-        'user_id',
-        'fecha_inicio',
-        'fecha_fin',
+        'alumno_id',
+        'hora_inicio',
+        'hora_fin',
         'estado'];
 
     // Relación con el detalle grupal
@@ -30,8 +30,8 @@ class Reserva extends Model{
     }
 
     // usuario asociado a la reserva
-    public function user(){
-        return $this->belongsTo(Usuario::class, 'user_id');
+    public function alumno(){
+        return $this->belongsTo(Usuario::class, 'alumno_id');
     }
 
     // espacio asociado a la reserva
@@ -39,18 +39,24 @@ class Reserva extends Model{
         return $this->belongsTo(Espacio::class);
     }
 
-    //relacion con el horario
-    public function horario(): ?Horario{
-        return Horario::where('inicio', $this->fecha_inicio)
-            ->where('fin', $this->fecha_fin)
-            ->first();
-    }
 
     protected function casts(): array{
         return [
-            'fecha_inicio' => 'datetime',
-            'fecha_fin' => 'datetime',
+            'hora_inicio' => 'datetime',
+            'hora_fin' => 'datetime',
             'estado' => EstadoReserva::class,
         ];
+    }
+
+    //para cancelar una reserva
+    public function cancelar() {
+        $this->estado = 'CANCELADA';
+        $this->save();
+    }
+
+    //abrir una reserva
+    public function abrirReserva() {
+        $this->estado = 'ACEPTADA';
+        $this->save();
     }
 }
