@@ -6,6 +6,7 @@ use App\Models\Reserva;
 use App\Models\Usuario;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {
     return view('main');
@@ -24,6 +25,9 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 //     ]);
 // });
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+
+Route::get('/perfil', [UsuarioController::class, 'perfil'])
+->middleware('auth')->name('usuario.perfil');
 
 Route::view('/aviso-legal', 'aviso-legal')->name('legal.aviso');
 Route::view('/privacidad', 'privacidad')->name('legal.privacidad');
