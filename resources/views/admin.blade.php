@@ -93,7 +93,7 @@
                         @forelse ($espacios as $espacio)
                         <tr class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 font-medium text-gray-900">{{ $espacio->nombre }}</td>
-                            <td class="px-6 py-4">{{ $espacio->tipo_espacio_id->nombre }}</td>
+                            <td class="px-6 py-4">{{ $espacio->tipo->nombre }}</td>
                             <td class="px-6 py-4" data-value="{{ $espacio->aforo }}">{{ $espacio->aforo }} pers.</td>
                             <td class="px-6 py-4">
                                 @if ($espacio->estado->value === 'HABILITADO')
@@ -142,7 +142,7 @@
                     <tbody class="divide-y divide-gray-200 bg-white">
                         @forelse ($reservas as $reserva)
                         <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 font-medium text-gray-900">{{ $reserva->usuario->getFullName() }}</td>
+                            <td class="px-6 py-4 font-medium text-gray-900">{{ $reserva->user->getFullName() }}</td>
                             <td class="px-6 py-4">{{ $reserva->espacio->nombre }}</td>
                             <!-- <td class="px-6 py-4">{{ $reserva->horario()?->inicio?->format('d/m/Y H:i') }}</td>
                             <td class="px-6 py-4">{{ $reserva->horario()?->fin?->format('d/m/Y H:i') }}</td> -->

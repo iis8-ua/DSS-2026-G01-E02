@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Enums\EstadoReserva;
+use App\Models\Usuario;
+use App\Models\Espacio;
+use App\Models\Horario;
 
 class Reserva extends Model{
     use HasFactory, HasUuids;
@@ -27,7 +30,7 @@ class Reserva extends Model{
     }
 
     // usuario asociado a la reserva
-    public function usuario(){
+    public function user(){
         return $this->belongsTo(Usuario::class, 'user_id');
     }
 
