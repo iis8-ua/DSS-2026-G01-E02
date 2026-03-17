@@ -154,9 +154,11 @@ return [
     'uuid'                   => 'El campo :attribute debe ser un UUID válido.',
     'custom' => [
         'nombre' => [
-            'required' => 'El nombre del tipo de espacio es obligatorio.',
-            'unique'   => 'Ya existe un tipo de espacio con este nombre en el sistema.',
+            'required' => 'El nombre es un dato obligatorio.',
+            'unique'   => 'Ya existe un registro con este nombre en el sistema.',
+            'max'      => 'El nombre no puede tener más de 255 caracteres.',
         ],
+
         'latitud' => [
             'required' => 'La latitud es un dato obligatorio.',
             'numeric'  => 'La latitud debe ser un valor numérico (usa un punto para los decimales).',
@@ -169,5 +171,28 @@ return [
             'required' => 'Debes indicar el número de planta o piso.',
             'integer'  => 'El piso debe ser un número entero.',
         ],
-    ],
-];
+
+        'aforo' => [
+            'required' => 'El aforo máximo es obligatorio.',
+            'integer'  => 'El aforo debe ser un número entero.',
+            'min'      => 'El aforo debe ser de al menos 1 persona.',
+        ],
+        'estado' => [
+            'required' => 'Debes especificar el estado del espacio.',
+        ],
+        'tipo_espacio_id' => [
+            'required' => 'Debes seleccionar un tipo de espacio.',
+            'exists'   => 'El tipo de espacio seleccionado no es válido.',
+        ],
+        'localizacion_compuesta' => [
+            'required' => 'Debes asignar una localización libre a este espacio.',
+        ],
+        'horario_compuesto' => [
+            'required' => 'Debes establecer un horario base para el espacio.',
+        ],
+        'imagen' => [
+            'image' => 'El archivo subido debe ser una imagen válida.',
+            'mimes' => 'La imagen debe estar en formato: jpeg, png o jpg.',
+            'max'   => 'La imagen es demasiado grande. El tamaño máximo permitido es 2MB.',
+        ],
+    ],];
