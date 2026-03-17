@@ -15,8 +15,7 @@ Route::get('/', function () {
 })->name('inicio');
 
 Route::get('/catalogo', [EspacioController::class, 'catalogo'])->name('espacios.catalogo');
-
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
 Route::get('/blog', function () {
     return view('blog', [
