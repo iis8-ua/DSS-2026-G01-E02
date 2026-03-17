@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EspacioController;
+use App\Http\Controllers\TipoEspacioController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Espacio;
 use App\Models\Reserva;
@@ -12,10 +13,7 @@ Route::get('/', function () {
     return view('main');
 })->name('inicio');
 
-Route::get('/catalogo', function () {
-    $espacios = Espacio::all();
-    return view('reservations', ['espacios' => $espacios]);
-})->name('espacios.catalogo');
+Route::get('/catalogo', [EspacioController::class, 'index'])->name('espacios.catalogo');
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
@@ -36,3 +34,4 @@ Route::view('/cookies', 'cookies')->name('legal.cookies');
 
 Route::resource('espacios', EspacioController::class);
 Route::resource('reservas', ReservaController::class);
+Route::resource('tipos-espacio', TipoEspacioController::class);
