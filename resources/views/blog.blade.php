@@ -13,14 +13,14 @@
             </div>
         </div>
     </div>
-</div>    
+</div>
 
 {{-- cuadrícula de incidencias --}}
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     @forelse ($incidencias as $incidencia)
     <div class="col">
         <div class="card h-100 shadow-sm border-light">
-            
+
             {{-- ponemos la foto si hay --}}
             @if ($incidencia->foto)
                 <img src="{{ asset('storage/' . $incidencia->foto) }}" alt="Foto de la incidencia" class="card-img-top object-fit-cover" style="height: 12rem;" />
