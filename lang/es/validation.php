@@ -157,5 +157,17 @@ return [
             'required' => 'El nombre del tipo de espacio es obligatorio.',
             'unique'   => 'Ya existe un tipo de espacio con este nombre en el sistema.',
         ],
+        'latitud' => [
+            'required' => 'La latitud es un dato obligatorio.',
+            'numeric'  => 'La latitud debe ser un valor numérico (usa un punto para los decimales).',
+        ],
+        'longitud' => [
+            'required' => 'La longitud es un dato obligatorio.',
+            'numeric'  => 'La longitud debe ser un valor numérico (usa un punto para los decimales).',
+        ],
+        'piso' => [
+            'required' => 'Debes indicar el número de planta o piso.',
+            'integer'  => 'El piso debe ser un número entero.',
+        ],
     ],
 ];
