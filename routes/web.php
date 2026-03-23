@@ -2,17 +2,20 @@
 
 use App\Http\Controllers\EspacioController;
 use App\Http\Controllers\LocalizacionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TipoEspacioController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Espacio;
-use App\Models\Reserva;
-use App\Models\Usuario;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UsuarioController;
 
-Route::get('/', function () {
-    return view('main');
-})->name('inicio');
+
+// FALTA EL LOGIN: REEMPLAZO TEMPORAL
+//Route::get('/', [NotificationController::class, 'getNotificationsAsUser'])->middleware('auth')->name('inicio');
+Route::get('/', [NotificationController::class, 'getNotificationsAsUser'])->name('inicio');
+Route::post('/notificacion/{id}/view', [NotificationController::class, 'viewNotification'])
+    ->name('notification.view');
+Route::post('/notificacion/viewall', [NotificationController::class, 'viewAllNotificationsAsUser'])
+    ->name('notification.viewall');
 
 Route::get('/catalogo', [EspacioController::class, 'catalogo'])->name('espacios.catalogo');
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
@@ -33,6 +36,5 @@ Route::view('/cookies', 'cookies')->name('legal.cookies');
 
 
 Route::resource('espacios', EspacioController::class);
-Route::resource('reservas', ReservaController::class);
 Route::resource('tipos-espacio', TipoEspacioController::class);
 Route::resource('localizaciones', LocalizacionController::class);

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('notificaciones', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->text('titulo');
             $table->text('texto');
             $table->boolean('vista')->default(false);
-            $table->string('foto')->nullable();
+            $table->string('imagen')->nullable();
 
             $table->foreignUuid('user_id')
                 ->constrained('usuarios')

@@ -92,12 +92,13 @@
                             </a>
                         @else
                             {{-- se va a mandar al login, no implementado aun--}}
-                            <a href="#" class="btn btn-outline-primary mt-2 w-100">
+                            <a href="/login" class="btn btn-outline-primary mt-2 w-100">
                                 Reservar ahora
                             </a>
                         @endauth
                     @endif
-                </div>
+                </div>            border-radius: 8px;
+
             </div>
         </div>
         @empty

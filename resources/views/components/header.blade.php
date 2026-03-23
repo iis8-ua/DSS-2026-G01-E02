@@ -30,7 +30,7 @@
             <ul class="navbar-nav">
                 @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Iniciar Sesión</a>
+                    <a class="nav-link" href="/login">Iniciar Sesión</a>
                 </li>
                 @else
                 <li class="nav-item dropdown">

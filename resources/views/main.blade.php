@@ -7,7 +7,7 @@
 
 @section('content')
     <main>
-        <x-notifications/>
+        <x-notifications :notifications="$notifications"/>
         <x-map/>
     </main>
 @endsection
