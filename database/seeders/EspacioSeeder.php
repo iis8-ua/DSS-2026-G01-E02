@@ -17,11 +17,6 @@ class EspacioSeeder extends Seeder
     {
         $horarios = Horario::all();
 
-        if ($horarios->isEmpty()) {
-            $this->command->error('No hay horarios en la base de datos. Ejecuta HorarioSeeder primero.');
-            return;
-        }
-
         $tipoLab         = TipoEspacio::where('nombre', 'Laboratorio')->first();
         $tipoAula        = TipoEspacio::where('nombre', 'Aula Teoría')->first();
         $tipoDespacho    = TipoEspacio::where('nombre', 'Despacho')->first();
@@ -30,7 +25,6 @@ class EspacioSeeder extends Seeder
 
         $tipoDeportes    = TipoEspacio::firstOrCreate(['nombre' => 'Instalación Deportiva']);
 
-        // Localizaciones originales
         $locOriginal   = Localizacion::where('latitud', 40.5)->where('longitud', -3.5)->where('piso', 2)->first();
         $locPlantaBaja = Localizacion::where('latitud', 40.5)->where('longitud', -3.5)->where('piso', 0)->first();
         $locFacultad   = Localizacion::where('latitud', 40.501)->where('longitud', -3.502)->where('piso', 1)->first();
@@ -63,8 +57,8 @@ class EspacioSeeder extends Seeder
                 'loc_latitud'     => $locPlantaBaja->latitud,
                 'loc_longitud'    => $locPlantaBaja->longitud,
                 'loc_piso'        => $locPlantaBaja->piso,
-                'horario_inicio'  => $horarios->count() > 1 ? $horarios[1]->inicio : $horarios[0]->inicio,
-                'horario_fin'     => $horarios->count() > 1 ? $horarios[1]->fin : $horarios[0]->fin,
+                'horario_inicio'  => $horarios[1]->inicio,
+                'horario_fin'     => $horarios[1]->fin,
                 'imagen'          => 'aula-magna.jpg'
             ]);
         }
@@ -79,8 +73,8 @@ class EspacioSeeder extends Seeder
                 'loc_latitud'     => $locAulario->latitud,
                 'loc_longitud'    => $locAulario->longitud,
                 'loc_piso'        => $locAulario->piso,
-                'horario_inicio'  => $horarios->count() > 2 ? $horarios[2]->inicio : $horarios[0]->inicio,
-                'horario_fin'     => $horarios->count() > 2 ? $horarios[2]->fin : $horarios[0]->fin,
+                'horario_inicio'  => $horarios[2]->inicio,
+                'horario_fin'     => $horarios[2]->fin,
                 'imagen'          => 'aula-info.jpg'
             ]);
         }
@@ -95,8 +89,8 @@ class EspacioSeeder extends Seeder
                 'loc_latitud'     => $locBiblioteca->latitud,
                 'loc_longitud'    => $locBiblioteca->longitud,
                 'loc_piso'        => $locBiblioteca->piso,
-                'horario_inicio'  => $horarios->count() > 3 ? $horarios[3]->inicio : $horarios[0]->inicio,
-                'horario_fin'     => $horarios->count() > 3 ? $horarios[3]->fin : $horarios[0]->fin,
+                'horario_inicio'  => $horarios[3]->inicio,
+                'horario_fin'     => $horarios[3]->fin,
                 'imagen'          => 'sala-estudio.jpg'
             ]);
         }
