@@ -55,7 +55,40 @@
             </div>
         </div>
 
+        {{-- Reservas --}}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-start border-4 border-danger hover-shadow transition">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title text-muted mb-0 fw-bold">RESERVAS</h5>
+                    </div>
+                    <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalReservas }}</h2>
+                    <br>
+                    <a href="{{ route('reservas.index') }}" class="btn btn-outline-danger w-100">Gestionar Reservas</a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Incidencias --}}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-start border-4 border-danger hover-shadow transition">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title text-muted mb-0 fw-bold">INCIDENCIAS</h5>
+                    </div>
+                    <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalReservas }}</h2>
+                    <br>
+                    <a href="{{ route('reservas.index') }}" class="btn btn-outline-danger w-100">Gestionar Reservas</a>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    
+
+
+    
 
     <div class="row g-4">
         {{-- para las reservas pendientes --}}

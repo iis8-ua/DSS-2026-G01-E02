@@ -3,6 +3,7 @@
 use App\Http\Controllers\EspacioController;
 use App\Http\Controllers\LocalizacionController;
 use App\Http\Controllers\TipoEspacioController;
+use App\Http\Controllers\ReservaController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Espacio;
 use App\Models\Reserva;
@@ -36,6 +37,8 @@ Route::view('/privacidad', 'privacidad')->name('legal.privacidad');
 Route::view('/accesibilidad', 'accesibilidad')->name('legal.accesibilidad');
 Route::view('/cookies', 'cookies')->name('legal.cookies');
 
+Route::patch('/reservas/{reserva}/aprobar', [ReservaController::class, 'aprobar'])->name('reservas.aprobar');
+Route::patch('/reservas/{reserva}/rechazar', [ReservaController::class, 'rechazar'])->name('reservas.rechazar');
 
 Route::resource('espacios', EspacioController::class);
 Route::resource('reservas', ReservaController::class);
