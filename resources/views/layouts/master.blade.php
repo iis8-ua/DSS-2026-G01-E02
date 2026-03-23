@@ -22,6 +22,7 @@
             background-color: #003366;
             position: sticky;
             top: 0 !important;
+            z-index: 10000;
         }
         .navbar-ua .navbar-brand, .navbar-ua .nav-link { color: #ffffff; }
         .navbar-ua .nav-link:hover { color: #cccccc; }

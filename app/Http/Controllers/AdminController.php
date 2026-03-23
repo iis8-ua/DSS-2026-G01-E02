@@ -6,21 +6,33 @@ use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Espacio;
 use App\Models\Reserva;
+use App\Models\TipoEspacio;
+use App\Models\Localizacion;
 
-class AdminController extends Controller{
-    public function index(){
-        // obtenemos todos los usuarios
-        $usuarios = Usuario::all();
+class AdminController extends Controller
+{
+    public function index()
+    {
+        // Obtenemos solo los totales para el Dashboard
+        $totalUsuarios = Usuario::count();
+        $totalEspacios = Espacio::count();
+        $totalReservas = Reserva::count();
+        $totalTipos = TipoEspacio::count();
+        $totalLocalizaciones = Localizacion::count();
 
-        // Obtenemos todos los espacios
-        // with para obtener el tipo de espacio asociado
-        $espacios = Espacio::with('tipo')->get();
+        //se sacan las reservas pendientes de aprobar ya que el admin tmbn puede hacer eso
+        $ultimasReservas = Reserva::with(['alumno', 'espacio'])
+            ->where('estado', 'PENDIENTE')
+            ->latest()
+            ->get();
 
-        // Obtenemos todas las reservas
-        // obtenemos también su alumno y espacio asociados
-        $reservas = Reserva::with(['alumno', 'espacio'])->get();
-
-        // los enviamos todos a la vista del admin
-        return view('admin', compact('usuarios', 'espacios', 'reservas'));
+        return view('admin', compact(
+            'totalUsuarios',
+            'totalEspacios',
+            'totalReservas',
+            'totalTipos',
+            'totalLocalizaciones',
+            'ultimasReservas'
+        ));
     }
 }

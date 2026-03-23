@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\EspacioController;
+use App\Http\Controllers\LocalizacionController;
+use App\Http\Controllers\TipoEspacioController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Espacio;
 use App\Models\Reserva;
@@ -13,10 +15,14 @@ Route::get('/', function () {
     return view('main');
 })->name('inicio');
 
-Route::get('/catalogo', function () {
-    $espacios = Espacio::all();
-    return view('reservations', ['espacios' => $espacios]);
-})->name('espacios.catalogo');
+Route::get('/catalogo', [EspacioController::class, 'catalogo'])->name('espacios.catalogo');
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
+Route::get('/blog', function () {
+    return view('blog', [
+        'incidencias' => [],
+    ]);
+});
 
 Route::get('/perfil', [UsuarioController::class, 'perfil'])
 ->middleware('auth')->name('usuario.perfil');
@@ -33,4 +39,5 @@ Route::view('/cookies', 'cookies')->name('legal.cookies');
 
 Route::resource('espacios', EspacioController::class);
 Route::resource('reservas', ReservaController::class);
-Route::resource('usuarios', UsuarioController::class);
+Route::resource('tipos-espacio', TipoEspacioController::class);
+Route::resource('localizaciones', LocalizacionController::class);
