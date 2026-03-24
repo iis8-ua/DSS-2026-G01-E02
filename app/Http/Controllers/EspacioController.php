@@ -34,13 +34,14 @@ class EspacioController extends Controller
         }
 
         $request->validate([
-            'nombre' => $reglaNombre,
-            'aforo' => 'required|integer|min:1',
-            'estado' => 'required',
+            'nombre'          => $reglaNombre,
+            'aforo'           => 'required|integer|min:1',
+            'estado'          => 'required',
             'tipo_espacio_id' => 'required|exists:tipo_espacios,id',
-            'localizacion_compuesta' => 'required',
-            'horario_compuesto' => 'required',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'localizacion_id' => 'required|exists:localizacions,id',
+            'horarios_ids'    => 'required|array|min:1',
+            'horarios_ids.*'  => 'exists:horarios,id',
+            'imagen'          => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
     }
 
@@ -74,17 +75,12 @@ class EspacioController extends Controller
         $tipos = TipoEspacio::orderBy('nombre')->get();
 
         //se sacan estas para que no se pueda crear un espacio en una duplicada
-        $localizacionesOcupadas = Espacio::select('loc_latitud', 'loc_longitud', 'loc_piso')->get()->map(function($e) {
-            return $e->loc_latitud . '_' . $e->loc_longitud . '_' . $e->loc_piso;
-        })->toArray();
+        $localizacionesOcupadas = Espacio::pluck('localizacion_id')->toArray();
 
         //se muestran solo las libres para evitar la duplicacion que se ha dicho antes
-        $todasLocalizaciones = Localizacion::all();
-        $localizaciones = $todasLocalizaciones->filter(function($loc) use ($localizacionesOcupadas) {
-            return !in_array($loc->latitud . '_' . $loc->longitud . '_' . $loc->piso, $localizacionesOcupadas);
-        });
+        $localizaciones = Localizacion::whereNotIn('id', $localizacionesOcupadas)->get();
 
-        $horarios = Horario::all();
+        $horarios = Horario::orderBy('inicio')->orderBy('fin')->get();
         $estados = EstadoEspacio::cases();
 
         return view('espacios.create', compact('tipos', 'localizaciones', 'horarios', 'estados'));
@@ -95,16 +91,7 @@ class EspacioController extends Controller
      */
     public function store(Request $request){
         $this->validarEspacio($request);
-
-        $loc = explode('_', $request->localizacion_compuesta);
-        $horario = explode('_', $request->horario_compuesto);
-
-        $datos = $request->all();
-        $datos['loc_latitud'] = $loc[0];
-        $datos['loc_longitud'] = $loc[1];
-        $datos['loc_piso'] = $loc[2];
-        $datos['horario_inicio'] = $horario[0];
-        $datos['horario_fin'] = $horario[1];
+        $datos = $request->only(['nombre', 'aforo', 'estado', 'tipo_espacio_id', 'localizacion_id', 'caracteristicas']);
 
         // si hay imagen la guardamos en su carpeta publica
         if ($request->hasFile('imagen')) {
@@ -115,7 +102,8 @@ class EspacioController extends Controller
             $datos['imagen'] = $nombreArchivo;
         }
 
-        Espacio::create($datos);
+        $espacio = Espacio::create($datos);
+        $espacio->horario()->sync($request->horarios_ids);
 
         return redirect()->route('espacios.index')->with('success', 'Espacio creado correctamente.');
     }
@@ -125,12 +113,17 @@ class EspacioController extends Controller
      */
     public function edit(Espacio $espacio){
         $tipos = TipoEspacio::orderBy('nombre')->get();
-        //aqui para la localizacion se pasan todas no como antes ya que asi se puede escoger la que ya tenia asignada si no se quiere editar
-        $localizaciones = Localizacion::all();
-        $horarios = Horario::all();
-        $estados = EstadoEspacio::cases();
+        //aqui para la localizacion se pasan todas las libres y la suya para si quiere cambiar
+        $localizacionesOcupadas = Espacio::where('id', '!=', $espacio->id)
+            ->pluck('localizacion_id')
+            ->toArray();
 
-        return view('espacios.edit', compact('espacio', 'tipos', 'localizaciones', 'horarios', 'estados'));
+        $localizaciones = Localizacion::whereNotIn('id', $localizacionesOcupadas)->get();
+        $horarios = Horario::orderBy('inicio')->orderBy('fin')->get();
+        $estados         = EstadoEspacio::cases();
+        $horariosActivos = $espacio->horario->pluck('id')->toArray();
+
+        return view('espacios.edit', compact('espacio', 'tipos', 'localizaciones', 'horarios', 'estados', 'horariosActivos'));
     }
 
     /**
@@ -138,16 +131,7 @@ class EspacioController extends Controller
      */
     public function update(Request $request, Espacio $espacio){
         $this->validarEspacio($request, $espacio->id);
-
-        $loc = explode('_', $request->localizacion_compuesta);
-        $horario = explode('_', $request->horario_compuesto);
-
-        $datos = $request->all();
-        $datos['loc_latitud'] = $loc[0];
-        $datos['loc_longitud'] = $loc[1];
-        $datos['loc_piso'] = $loc[2];
-        $datos['horario_inicio'] = $horario[0];
-        $datos['horario_fin'] = $horario[1];
+        $datos = $request->only(['nombre', 'aforo', 'estado', 'tipo_espacio_id', 'localizacion_id', 'caracteristicas']);
 
         if ($request->hasFile('imagen')) {
             //se borra la imagen si habia ya que puede ser null este campo
@@ -163,6 +147,7 @@ class EspacioController extends Controller
         }
 
         $espacio->update($datos);
+        $espacio->horario()->sync($request->horarios_ids);
 
         return redirect()->route('espacios.index')->with('success', 'Espacio actualizado correctamente.');
     }

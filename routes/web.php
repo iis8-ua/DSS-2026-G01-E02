@@ -9,6 +9,7 @@ use App\Models\Reserva;
 use App\Models\Usuario;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\HorarioController;
 
 Route::get('/', function () {
     return view('main');
@@ -36,3 +37,4 @@ Route::resource('espacios', EspacioController::class);
 Route::resource('reservas', ReservaController::class);
 Route::resource('tipos-espacio', TipoEspacioController::class);
 Route::resource('localizaciones', LocalizacionController::class);
+Route::resource('horarios', HorarioController::class);

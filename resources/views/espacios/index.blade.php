@@ -11,7 +11,6 @@
             <a href="{{ route('espacios.create') }}" class="btn text-white" style="background-color: #003366;">Añadir Nuevo</a>
         </div>
 
-        {{--parte del buscador--}}
         <form method="GET" action="{{ route('espacios.index') }}" class="mb-4">
             <div class="input-group">
                 <input type="text" name="buscar" value="{{ request('buscar') }}" class="form-control" placeholder="Buscar por nombre, estado o aforo...">
@@ -26,7 +25,8 @@
                 <tr>
                     <th>Imagen</th>
                     <th>
-                        <a href="{{ route('espacios.index', ['buscar' => request('buscar'), 'ordenar_por' => 'nombre', 'direccion' => request('direccion') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark d-flex justify-content-center align-items-center gap-2">
+                        <a href="{{ route('espacios.index', ['buscar' => request('buscar'), 'ordenar_por' => 'nombre', 'direccion' => request('direccion') == 'asc' ? 'desc' : 'asc']) }}"
+                           class="text-decoration-none text-dark d-flex justify-content-center align-items-center gap-2">
                             Nombre
                             @if(request('ordenar_por', 'nombre') == 'nombre')
                             <span>{{ request('direccion', 'asc') == 'asc' ? '↓' : '↑' }}</span>
@@ -36,7 +36,8 @@
                     <th>Tipo</th>
                     <th>Piso</th>
                     <th>
-                        <a href="{{ route('espacios.index', ['buscar' => request('buscar'), 'ordenar_por' => 'aforo', 'direccion' => request('direccion') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark d-flex justify-content-center align-items-center gap-2">
+                        <a href="{{ route('espacios.index', ['buscar' => request('buscar'), 'ordenar_por' => 'aforo', 'direccion' => request('direccion') == 'asc' ? 'desc' : 'asc']) }}"
+                           class="text-decoration-none text-dark d-flex justify-content-center align-items-center gap-2">
                             Aforo
                             @if(request('ordenar_por') == 'aforo')
                             <span>{{ request('direccion') == 'asc' ? '↓' : '↑' }}</span>
@@ -52,22 +53,26 @@
                 <tr>
                     <td>
                         @if($espacio->imagen)
-                        <img src="{{ asset('images/espacios/' . $espacio->imagen) }}" alt="{{ $espacio->nombre }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" class="shadow-sm">
+                        <img src="{{ asset('images/espacios/' . $espacio->imagen) }}"
+                             alt="{{ $espacio->nombre }}"
+                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;"
+                             class="shadow-sm">
                         @else
                         <span class="badge bg-secondary">Sin imagen</span>
                         @endif
                     </td>
                     <td class="fw-bold">{{ $espacio->nombre }}</td>
-                    <td>{{ $espacio->tipo->nombre}}</td>
-                    <td>{{ $espacio->loc_piso }}</td>
+                    <td>{{ $espacio->tipo->nombre }}</td>
+                    <td>{{ $espacio->localizacion->piso }}</td>
                     <td>{{ $espacio->aforo }} pax.</td>
                     <td>
-                            <span class="badge {{ $espacio->estado->value === 'HABILITADO' ? 'bg-success' : 'bg-danger' }}">
-                                {{ $espacio->estado->value }}
-                            </span>
+                        <span class="badge {{ $espacio->estado->value === 'HABILITADO' ? 'bg-success' : 'bg-danger' }}">
+                            {{ $espacio->estado->value }}
+                        </span>
                     </td>
                     <td class="text-end">
-                        <form action="{{ route('espacios.destroy', $espacio->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro que deseas eliminar este espacio? Si tiene imagen, también se borrará.');">
+                        <form action="{{ route('espacios.destroy', $espacio->id) }}" method="POST" class="d-inline"
+                              onsubmit="return confirm('¿Seguro que deseas eliminar este espacio? Si tiene imagen, también se borrará.');">
                             <a href="{{ route('espacios.edit', $espacio->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                 <i class="bi bi-pencil"></i>
                             </a>

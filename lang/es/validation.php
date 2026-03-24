@@ -195,4 +195,13 @@ return [
             'mimes' => 'La imagen debe estar en formato: jpeg, png o jpg.',
             'max'   => 'La imagen es demasiado grande. El tamaño máximo permitido es 2MB.',
         ],
+        'inicio' => [
+            'required' => 'La hora de inicio es obligatoria.',
+            'date_format' => 'La hora de inicio debe tener el formato HH:MM.',
+        ],
+        'fin' => [
+            'required' => 'La hora de fin es obligatoria.',
+            'date_format' => 'La hora de fin debe tener el formato HH:MM.',
+            'after' => 'La hora de fin debe ser posterior a la hora de inicio.',
+        ],
     ],];

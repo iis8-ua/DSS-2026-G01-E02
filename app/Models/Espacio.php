@@ -11,34 +11,29 @@ class Espacio extends Model
     use HasUuids;
 
     protected $table = 'espacios';
+    public $timestamps = false;
 
     protected $fillable = [
         'nombre',
         'aforo',
         'estado',
         'caracteristicas',
-        'loc_latitud',
-        'loc_longitud',
-        'loc_piso',
+        'localizacion_id',
         'tipo_espacio_id',
-        'horario_inicio',
-        'horario_fin',
         'imagen'
     ];
 
-    //Para castear el estado al enumerado y los horarios a DateTime
-    protected $casts = ['estado' => EstadoEspacio::class,
-                        'horario_inicio' => 'datetime',
-                        'horario_fin' => 'datetime',];
+    //Para castear el estado al enumerado
+    protected $casts = [
+        'estado' => EstadoEspacio::class,
+    ];
 
     /**
      * Relacion con localización, tiene que tener una obligatoria
      */
     public function localizacion()
     {
-        return $this->belongsTo(Localizacion::class, 'loc_latitud', 'latitud')
-                    ->where('longitud', '=', $this->loc_longitud)
-                    ->where('piso', '=', $this->loc_piso);
+        return $this->belongsTo(Localizacion::class, 'localizacion_id');
     }
 
     /***
@@ -54,8 +49,7 @@ class Espacio extends Model
      */
     public function horario()
     {
-        return $this->belongsTo(Horario::class, 'horario_inicio', 'inicio')
-            ->where('fin', $this->horario_fin);
+        return $this->belongsToMany(Horario::class, 'espacio_horario');
     }
 
 

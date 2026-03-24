@@ -19,12 +19,12 @@ return new class extends Migration
 
             $table->foreignUuid('user_id')
                 ->constrained('usuarios')
-                ->cascadeOnDelete();
+                ->onDelete("cascade");
 
             $table->foreignUuid('incidencia_id')
                 ->nullable()
                 ->constrained('incidencias')
-                ->cascadeOnDelete();
+                ->onDelete("set null");
         });
     }
 

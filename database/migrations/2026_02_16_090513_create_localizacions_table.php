@@ -12,12 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('localizacions', function (Blueprint $table) {
-            $table->float('latitud');
-            $table->float('longitud');
+            $table->uuid('id')->primary();
+            $table->decimal('latitud', 10, 7);
+            $table->decimal('longitud', 10, 7);
             $table->integer('piso');
-            $table->timestamps();
-
-            $table->primary(['latitud', 'longitud', 'piso']);
         });
     }
 
@@ -26,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        //se pone ya que sino da error por las relaciones
+        Schema::dropIfExists('espacios');
         Schema::dropIfExists('localizacions');
     }
 };

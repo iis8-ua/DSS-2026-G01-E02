@@ -24,9 +24,6 @@ class Alumno extends Usuario{
         });
 
     }
-    public function reservas(): HasMany{
-        return $this->hasMany(Reserva::class, 'alumno_id');
-    }
 
     public function reservasGrupales(): BelongsToMany{
         return $this->belongsToMany(ReservaGrupal::class, 'alumno_reserva_grupal', 'alumno_id', 'reserva_grupal_id');
@@ -47,7 +44,8 @@ class Alumno extends Usuario{
         return $reserva;
     }
 
-    public function obtenerHistorial(){
-        return $this->reservas()->orderBy('hora_inicio', 'desc')->get();
+    public function obtenerHistorial()
+    {
+        return Reserva::where('alumno_id', $this->id)->orderBy('hora_inicio', 'desc')->get();
     }
 }

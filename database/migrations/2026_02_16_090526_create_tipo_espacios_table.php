@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tipo_espacios', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string("nombre");
-            $table->timestamps();
         });
     }
 
