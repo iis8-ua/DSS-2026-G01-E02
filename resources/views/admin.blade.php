@@ -56,58 +56,6 @@
         </div>
 
     </div>
-
-    <div class="row g-4">
-        {{-- para las reservas pendientes --}}
-        <div class="col-lg-8">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-header bg-white border-bottom-0 pt-4 pb-0 d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold mb-0 text-dark">Reservas Pendientes</h5>
-                    <span class="badge bg-secondary">{{ $totalReservas }} Reservas en total</span>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light text-muted small text-uppercase">
-                            <tr>
-                                <th>Alumno</th>
-                                <th>Espacio</th>
-                                <th>Fecha Solicitud</th>
-                                <th class="text-end">Acciones</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @forelse($ultimasReservas as $reserva)
-                            <tr>
-                                <td class="fw-bold">{{ $reserva->alumno->getFullName() ?? 'Usuario' }}</td>
-                                <td>{{ $reserva->espacio->nombre ?? 'N/A' }}</td>
-                                <td>{{ $reserva->created_at->format('d/m/Y') }}</td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-sm btn-outline-dark">Ver detalle</a>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr><td colspan="4" class="text-center text-muted py-4">No hay reservas pendientes de revisión.</td></tr>
-                            @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- parte de la gestion de los usuarios, separada de las demas clases --}}
-        <div class="col-lg-4">
-            <div class="card shadow-sm border-0 h-100 border-start border-4 border-info bg-light">
-                <div class="card-body p-4 text-center d-flex flex-column justify-content-center">
-                    <h5 class="fw-bold text-dark">Gestión de Usuarios</h5>
-                    <p class="text-muted mb-4">Actualmente hay <strong>{{ $totalUsuarios }}</strong> usuarios registrados en el sistema.</p>
-                    <button class="btn btn-info text-white w-100" disabled>Módulo en desarrollo</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 
 <style>

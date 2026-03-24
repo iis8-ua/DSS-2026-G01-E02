@@ -23,7 +23,7 @@ class AdminController extends Controller
         //se sacan las reservas pendientes de aprobar ya que el admin tmbn puede hacer eso
         $ultimasReservas = Reserva::with(['alumno', 'espacio'])
             ->where('estado', 'PENDIENTE')
-            ->latest()
+            ->orderBy('id')
             ->get();
 
         return view('admin', compact(
