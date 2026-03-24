@@ -20,7 +20,6 @@ class Espacio extends Model
         'caracteristicas',
         'localizacion_id',
         'tipo_espacio_id',
-        'horario_id',
         'imagen'
     ];
 
@@ -50,7 +49,7 @@ class Espacio extends Model
      */
     public function horario()
     {
-        return $this->belongsTo(Horario::class, 'horario_id');
+        return $this->belongsToMany(Horario::class, 'espacio_horario');
     }
 
 

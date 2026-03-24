@@ -26,12 +26,6 @@ return new class extends Migration
 
             //Relacion con el tipo espacio
             $table->foreignUuid('tipo_espacio_id')->constrained('tipo_espacios');
-
-            //con restrict impide borrar el horario si el espacio lo usa ya que la relacion representa eso
-            $table->foreignUuid('horario_id')
-                ->constrained('horarios')
-                ->onDelete('restrict');
-
         });
     }
 

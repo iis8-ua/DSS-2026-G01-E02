@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('horarios', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->dateTime('inicio');
-            $table->dateTime('fin');
+            $table->time('inicio');
+            $table->time('fin');
         });
     }
 

@@ -31,68 +31,68 @@ class EspacioSeeder extends Seeder
         $locAulario    = Localizacion::where('latitud', 41.0)->where('longitud', -2.0)->where('piso', 1)->first();
 
         if ($tipoLab && $locOriginal) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Lab de Química',
                 'aforo'           => 25,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Mesas ignífugas, campana extractora',
                 'tipo_espacio_id' => $tipoLab->id,
                 'localizacion_id' => $locOriginal->id,
-                'horario_id'      => $horarios[0]->id,
                 'imagen'          => 'lab-quimica.jpg'
             ]);
+            $espacio->horario()->attach([$horarios[0]->id, $horarios[1]->id]);
         }
 
         if ($tipoAula && $locPlantaBaja) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Aula Magna',
                 'aforo'           => 150,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Proyector 4K, microfonía, enchufes en mesas',
                 'tipo_espacio_id' => $tipoAula->id,
                 'localizacion_id' => $locPlantaBaja->id,
-                'horario_id'      => $horarios[1]->id,
                 'imagen'          => 'aula-magna.jpg'
             ]);
+            $espacio->horario()->attach([$horarios[0]->id, $horarios[1]->id, $horarios[2]->id]);
         }
 
         if ($tipoInformatica && $locAulario) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Aula Info 1.1',
                 'aforo'           => 30,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => '30 PCs Windows, software de diseño',
                 'tipo_espacio_id' => $tipoInformatica->id,
                 'localizacion_id' => $locAulario->id,
-                'horario_id'      => $horarios[2]->id,
                 'imagen'          => 'aula-info.jpg'
             ]);
+            $espacio->horario()->attach($horarios[2]->id);
         }
 
         if ($tipoSalaEstudio && $locBiblioteca) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Sala de Estudio Silenciosa',
                 'aforo'           => 80,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Aislamiento acústico, flexos individuales',
                 'tipo_espacio_id' => $tipoSalaEstudio->id,
                 'localizacion_id' => $locBiblioteca->id,
-                'horario_id'      => $horarios[3]->id,
                 'imagen'          => 'sala-estudio.jpg'
             ]);
+            $espacio->horario()->attach($horarios[4]->id);
         }
 
         if ($tipoDespacho && $locFacultad) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Despacho Tutorías Ciencias',
                 'aforo'           => 4,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Mesa de reuniones pequeña, pizarra blanca',
                 'tipo_espacio_id' => $tipoDespacho->id,
                 'localizacion_id' => $locFacultad->id,
-                'horario_id'      => $horarios[4]->id,
                 'imagen'          => 'despacho-tutorias.jpg'
             ]);
+            $espacio->horario()->attach($horarios[5]->id);
         }
 
         $nuevosEspacios = [
@@ -166,16 +166,16 @@ class EspacioSeeder extends Seeder
 
             $horario = $horarios[$index % $horarios->count()];
 
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => $datos['nombre'],
                 'aforo'           => $datos['aforo'],
                 'estado'          => $datos['estado'],
                 'caracteristicas' => $datos['caracteristicas'],
                 'tipo_espacio_id' => $tipoDeportes->id,
                 'localizacion_id' => $loc->id,
-                'horario_id'      => $horario->id,
                 'imagen'          => $datos['imagen']
             ]);
+            $espacio->horario()->attach($horario->id);
         }
     }
 }
