@@ -22,7 +22,6 @@ class EspacioSeeder extends Seeder
         $tipoDespacho    = TipoEspacio::where('nombre', 'Despacho')->first();
         $tipoInformatica = TipoEspacio::where('nombre', 'Aula Informática')->first();
         $tipoSalaEstudio = TipoEspacio::where('nombre', 'Sala de Estudio')->first();
-
         $tipoDeportes    = TipoEspacio::firstOrCreate(['nombre' => 'Instalación Deportiva']);
 
         $locOriginal   = Localizacion::where('latitud', 40.5)->where('longitud', -3.5)->where('piso', 2)->first();
@@ -38,9 +37,7 @@ class EspacioSeeder extends Seeder
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Mesas ignífugas, campana extractora',
                 'tipo_espacio_id' => $tipoLab->id,
-                'loc_latitud'     => $locOriginal->latitud,
-                'loc_longitud'    => $locOriginal->longitud,
-                'loc_piso'        => $locOriginal->piso,
+                'localizacion_id' => $locOriginal->id,
                 'horario_inicio'  => $horarios[0]->inicio,
                 'horario_fin'     => $horarios[0]->fin,
                 'imagen'          => 'lab-quimica.jpg'
@@ -54,9 +51,7 @@ class EspacioSeeder extends Seeder
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Proyector 4K, microfonía, enchufes en mesas',
                 'tipo_espacio_id' => $tipoAula->id,
-                'loc_latitud'     => $locPlantaBaja->latitud,
-                'loc_longitud'    => $locPlantaBaja->longitud,
-                'loc_piso'        => $locPlantaBaja->piso,
+                'localizacion_id' => $locPlantaBaja->id,
                 'horario_inicio'  => $horarios[1]->inicio,
                 'horario_fin'     => $horarios[1]->fin,
                 'imagen'          => 'aula-magna.jpg'
@@ -70,9 +65,7 @@ class EspacioSeeder extends Seeder
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => '30 PCs Windows, software de diseño',
                 'tipo_espacio_id' => $tipoInformatica->id,
-                'loc_latitud'     => $locAulario->latitud,
-                'loc_longitud'    => $locAulario->longitud,
-                'loc_piso'        => $locAulario->piso,
+                'localizacion_id' => $locAulario->id,
                 'horario_inicio'  => $horarios[2]->inicio,
                 'horario_fin'     => $horarios[2]->fin,
                 'imagen'          => 'aula-info.jpg'
@@ -86,9 +79,7 @@ class EspacioSeeder extends Seeder
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Aislamiento acústico, flexos individuales',
                 'tipo_espacio_id' => $tipoSalaEstudio->id,
-                'loc_latitud'     => $locBiblioteca->latitud,
-                'loc_longitud'    => $locBiblioteca->longitud,
-                'loc_piso'        => $locBiblioteca->piso,
+                'localizacion_id' => $locBiblioteca->id,
                 'horario_inicio'  => $horarios[3]->inicio,
                 'horario_fin'     => $horarios[3]->fin,
                 'imagen'          => 'sala-estudio.jpg'
@@ -102,9 +93,7 @@ class EspacioSeeder extends Seeder
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Mesa de reuniones pequeña, pizarra blanca',
                 'tipo_espacio_id' => $tipoDespacho->id,
-                'loc_latitud'     => $locFacultad->latitud,
-                'loc_longitud'    => $locFacultad->longitud,
-                'loc_piso'        => $locFacultad->piso,
+                'localizacion_id' => $locFacultad->id,
                 'horario_inicio'  => $horarios->count() > 4 ? $horarios[4]->inicio : $horarios[0]->inicio,
                 'horario_fin'     => $horarios->count() > 4 ? $horarios[4]->fin : $horarios[0]->fin,
                 'imagen'          => 'despacho-tutorias.jpg'
@@ -169,14 +158,16 @@ class EspacioSeeder extends Seeder
             ]
         ];
 
-        // Recorremos el array y creamos las instalaciones
         foreach ($nuevosEspacios as $index => $datos) {
 
-            $loc = Localizacion::firstOrCreate([
-                'latitud'  => $datos['lat'],
-                'longitud' => $datos['lon'],
-                'piso'     => $datos['piso']
-            ]);
+            $loc = Localizacion::where('latitud', $datos['lat'])
+                    ->where('longitud', $datos['lon'])
+                    ->where('piso', $datos['piso'])
+                    ->firstOrCreate([
+                        'latitud'  => $datos['lat'],
+                        'longitud' => $datos['lon'],
+                        'piso'     => $datos['piso']
+                    ]);
 
             $horario = $horarios[$index % $horarios->count()];
 
@@ -186,9 +177,7 @@ class EspacioSeeder extends Seeder
                 'estado'          => $datos['estado'],
                 'caracteristicas' => $datos['caracteristicas'],
                 'tipo_espacio_id' => $tipoDeportes->id,
-                'loc_latitud'     => $loc->latitud,
-                'loc_longitud'    => $loc->longitud,
-                'loc_piso'        => $loc->piso,
+                'localizacion_id' => $loc->id,
                 'horario_inicio'  => $horario->inicio,
                 'horario_fin'     => $horario->fin,
                 'imagen'          => $datos['imagen']

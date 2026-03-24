@@ -11,15 +11,14 @@ class Espacio extends Model
     use HasUuids;
 
     protected $table = 'espacios';
+    public $timestamps = false;
 
     protected $fillable = [
         'nombre',
         'aforo',
         'estado',
         'caracteristicas',
-        'loc_latitud',
-        'loc_longitud',
-        'loc_piso',
+        'localizacion_id',
         'tipo_espacio_id',
         'horario_inicio',
         'horario_fin',
@@ -36,9 +35,7 @@ class Espacio extends Model
      */
     public function localizacion()
     {
-        return $this->belongsTo(Localizacion::class, 'loc_latitud', 'latitud')
-                    ->where('longitud', '=', $this->loc_longitud)
-                    ->where('piso', '=', $this->loc_piso);
+        return $this->belongsTo(Localizacion::class, 'localizacion_id');
     }
 
     /***
