@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EstadoReserva;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +23,7 @@ return new class extends Migration{
 
 
             // EstadoReserva
-            $table->string('estado')->default(\App\Enums\EstadoReserva::PENDIENTE);
+            $table->string('estado')->default(EstadoReserva::PENDIENTE);
         });
     }
 
