@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+use App\Enums\EstadoReserva;
 use App\Models\Usuario;
 use App\Models\Reserva;
 use App\Models\Espacio;
@@ -24,12 +25,12 @@ class GestorEspacios extends Usuario{
 
     //metodos
     public function aceptarReserva(Reserva $reserva): void{
-        $reserva->estado = 'aceptada';
+        $reserva->estado = EstadoReserva::ACEPTADA;
         $reserva->save();
     }
 
     public function rechazarReserva(Reserva $reserva): void{
-        $reserva->estado = 'rechazada';
+        $reserva->estado = EstadoReserva::RECHAZADA;
         $reserva->save();
     }
 }
