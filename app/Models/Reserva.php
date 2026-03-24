@@ -16,6 +16,7 @@ class Reserva extends Model{
     // ID no autoincremental
     public $incrementing = false;
     protected $keyType = 'string';
+    public $timestamps = false;
 
     protected $fillable = [
         'espacio_id',
@@ -24,11 +25,6 @@ class Reserva extends Model{
         'hora_fin',
         'estado'];
 
-    // Relación con el detalle grupal
-    public function reservaGrupal(){
-        return $this->hasOne(ReservaGrupal::class, 'reserva_id');
-    }
-
     // usuario asociado a la reserva
     public function alumno(){
         return $this->belongsTo(Usuario::class, 'alumno_id');
@@ -36,7 +32,7 @@ class Reserva extends Model{
 
     // espacio asociado a la reserva
     public function espacio(){
-        return $this->belongsTo(Espacio::class);
+        return $this->belongsTo(Espacio::class, 'espacio_id');
     }
 
 

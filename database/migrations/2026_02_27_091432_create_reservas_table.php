@@ -23,7 +23,6 @@ return new class extends Migration{
 
             // EstadoReserva
             $table->string('estado')->default(\App\Enums\EstadoReserva::PENDIENTE);
-            $table->timestamps();
         });
     }
 
