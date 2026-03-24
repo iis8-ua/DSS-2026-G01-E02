@@ -36,17 +36,5 @@ class Usuario extends User{
     public function getFullName(): string {
         return $this->name . ' ' . $this->apellidos;
     }
-    //relacion con notificacion
-    public function notificaciones(){
-        return $this->hasMany(Notificacion::class, 'user_id');
-    }
-    //relacion con incidencias
-    public function incidencias(){
-        return $this->hasMany(Incidencia::class, 'user_id');
-    }
 
-    //relacion con reservas
-    public function reservas(){
-        return $this->hasMany(Reserva::class, 'user_id');
-    }
 }
