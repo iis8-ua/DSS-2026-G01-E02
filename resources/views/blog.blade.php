@@ -1,16 +1,22 @@
 {{-- resources/views/blog.blade.php --}}
-@extends('layouts.master')
-@section('title', 'Página de incidencias')
-@section('content')
-{{-- Cabecera --}}
-<main>
-<div class="card shadow-sm mb-4">
-    <div class="card-body p-4">
-        <div class="d-flex align-items-center justify-content-between">
-            <div>
-                <h1 class="h3 mb-0 text-dark">Incidencias Reportadas</h1>
-                <p class="text-muted small mt-1 mb-0">Supervisión del estado de las instalaciones</p>
-            </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog de Incidencias</title>
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+    @endif
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50 font-sans text-gray-800">
+
+    {{-- Cabecera --}}
+    <header class="bg-white border-b border-gray-200 shadow-sm px-8 py-5 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Incidencias Reportadas</h1>
+            <p class="text-sm text-gray-500 mt-1">Comprobar el estado de las instalaciones</p>
         </div>
     </div>
 </div>
@@ -36,17 +42,10 @@
                 </div>
             @endif
 
-            <div class="card-body p-4 d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <span class="badge bg-primary px-3 py-2">{{ substr($incidencia->id, 0, 8) }}</span>
-                    <span class="badge bg-secondary px-3 py-2">
-                        @if($incidencia->reserva)
-                            {{ $incidencia->reserva->fecha_inicio?->format('H:i') }} - {{ $incidencia->reserva->fecha_fin?->format('H:i') }}
-                        @else
-                            Sin horario
-                        @endif
-                    </span>
-                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">ID: {{ substr($incidencia->id, 0, 8) }}</span>
+                    </div>
 
                 <p class="card-text small text-secondary flex-grow-1 mb-4">
                     "{{ $incidencia->descripcion }}"
