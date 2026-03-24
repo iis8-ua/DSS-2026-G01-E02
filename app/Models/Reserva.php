@@ -46,13 +46,13 @@ class Reserva extends Model{
 
     //para cancelar una reserva
     public function cancelar() {
-        $this->estado = 'CANCELADA';
+        $this->estado = EstadoReserva::CANCELADA;
         $this->save();
     }
 
     //abrir una reserva
     public function abrirReserva() {
-        $this->estado = 'ACEPTADA';
+        $this->estado = EstadoReserva::ACEPTADA;
         $this->save();
     }
 }
