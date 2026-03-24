@@ -11,7 +11,7 @@
             <a href="{{ route('reservas.create') }}" class="btn text-white" style="background-color: #003366;">Añadir Nueva</a>
         </div>
 
-        {{-- Parte del buscador --}}
+        {{-- Buscador --}}
         <form method="GET" action="{{ route('reservas.index') }}" class="mb-4">
             <div class="input-group">
                 <input type="text" name="buscar" value="{{ request('buscar') }}" class="form-control" placeholder="Buscar por alumno, espacio o estado...">
@@ -35,7 +35,6 @@
                     </th>
                     <th>Espacio</th>
                     <th>Horario</th>
-                    <th>Tipo</th>
                     <th>Estado</th>
                     <th class="text-end" style="width: 150px;">Acciones</th>
                 </tr>
@@ -51,41 +50,32 @@
                         <span class="badge bg-secondary">Sin imagen</span>
                         @endif
                     </td>
-                    
+
                     {{-- Usuario y espacio --}}
                     <td class="fw-bold">{{ $reserva->alumno->getFullName() ?? 'Usuario Desconocido' }}</td>
                     <td>{{ $reserva->espacio->nombre ?? 'Espacio Eliminado' }}</td>
-                    
+
                     {{-- Fechas --}}
                     <td class="small">
-                        {{ \Carbon\Carbon::parse($reserva->hora_inicio)->format('d/m/Y H:i') }}<br>
+                        {{ $reserva->hora_inicio->format('d/m/Y H:i') }}<br>
                         a<br>
-                        {{ \Carbon\Carbon::parse($reserva->hora_fin)->format('d/m/Y H:i') }}
-                    </td>
-
-                    {{-- Tipo de Reserva --}}
-                    <td>
-                        @if($reserva->reservaGrupal)
-                            <span class="badge bg-info text-dark"><i class="bi bi-people-fill me-1"></i> Grupal</span>
-                        @else
-                            <span class="badge bg-light text-dark border"><i class="bi bi-person-fill me-1"></i> Individual</span>
-                        @endif
+                        {{ $reserva->hora_fin->format('d/m/Y H:i') }}
                     </td>
 
                     {{-- Estado de la reserva --}}
                     <td>
                         @php
-                            // obtenemos el color según el estado
-                            $estadoValor = $reserva->estado->value ?? $reserva->estado;
-                            $colorBadge = match($estadoValor) {
-                                'ACEPTADA', 'APROBADA' => 'bg-success',
-                                'CANCELADA', 'RECHAZADA' => 'bg-danger',
-                                'PENDIENTE' => 'bg-warning text-dark',
-                                default => 'bg-secondary',
-                            };
+                        $estadoValor = $reserva->estado->value;
+                        $colorBadge = match($estadoValor) {
+                        'ACEPTADA'  => 'bg-success',
+                        'RECHAZADA' => 'bg-danger',
+                        'CANCELADA' => 'bg-danger',
+                        'PENDIENTE' => 'bg-warning text-dark',
+                        default     => 'bg-secondary',
+                        };
                         @endphp
                         <span class="badge {{ $colorBadge }}">
-                            {{ $reserva->estado }}
+                            {{ $estadoValor }}
                         </span>
                     </td>
 
@@ -101,20 +91,18 @@
                             <a href="{{ route('reservas.edit', $reserva->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            
+
                             @csrf
                             @method('DELETE')
                             {{-- Eliminar --}}
                             <button type="submit" class="btn btn-sm btn-outline-danger" title="Borrar">
                                 <i class="bi bi-trash"></i>
                             </button>
-
-                            
                         </form>
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="7" class="text-center text-muted py-4">No hay reservas registradas en el sistema.</td></tr>
+                <tr><td colspan="6" class="text-center text-muted py-4">No hay reservas registradas en el sistema.</td></tr>
                 @endforelse
                 </tbody>
             </table>

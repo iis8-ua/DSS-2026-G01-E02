@@ -21,9 +21,9 @@
                                 <select name="alumno_id" class="form-select @error('alumno_id') is-invalid @enderror">
                                     <option value="">Seleccione solicitante...</option>
                                     @foreach($usuarios as $usuario)
-                                        <option value="{{ $usuario->id }}" {{ old('alumno_id') == $usuario->id ? 'selected' : '' }}>
-                                            {{ $usuario->nombre ?? $usuario->name }}
-                                        </option>
+                                    <option value="{{ $usuario->id }}" {{ old('alumno_id') == $usuario->id ? 'selected' : '' }}>
+                                    {{ $usuario->getFullName() }}
+                                    </option>
                                     @endforeach
                                 </select>
                                 @error('alumno_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -35,9 +35,9 @@
                                 <select name="espacio_id" class="form-select @error('espacio_id') is-invalid @enderror">
                                     <option value="">Seleccione espacio...</option>
                                     @foreach($espacios as $espacio)
-                                        <option value="{{ $espacio->id }}" {{ old('espacio_id') == $espacio->id ? 'selected' : '' }}>
-                                            {{ $espacio->nombre }} (Aforo Max: {{ $espacio->aforo }})
-                                        </option>
+                                    <option value="{{ $espacio->id }}" {{ old('espacio_id') == $espacio->id ? 'selected' : '' }}>
+                                    {{ $espacio->nombre }} (Aforo Max: {{ $espacio->aforo }})
+                                    </option>
                                     @endforeach
                                 </select>
                                 @error('espacio_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -62,32 +62,15 @@
 
                         <div class="row mb-4">
                             {{-- Estado de la reserva --}}
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label fw-bold">Estado</label>
                                 <select name="estado" class="form-select @error('estado') is-invalid @enderror">
-                                    <option value="PENDIENTE" {{ old('estado', 'PENDIENTE') == 'PENDIENTE' ? 'selected' : '' }}>Pendiente</option>
-                                    <option value="ACEPTADA" {{ old('estado') == 'ACEPTADA' ? 'selected' : '' }}>Aceptada / Aprobada</option>
-                                    <option value="CANCELADA" {{ old('estado') == 'CANCELADA' ? 'selected' : '' }}>Cancelada / Rechazada</option>
+                                    <option value="PENDIENTE"  {{ old('estado', 'PENDIENTE') == 'PENDIENTE'  ? 'selected' : '' }}>Pendiente</option>
+                                    <option value="ACEPTADA"   {{ old('estado') == 'ACEPTADA'   ? 'selected' : '' }}>Aceptada</option>
+                                    <option value="RECHAZADA"  {{ old('estado') == 'RECHAZADA'  ? 'selected' : '' }}>Rechazada</option>
+                                    <option value="CANCELADA"  {{ old('estado') == 'CANCELADA'  ? 'selected' : '' }}>Cancelada</option>
                                 </select>
                                 @error('estado')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-
-                            {{-- Seleccionar el tipo de reserva --}}
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">Tipo de Reserva</label>
-                                <select name="tipo_reserva" id="tipo_reserva" class="form-select @error('tipo_reserva') is-invalid @enderror">
-                                    <option value="individual" {{ old('tipo_reserva', 'individual') == 'individual' ? 'selected' : '' }}>Individual</option>
-                                    <option value="grupal" {{ old('tipo_reserva') == 'grupal' ? 'selected' : '' }}>Grupal</option>
-                                </select>
-                                @error('tipo_reserva')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-
-                            {{-- Aforo máximo para reservas grupales --}}
-                            <div class="col-md-4" id="div_aforo_max" style="display: none;">
-                                <label class="form-label fw-bold">Aforo Solicitado</label>
-                                <input type="number" name="aforo_max" id="aforo_max" value="{{ old('aforo_max') }}" class="form-control @error('aforo_max') is-invalid @enderror" placeholder="Ej. 5">
-                                <div class="form-text">Obligatorio si es reserva grupal.</div>
-                                @error('aforo_max')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
 
@@ -101,28 +84,4 @@
         </div>
     </div>
 </div>
-
-{{-- script para mostrar el campo de aforo si es grupal --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const selectTipo = document.getElementById('tipo_reserva');
-        const divAforo = document.getElementById('div_aforo_max');
-
-        function toggleAforo() {
-            if (selectTipo.value === 'grupal') {
-                divAforo.style.display = 'block';
-            } else {
-                divAforo.style.display = 'none';
-                // si vulve a individual, limpiamos
-                document.getElementById('aforo_max').value = '';
-            }
-        }
-
-        // cargamos la página
-        toggleAforo();
-
-        // ponemos que se ejecuta cada vez que se cambie el tipo de reserva
-        selectTipo.addEventListener('change', toggleAforo);
-    });
-</script>
 @endsection
