@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Incidencia;
 
-class BlogController extends Controller{
+class IncidenciaController extends Controller{
     public function index(){
-        
+
         // obtenemos todas las incidencias
         // como necesitamos el usuario, lo obtenemos con with
         $incidencias = Incidencia::with(['usuario'])->get();
