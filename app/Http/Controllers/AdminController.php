@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Espacio;
 use App\Models\Reserva;
+use App\Models\Horario;
 use App\Models\TipoEspacio;
 use App\Models\Localizacion;
 
@@ -19,6 +20,7 @@ class AdminController extends Controller
         $totalReservas = Reserva::count();
         $totalTipos = TipoEspacio::count();
         $totalLocalizaciones = Localizacion::count();
+        $totalHorarios = Horario::count();
 
         //se sacan las reservas pendientes de aprobar ya que el admin tmbn puede hacer eso
         $ultimasReservas = Reserva::with(['alumno', 'espacio'])
@@ -32,6 +34,7 @@ class AdminController extends Controller
             'totalReservas',
             'totalTipos',
             'totalLocalizaciones',
+            'totalHorarios',
             'ultimasReservas'
         ));
     }
