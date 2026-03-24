@@ -20,15 +20,14 @@ class Espacio extends Model
         'caracteristicas',
         'localizacion_id',
         'tipo_espacio_id',
-        'horario_inicio',
-        'horario_fin',
+        'horario_id',
         'imagen'
     ];
 
-    //Para castear el estado al enumerado y los horarios a DateTime
-    protected $casts = ['estado' => EstadoEspacio::class,
-                        'horario_inicio' => 'datetime',
-                        'horario_fin' => 'datetime',];
+    //Para castear el estado al enumerado
+    protected $casts = [
+        'estado' => EstadoEspacio::class,
+    ];
 
     /**
      * Relacion con localización, tiene que tener una obligatoria
@@ -51,8 +50,7 @@ class Espacio extends Model
      */
     public function horario()
     {
-        return $this->belongsTo(Horario::class, 'horario_inicio', 'inicio')
-            ->where('fin', $this->horario_fin);
+        return $this->belongsTo(Horario::class, 'horario_id');
     }
 
 

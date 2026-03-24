@@ -38,8 +38,7 @@ class EspacioSeeder extends Seeder
                 'caracteristicas' => 'Mesas ignífugas, campana extractora',
                 'tipo_espacio_id' => $tipoLab->id,
                 'localizacion_id' => $locOriginal->id,
-                'horario_inicio'  => $horarios[0]->inicio,
-                'horario_fin'     => $horarios[0]->fin,
+                'horario_id'      => $horarios[0]->id,
                 'imagen'          => 'lab-quimica.jpg'
             ]);
         }
@@ -52,8 +51,7 @@ class EspacioSeeder extends Seeder
                 'caracteristicas' => 'Proyector 4K, microfonía, enchufes en mesas',
                 'tipo_espacio_id' => $tipoAula->id,
                 'localizacion_id' => $locPlantaBaja->id,
-                'horario_inicio'  => $horarios[1]->inicio,
-                'horario_fin'     => $horarios[1]->fin,
+                'horario_id'      => $horarios[1]->id,
                 'imagen'          => 'aula-magna.jpg'
             ]);
         }
@@ -66,8 +64,7 @@ class EspacioSeeder extends Seeder
                 'caracteristicas' => '30 PCs Windows, software de diseño',
                 'tipo_espacio_id' => $tipoInformatica->id,
                 'localizacion_id' => $locAulario->id,
-                'horario_inicio'  => $horarios[2]->inicio,
-                'horario_fin'     => $horarios[2]->fin,
+                'horario_id'      => $horarios[2]->id,
                 'imagen'          => 'aula-info.jpg'
             ]);
         }
@@ -80,8 +77,7 @@ class EspacioSeeder extends Seeder
                 'caracteristicas' => 'Aislamiento acústico, flexos individuales',
                 'tipo_espacio_id' => $tipoSalaEstudio->id,
                 'localizacion_id' => $locBiblioteca->id,
-                'horario_inicio'  => $horarios[3]->inicio,
-                'horario_fin'     => $horarios[3]->fin,
+                'horario_id'      => $horarios[3]->id,
                 'imagen'          => 'sala-estudio.jpg'
             ]);
         }
@@ -94,8 +90,7 @@ class EspacioSeeder extends Seeder
                 'caracteristicas' => 'Mesa de reuniones pequeña, pizarra blanca',
                 'tipo_espacio_id' => $tipoDespacho->id,
                 'localizacion_id' => $locFacultad->id,
-                'horario_inicio'  => $horarios->count() > 4 ? $horarios[4]->inicio : $horarios[0]->inicio,
-                'horario_fin'     => $horarios->count() > 4 ? $horarios[4]->fin : $horarios[0]->fin,
+                'horario_id'      => $horarios[4]->id,
                 'imagen'          => 'despacho-tutorias.jpg'
             ]);
         }
@@ -178,8 +173,7 @@ class EspacioSeeder extends Seeder
                 'caracteristicas' => $datos['caracteristicas'],
                 'tipo_espacio_id' => $tipoDeportes->id,
                 'localizacion_id' => $loc->id,
-                'horario_inicio'  => $horario->inicio,
-                'horario_fin'     => $horario->fin,
+                'horario_id'      => $horario->id,
                 'imagen'          => $datos['imagen']
             ]);
         }
