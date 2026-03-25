@@ -30,7 +30,7 @@ Route::get('/perfil', [UsuarioController::class, 'perfil'])
 ->middleware('auth')->name('usuario.perfil');
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
-Route::get('/blog', [IncidenciaController::class, 'index'])->name('blog');
+Route::get('/blog', [IncidenciaController::class, 'blog'])->name('blog');
 
 
 Route::view('/aviso-legal', 'aviso-legal')->name('legal.aviso');
@@ -46,3 +46,4 @@ Route::resource('reservas', ReservaController::class);
 Route::resource('tipos-espacio', TipoEspacioController::class);
 Route::resource('localizaciones', LocalizacionController::class);
 Route::resource('horarios', HorarioController::class);
+Route::resource('incidencias', IncidenciaController::class);
