@@ -1,17 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
-use App\Models\Notificacion;
 use App\Models\Incidencia;
+use App\Models\Notificacion;
 use App\Models\Usuario;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class NotificacionTest extends TestCase
 {
     use RefreshDatabase;
+    protected $usuario;
     protected $incidencia;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -38,7 +40,8 @@ class NotificacionTest extends TestCase
         // Arrange: inicializamos los datos
 
         $notificacion = Notificacion::create([
-            'texto'=> 'Notificación de testing',
+            'texto'   => 'Notificación de testing',
+            'vista'   => false,
             'user_id' => $this->usuario->id
         ]);
         // Act: obtenemos los resultados
@@ -53,6 +56,7 @@ class NotificacionTest extends TestCase
         // Arrange: creamos una incidencia y la vinculamos
         $notificacion = Notificacion::create([
             'texto' => 'Notificación de testing',
+            'vista' => false,
             'incidencia_id' => $this->incidencia->id,
             'user_id' => $this->usuario->id
         ]);
@@ -70,6 +74,7 @@ class NotificacionTest extends TestCase
         // Arrange
         $notificacion = Notificacion::create([
             'texto' => 'Notificación de testing',
+            'vista' => false,
             'incidencia_id' => $this->incidencia->id,
             'user_id' => $this->usuario->id
         ]);
