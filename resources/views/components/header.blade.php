@@ -41,7 +41,7 @@
                         <li><a class="dropdown-item" href="{{ route('perfil') }}">Mi Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form action="#" method="POST">
+                            <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-item text-danger">
                                     <i class="bi bi-box-arrow-right"></i> Cerrar Sesión

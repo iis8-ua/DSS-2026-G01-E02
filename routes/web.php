@@ -15,7 +15,7 @@ use App\Models\Espacio;
 
 
 Route::get('/', [NotificationController::class, 'getNotificationsAsUser'])
-    //->middleware('auth')
+    ->middleware('auth')
     ->name('inicio');
 
 Route::post('/notificacion/{id}/view', [NotificationController::class, 'viewNotification'])
