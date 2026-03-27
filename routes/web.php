@@ -46,3 +46,4 @@ Route::resource('reservas', ReservaController::class);
 Route::resource('tipos-espacio', TipoEspacioController::class);
 Route::resource('localizaciones', LocalizacionController::class);
 Route::resource('horarios', HorarioController::class);
+Route::resource('usuarios', UsuarioController::class);
