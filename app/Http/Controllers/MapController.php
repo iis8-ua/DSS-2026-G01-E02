@@ -14,6 +14,7 @@ class MapController extends Controller
         $markers = $espacios->map(function($espacio) {
             $loc = $espacio->localizacion;
             return [
+                'id' => $espacio->id,
                 'nombre' => $espacio->nombre,
                 'latitud' => $loc->latitud,
                 'longitud' => $loc->longitud,

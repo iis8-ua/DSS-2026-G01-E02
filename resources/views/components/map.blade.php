@@ -46,7 +46,10 @@
             if (loc.latitud && loc.longitud) {
                 const marker = L.marker([loc.latitud, loc.longitud]).addTo(map);
                     marker.bindPopup(`
-                    <strong>${loc.nombre}</strong>
+                    <strong>${loc.nombre}</strong><br />
+                    <a href="/reservas/nueva/${loc.id}">
+                        Reservar
+                    </a>
                 `);
             }
         });
