@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-ua shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ route('inicio') }}">
             <img src="{{ asset('images/logo-ua.png') }}" alt="Logo UA" height="40" class="me-2">
             EspaciUA
         </a>
@@ -30,7 +30,7 @@
             <ul class="navbar-nav">
                 @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Iniciar Sesión</a>
+                    <a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a>
                 </li>
                 @else
                 <li class="nav-item dropdown">

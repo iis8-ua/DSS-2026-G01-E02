@@ -12,6 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->time('inicio');
             $table->time('fin');
+
         });
     }
 
