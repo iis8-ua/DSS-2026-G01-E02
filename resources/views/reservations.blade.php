@@ -96,8 +96,7 @@
                             </a>
                         @endauth
                     @endif
-                </div>            border-radius: 8px;
-
+                </div>
             </div>
         </div>
         @empty
