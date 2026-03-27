@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EspacioController;
 use App\Http\Controllers\LocalizacionController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TipoEspacioController;
 use App\Http\Controllers\ReservaController;
@@ -13,9 +14,10 @@ use App\Http\Controllers\HorarioController;
 use App\Models\Espacio;
 
 
-// FALTA EL LOGIN: REEMPLAZO TEMPORAL
-//Route::get('/', [NotificationController::class, 'getNotificationsAsUser'])->middleware('auth')->name('inicio');
-Route::get('/', [NotificationController::class, 'getNotificationsAsUser'])->name('inicio');
+Route::get('/', [NotificationController::class, 'getNotificationsAsUser'])
+    //->middleware('auth')
+    ->name('inicio');
+
 Route::post('/notificacion/{id}/view', [NotificationController::class, 'viewNotification'])
     ->name('notification.view');
 Route::post('/notificacion/viewall', [NotificationController::class, 'viewAllNotificationsAsUser'])
@@ -34,7 +36,17 @@ Route::get('/perfil', [UsuarioController::class, 'perfil'])
     ->middleware('auth')
     ->name('perfil');
 
-Route::view('/login', 'login')->name('login');
+
+Route::view('/login', 'login')
+    ->middleware('guest')
+    ->name('login');
+
+Route::post('/login', [LoginController::class, 'login'])
+    ->middleware('guest');
+
+Route::post('/logout', [LoginController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
 
 Route::get('/reservas/nueva/{espacio}', function (Espacio $espacio) {
     return view('new_reservation', compact('espacio'));

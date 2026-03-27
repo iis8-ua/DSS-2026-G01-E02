@@ -15,17 +15,17 @@
                         </p>
                     </div>
 
-                    <form method="POST" action="#">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">Correo institucional</label>
+                            <label for="email" class="form-label">Correo electrónico</label>
                             <input
                                 type="email"
                                 class="form-control"
                                 id="email"
                                 name="email"
-                                placeholder="usuario@alu.ua.es"
+                                placeholder="ejemplo@ejemplo.com"
                                 required
                             >
                         </div>
@@ -41,6 +41,12 @@
                                 required
                             >
                         </div>
+
+                        @error('email')
+                            <div class="invalid-feedback d-block m-3">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                         <button type="submit" class="btn btn-primary w-100">
                             Entrar
