@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EspacioController;
 use App\Http\Controllers\LocalizacionController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TipoEspacioController;
 use App\Http\Controllers\ReservaController;
@@ -14,7 +15,7 @@ use App\Http\Controllers\HorarioController;
 use App\Models\Espacio;
 
 
-Route::get('/', [NotificationController::class, 'getNotificationsAsUser'])
+Route::get('/', [MapController::class, 'map'])
     ->middleware('auth')
     ->name('inicio');
 

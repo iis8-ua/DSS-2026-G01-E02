@@ -16,7 +16,9 @@
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     crossorigin=""
 ></script>
-
+<script>
+    const localizaciones = @json($markers);
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (window.leafletMap) { return; }
@@ -33,5 +35,20 @@
         }).addTo(map);
 
         window.leafletMap = map;
+        const customIcon = L.icon({
+            iconUrl: '/images/marker-icon.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+        });
+
+        localizaciones.forEach(loc => {
+            if (loc.latitud && loc.longitud) {
+                const marker = L.marker([loc.latitud, loc.longitud]).addTo(map);
+                    marker.bindPopup(`
+                    <strong>${loc.nombre}</strong>
+                `);
+            }
+        });
     });
 </script>

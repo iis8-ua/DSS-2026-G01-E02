@@ -8,6 +8,6 @@
 @section('content')
     <main>
         <x-notifications :notifications="$notifications"/>
-        <x-map/>
+        <x-map :markers="$markers"/>
     </main>
 @endsection

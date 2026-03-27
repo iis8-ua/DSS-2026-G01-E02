@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class LocalizacionController extends Controller
 {
+    
     /**
      * Función para listar (Read)
      * Encargada de la busqueda, ordenación y paginación
