@@ -17,13 +17,17 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Nombre del Espacio</label>
-                                <input type="text" name="nombre" value="{{ old('nombre') }}" class="form-control @error('nombre') is-invalid @enderror" placeholder="Ej. Aula 101">
+                                <input type="text" name="nombre" value="{{ old('nombre') }}"
+                                       class="form-control @error('nombre') is-invalid @enderror"
+                                       placeholder="Ej. Aula 101">
                                 @error('nombre')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-md-3">
                                 <label class="form-label fw-bold">Aforo Máximo</label>
-                                <input type="number" name="aforo" value="{{ old('aforo') }}" class="form-control @error('aforo') is-invalid @enderror" placeholder="Ej. 30">
+                                <input type="number" name="aforo" value="{{ old('aforo') }}"
+                                       class="form-control @error('aforo') is-invalid @enderror"
+                                       placeholder="Ej. 30">
                                 @error('aforo')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
@@ -31,7 +35,10 @@
                                 <label class="form-label fw-bold">Estado</label>
                                 <select name="estado" class="form-select @error('estado') is-invalid @enderror">
                                     @foreach($estados as $est)
-                                    <option value="{{ $est->value }}" {{ old('estado', 'HABILITADO') == $est->value ? 'selected' : '' }}>{{ $est->name }}</option>
+                                    <option value="{{ $est->value }}"
+                                            {{ old('estado', 'HABILITADO') == $est->value ? 'selected' : '' }}>
+                                    {{ $est->name }}
+                                    </option>
                                     @endforeach
                                 </select>
                                 @error('estado')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -44,7 +51,10 @@
                                 <select name="tipo_espacio_id" class="form-select @error('tipo_espacio_id') is-invalid @enderror">
                                     <option value="">Seleccione tipo...</option>
                                     @foreach($tipos as $tipo)
-                                    <option value="{{ $tipo->id }}" {{ old('tipo_espacio_id') == $tipo->id ? 'selected' : '' }}>{{ $tipo->nombre }}</option>
+                                    <option value="{{ $tipo->id }}"
+                                            {{ old('tipo_espacio_id') == $tipo->id ? 'selected' : '' }}>
+                                    {{ $tipo->nombre }}
+                                    </option>
                                     @endforeach
                                 </select>
                                 @error('tipo_espacio_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -52,42 +62,49 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">Localización</label>
-                                <select name="localizacion_compuesta" class="form-select @error('localizacion_compuesta') is-invalid @enderror">
+                                <select name="localizacion_id" class="form-select @error('localizacion_id') is-invalid @enderror">
                                     <option value="">Seleccione localización...</option>
                                     @foreach($localizaciones as $loc)
-                                    @php $valLoc = $loc->latitud . '_' . $loc->longitud . '_' . $loc->piso; @endphp
-                                    <option value="{{ $valLoc }}" {{ old('localizacion_compuesta') == $valLoc ? 'selected' : '' }}>
+                                    <option value="{{ $loc->id }}"
+                                            {{ old('localizacion_id') == $loc->id ? 'selected' : '' }}>
                                     Piso {{ $loc->piso }} ({{ $loc->latitud }}, {{ $loc->longitud }})
                                     </option>
                                     @endforeach
                                 </select>
-                                @error('localizacion_compuesta')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                @error('localizacion_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label fw-bold">Horario Base</label>
-                                <select name="horario_compuesto" class="form-select @error('horario_compuesto') is-invalid @enderror">
-                                    <option value="">Seleccione horario...</option>
+                                <label class="form-label fw-bold">Franjas Horarias</label>
+                                <select name="horarios_ids[]" multiple
+                                        class="form-select @error('horarios_ids') is-invalid @enderror"
+                                        style="height: 120px;">
                                     @foreach($horarios as $hor)
-                                    @php $valHor = $hor->inicio . '_' . $hor->fin; @endphp
-                                    <option value="{{ $valHor }}" {{ old('horario_compuesto') == $valHor ? 'selected' : '' }}>
-                                    {{ \Carbon\Carbon::parse($hor->inicio)->format('H:i') }} - {{ \Carbon\Carbon::parse($hor->fin)->format('H:i') }}
+                                    <option value="{{ $hor->id }}"
+                                            {{ in_array($hor->id, old('horarios_ids', [])) ? 'selected' : '' }}>
+                                        {{ \Carbon\Carbon::parse($hor->inicio)->format('H:i') }} - {{ \Carbon\Carbon::parse($hor->fin)->format('H:i') }}
                                     </option>
                                     @endforeach
                                 </select>
-                                @error('horario_compuesto')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <div class="form-text">Mantén Ctrl para seleccionar varias franjas.</div>
+                                @error('horarios_ids')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Características Adicionales</label>
-                            <textarea name="caracteristicas" class="form-control @error('caracteristicas') is-invalid @enderror" rows="3" placeholder="Ej. Proyector, Pizarra digital, Aire acondicionado...">{{ old('caracteristicas') }}</textarea>
+                            <textarea name="caracteristicas"
+                                      class="form-control @error('caracteristicas') is-invalid @enderror"
+                                      rows="3"
+                                      placeholder="Ej. Proyector, Pizarra digital, Aire acondicionado...">{{ old('caracteristicas') }}</textarea>
                             @error('caracteristicas')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label fw-bold">Fotografía del Espacio (Opcional)</label>
-                            <input type="file" name="imagen" class="form-control @error('imagen') is-invalid @enderror" accept="image/png, image/jpeg, image/jpg">
+                            <input type="file" name="imagen"
+                                   class="form-control @error('imagen') is-invalid @enderror"
+                                   accept="image/png, image/jpeg, image/jpg">
                             <div class="form-text">Formatos permitidos: JPG, PNG. Tamaño máximo: 2MB.</div>
                             @error('imagen')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>

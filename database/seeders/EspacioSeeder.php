@@ -17,20 +17,13 @@ class EspacioSeeder extends Seeder
     {
         $horarios = Horario::all();
 
-        if ($horarios->isEmpty()) {
-            $this->command->error('No hay horarios en la base de datos. Ejecuta HorarioSeeder primero.');
-            return;
-        }
-
         $tipoLab         = TipoEspacio::where('nombre', 'Laboratorio')->first();
         $tipoAula        = TipoEspacio::where('nombre', 'Aula Teoría')->first();
         $tipoDespacho    = TipoEspacio::where('nombre', 'Despacho')->first();
         $tipoInformatica = TipoEspacio::where('nombre', 'Aula Informática')->first();
         $tipoSalaEstudio = TipoEspacio::where('nombre', 'Sala de Estudio')->first();
-
         $tipoDeportes    = TipoEspacio::firstOrCreate(['nombre' => 'Instalación Deportiva']);
 
-        // Localizaciones originales
         $locOriginal   = Localizacion::where('latitud', 40.5)->where('longitud', -3.5)->where('piso', 2)->first();
         $locPlantaBaja = Localizacion::where('latitud', 40.5)->where('longitud', -3.5)->where('piso', 0)->first();
         $locFacultad   = Localizacion::where('latitud', 40.501)->where('longitud', -3.502)->where('piso', 1)->first();
@@ -38,83 +31,68 @@ class EspacioSeeder extends Seeder
         $locAulario    = Localizacion::where('latitud', 41.0)->where('longitud', -2.0)->where('piso', 1)->first();
 
         if ($tipoLab && $locOriginal) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Lab de Química',
                 'aforo'           => 25,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Mesas ignífugas, campana extractora',
                 'tipo_espacio_id' => $tipoLab->id,
-                'loc_latitud'     => $locOriginal->latitud,
-                'loc_longitud'    => $locOriginal->longitud,
-                'loc_piso'        => $locOriginal->piso,
-                'horario_inicio'  => $horarios[0]->inicio,
-                'horario_fin'     => $horarios[0]->fin,
+                'localizacion_id' => $locOriginal->id,
                 'imagen'          => 'lab-quimica.jpg'
             ]);
+            $espacio->horario()->attach([$horarios[0]->id, $horarios[1]->id]);
         }
 
         if ($tipoAula && $locPlantaBaja) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Aula Magna',
                 'aforo'           => 150,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Proyector 4K, microfonía, enchufes en mesas',
                 'tipo_espacio_id' => $tipoAula->id,
-                'loc_latitud'     => $locPlantaBaja->latitud,
-                'loc_longitud'    => $locPlantaBaja->longitud,
-                'loc_piso'        => $locPlantaBaja->piso,
-                'horario_inicio'  => $horarios->count() > 1 ? $horarios[1]->inicio : $horarios[0]->inicio,
-                'horario_fin'     => $horarios->count() > 1 ? $horarios[1]->fin : $horarios[0]->fin,
+                'localizacion_id' => $locPlantaBaja->id,
                 'imagen'          => 'aula-magna.jpg'
             ]);
+            $espacio->horario()->attach([$horarios[0]->id, $horarios[1]->id, $horarios[2]->id]);
         }
 
         if ($tipoInformatica && $locAulario) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Aula Info 1.1',
                 'aforo'           => 30,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => '30 PCs Windows, software de diseño',
                 'tipo_espacio_id' => $tipoInformatica->id,
-                'loc_latitud'     => $locAulario->latitud,
-                'loc_longitud'    => $locAulario->longitud,
-                'loc_piso'        => $locAulario->piso,
-                'horario_inicio'  => $horarios->count() > 2 ? $horarios[2]->inicio : $horarios[0]->inicio,
-                'horario_fin'     => $horarios->count() > 2 ? $horarios[2]->fin : $horarios[0]->fin,
+                'localizacion_id' => $locAulario->id,
                 'imagen'          => 'aula-info.jpg'
             ]);
+            $espacio->horario()->attach($horarios[2]->id);
         }
 
         if ($tipoSalaEstudio && $locBiblioteca) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Sala de Estudio Silenciosa',
                 'aforo'           => 80,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Aislamiento acústico, flexos individuales',
                 'tipo_espacio_id' => $tipoSalaEstudio->id,
-                'loc_latitud'     => $locBiblioteca->latitud,
-                'loc_longitud'    => $locBiblioteca->longitud,
-                'loc_piso'        => $locBiblioteca->piso,
-                'horario_inicio'  => $horarios->count() > 3 ? $horarios[3]->inicio : $horarios[0]->inicio,
-                'horario_fin'     => $horarios->count() > 3 ? $horarios[3]->fin : $horarios[0]->fin,
+                'localizacion_id' => $locBiblioteca->id,
                 'imagen'          => 'sala-estudio.jpg'
             ]);
+            $espacio->horario()->attach($horarios[4]->id);
         }
 
         if ($tipoDespacho && $locFacultad) {
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => 'Despacho Tutorías Ciencias',
                 'aforo'           => 4,
                 'estado'          => 'HABILITADO',
                 'caracteristicas' => 'Mesa de reuniones pequeña, pizarra blanca',
                 'tipo_espacio_id' => $tipoDespacho->id,
-                'loc_latitud'     => $locFacultad->latitud,
-                'loc_longitud'    => $locFacultad->longitud,
-                'loc_piso'        => $locFacultad->piso,
-                'horario_inicio'  => $horarios->count() > 4 ? $horarios[4]->inicio : $horarios[0]->inicio,
-                'horario_fin'     => $horarios->count() > 4 ? $horarios[4]->fin : $horarios[0]->fin,
+                'localizacion_id' => $locFacultad->id,
                 'imagen'          => 'despacho-tutorias.jpg'
             ]);
+            $espacio->horario()->attach($horarios[5]->id);
         }
 
         $nuevosEspacios = [
@@ -175,30 +153,29 @@ class EspacioSeeder extends Seeder
             ]
         ];
 
-        // Recorremos el array y creamos las instalaciones
         foreach ($nuevosEspacios as $index => $datos) {
 
-            $loc = Localizacion::firstOrCreate([
-                'latitud'  => $datos['lat'],
-                'longitud' => $datos['lon'],
-                'piso'     => $datos['piso']
-            ]);
+            $loc = Localizacion::where('latitud', $datos['lat'])
+                    ->where('longitud', $datos['lon'])
+                    ->where('piso', $datos['piso'])
+                    ->firstOrCreate([
+                        'latitud'  => $datos['lat'],
+                        'longitud' => $datos['lon'],
+                        'piso'     => $datos['piso']
+                    ]);
 
             $horario = $horarios[$index % $horarios->count()];
 
-            Espacio::create([
+            $espacio=Espacio::create([
                 'nombre'          => $datos['nombre'],
                 'aforo'           => $datos['aforo'],
                 'estado'          => $datos['estado'],
                 'caracteristicas' => $datos['caracteristicas'],
                 'tipo_espacio_id' => $tipoDeportes->id,
-                'loc_latitud'     => $loc->latitud,
-                'loc_longitud'    => $loc->longitud,
-                'loc_piso'        => $loc->piso,
-                'horario_inicio'  => $horario->inicio,
-                'horario_fin'     => $horario->fin,
+                'localizacion_id' => $loc->id,
                 'imagen'          => $datos['imagen']
             ]);
+            $espacio->horario()->attach($horario->id);
         }
     }
 }

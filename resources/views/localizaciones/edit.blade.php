@@ -11,7 +11,7 @@
                     <h1 class="h4 mb-0" style="color: #003366;">Editar Localización</h1>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('localizaciones.update', $id) }}" method="POST">
+                    <form action="{{ route('localizaciones.update', $localizacion->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 

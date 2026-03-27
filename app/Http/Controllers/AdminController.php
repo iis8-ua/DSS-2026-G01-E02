@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Incidencia;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Espacio;
 use App\Models\Reserva;
+use App\Models\Horario;
 use App\Models\TipoEspacio;
 use App\Models\Localizacion;
 
@@ -19,12 +21,8 @@ class AdminController extends Controller
         $totalReservas = Reserva::count();
         $totalTipos = TipoEspacio::count();
         $totalLocalizaciones = Localizacion::count();
-
-        //se sacan las reservas pendientes de aprobar ya que el admin tmbn puede hacer eso
-        $ultimasReservas = Reserva::with(['alumno', 'espacio'])
-            ->where('estado', 'PENDIENTE')
-            ->latest()
-            ->get();
+        $totalHorarios = Horario::count();
+        $totalIncidencias=Incidencia::count();
 
         return view('admin', compact(
             'totalUsuarios',
@@ -32,7 +30,8 @@ class AdminController extends Controller
             'totalReservas',
             'totalTipos',
             'totalLocalizaciones',
-            'ultimasReservas'
+            'totalHorarios',
+            'totalIncidencias',
         ));
     }
 }

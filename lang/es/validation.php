@@ -178,7 +178,8 @@ return [
             'min'      => 'El aforo debe ser de al menos 1 persona.',
         ],
         'estado' => [
-            'required' => 'Debes especificar el estado del espacio.',
+            'required' => 'El estado es un dato obligatorio.',
+            'string'   => 'El estado debe ser una cadena de texto válida.',
         ],
         'tipo_espacio_id' => [
             'required' => 'Debes seleccionar un tipo de espacio.',
@@ -194,5 +195,44 @@ return [
             'image' => 'El archivo subido debe ser una imagen válida.',
             'mimes' => 'La imagen debe estar en formato: jpeg, png o jpg.',
             'max'   => 'La imagen es demasiado grande. El tamaño máximo permitido es 2MB.',
+        ],
+        'inicio' => [
+            'required' => 'La hora de inicio es obligatoria.',
+            'date_format' => 'La hora de inicio debe tener el formato HH:MM.',
+        ],
+        'fin' => [
+            'required' => 'La hora de fin es obligatoria.',
+            'date_format' => 'La hora de fin debe tener el formato HH:MM.',
+            'after' => 'La hora de fin debe ser posterior a la hora de inicio.',
+        ],
+        'hora_inicio' => [
+            'required' => 'La fecha y hora de inicio es obligatoria.',
+            'date'     => 'La fecha y hora de inicio debe ser válida.',
+        ],
+        'hora_fin' => [
+            'required' => 'La fecha y hora de finalización es obligatoria.',
+            'date'     => 'La fecha y hora de finalización debe ser válida.',
+            'after'    => 'La hora de finalización debe ser posterior a la de inicio.',
+        ],
+        'espacio_id' => [
+            'required' => 'Debes seleccionar un espacio.',
+            'exists'   => 'El espacio seleccionado no existe en la base de datos.',
+        ],
+        'alumno_id' => [
+            'required' => 'Debes seleccionar un solicitante.',
+            'exists'   => 'El solicitante seleccionado no es válido.',
+        ],
+        'user_id' => [
+            'required' => 'Debes seleccionar un usuario.',
+            'exists'   => 'El usuario seleccionado no existe en la base de datos.',
+        ],
+        'descripcion' => [
+            'required' => 'La descripción de la incidencia es obligatoria.',
+            'max'      => 'La descripción no puede superar los 1000 caracteres.',
+        ],
+        'foto' => [
+            'image' => 'El archivo subido debe ser una imagen.',
+            'mimes' => 'La imagen debe tener formato: jpeg, png o jpg.',
+            'max'   => 'La fotografía no puede pesar más de 2MB.',
         ],
     ],];

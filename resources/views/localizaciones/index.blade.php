@@ -71,17 +71,13 @@
                 </thead>
                 <tbody>
                 @forelse($localizaciones as $loc)
-                {{-- Creamos la clave compuesta para la URL --}}
-                @php
-                $idCompuesto = $loc->latitud . '_' . $loc->longitud . '_' . $loc->piso;
-                @endphp
                 <tr>
                     <td>{{ $loc->latitud }}</td>
                     <td>{{ $loc->longitud }}</td>
                     <td>{{ $loc->piso }}</td>
                     <td class="text-end">
-                        <form action="{{ route('localizaciones.destroy', $idCompuesto) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro que deseas eliminar esta localización?');">
-                            <a href="{{ route('localizaciones.edit', $idCompuesto) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                        <form action="{{ route('localizaciones.destroy', $loc->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro que deseas eliminar esta localización?');">
+                            <a href="{{ route('localizaciones.edit', $loc->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                 <i class="bi bi-pencil"></i> Editar
                             </a>
                             @csrf

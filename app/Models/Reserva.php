@@ -10,12 +10,14 @@ use App\Models\Usuario;
 use App\Models\Espacio;
 use App\Models\Horario;
 
-class Reserva extends Model{
+class Reserva extends Model
+{
     use HasFactory, HasUuids;
 
     // ID no autoincremental
     public $incrementing = false;
     protected $keyType = 'string';
+    public $timestamps = false;
 
     protected $fillable = [
         'espacio_id',
@@ -24,23 +26,21 @@ class Reserva extends Model{
         'hora_fin',
         'estado'];
 
-    // Relación con el detalle grupal
-    public function reservaGrupal(){
-        return $this->hasOne(ReservaGrupal::class, 'reserva_id');
-    }
-
     // usuario asociado a la reserva
-    public function alumno(){
+    public function alumno()
+    {
         return $this->belongsTo(Usuario::class, 'alumno_id');
     }
 
     // espacio asociado a la reserva
-    public function espacio(){
-        return $this->belongsTo(Espacio::class);
+    public function espacio()
+    {
+        return $this->belongsTo(Espacio::class, 'espacio_id');
     }
 
 
-    protected function casts(): array{
+    protected function casts(): array
+    {
         return [
             'hora_inicio' => 'datetime',
             'hora_fin' => 'datetime',
@@ -49,14 +49,16 @@ class Reserva extends Model{
     }
 
     //para cancelar una reserva
-    public function cancelar() {
-        $this->estado = 'CANCELADA';
+    public function cancelar()
+    {
+        $this->estado = EstadoReserva::CANCELADA;
         $this->save();
     }
 
     //abrir una reserva
-    public function abrirReserva() {
-        $this->estado = 'ACEPTADA';
+    public function abrirReserva()
+    {
+        $this->estado = EstadoReserva::ACEPTADA;
         $this->save();
     }
 }
