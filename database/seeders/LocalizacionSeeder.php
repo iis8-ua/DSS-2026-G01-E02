@@ -12,33 +12,28 @@ class LocalizacionSeeder extends Seeder
      */
     public function run(): void
     {
+        Localizacion::create(['latitud' => 38.384, 'longitud' => -0.512, 'piso' => -1]);
+        Localizacion::create(['latitud' => 38.384, 'longitud' => -0.512, 'piso' => 0]);
+        Localizacion::create(['latitud' => 38.384, 'longitud' => -0.512, 'piso' => 1]);
+        Localizacion::create(['latitud' => 38.384, 'longitud' => -0.512, 'piso' => 2]);
+        Localizacion::create(['latitud' => 38.384, 'longitud' => -0.512, 'piso' => 3]);
+        Localizacion::create(['latitud' => 38.384, 'longitud' => -0.512, 'piso' => 4]);
 
-        Localizacion::create(['latitud' => 40.5, 'longitud' => -3.5, 'piso' => -1]);
-        Localizacion::create(['latitud' => 40.5, 'longitud' => -3.5, 'piso' => 0]);
-        Localizacion::create(['latitud' => 40.5, 'longitud' => -3.5, 'piso' => 1]);
-        Localizacion::create(['latitud' => 40.5, 'longitud' => -3.5, 'piso' => 2]);
-        Localizacion::create(['latitud' => 40.5, 'longitud' => -3.5, 'piso' => 3]);
-        Localizacion::create(['latitud' => 40.5, 'longitud' => -3.5, 'piso' => 4]);
+        Localizacion::create(['latitud' => 38.3845, 'longitud' => -0.5125, 'piso' => 0]);
+        Localizacion::create(['latitud' => 38.3845, 'longitud' => -0.5125, 'piso' => 1]);
+        Localizacion::create(['latitud' => 38.3845, 'longitud' => -0.5125, 'piso' => 2]);
+        Localizacion::create(['latitud' => 38.3845, 'longitud' => -0.5125, 'piso' => 3]);
 
+        Localizacion::create(['latitud' => 38.3835, 'longitud' => -0.5115, 'piso' => -1]);
+        Localizacion::create(['latitud' => 38.3835, 'longitud' => -0.5115, 'piso' => 0]);
+        Localizacion::create(['latitud' => 38.3835, 'longitud' => -0.5115, 'piso' => 1]);
+        Localizacion::create(['latitud' => 38.3835, 'longitud' => -0.5115, 'piso' => 2]);
 
-        Localizacion::create(['latitud' => 40.501, 'longitud' => -3.502, 'piso' => 0]);
-        Localizacion::create(['latitud' => 40.501, 'longitud' => -3.502, 'piso' => 1]);
-        Localizacion::create(['latitud' => 40.501, 'longitud' => -3.502, 'piso' => 2]);
-        Localizacion::create(['latitud' => 40.501, 'longitud' => -3.502, 'piso' => 3]);
+        Localizacion::create(['latitud' => 38.3830, 'longitud' => -0.5130, 'piso' => 0]);
+        Localizacion::create(['latitud' => 38.3830, 'longitud' => -0.5130, 'piso' => 1]);
+        Localizacion::create(['latitud' => 38.3830, 'longitud' => -0.5130, 'piso' => 2]);
 
-
-        Localizacion::create(['latitud' => 40.505, 'longitud' => -3.495, 'piso' => -1]);
-        Localizacion::create(['latitud' => 40.505, 'longitud' => -3.495, 'piso' => 0]);
-        Localizacion::create(['latitud' => 40.505, 'longitud' => -3.495, 'piso' => 1]);
-        Localizacion::create(['latitud' => 40.505, 'longitud' => -3.495, 'piso' => 2]);
-
-
-        Localizacion::create(['latitud' => 41.0, 'longitud' => -2.0, 'piso' => 0]);
-        Localizacion::create(['latitud' => 41.0, 'longitud' => -2.0, 'piso' => 1]);
-        Localizacion::create(['latitud' => 41.0, 'longitud' => -2.0, 'piso' => 2]);
-
-
-        Localizacion::create(['latitud' => 40.498, 'longitud' => -3.508, 'piso' => 0]);
-        Localizacion::create(['latitud' => 40.498, 'longitud' => -3.508, 'piso' => 1]);
+        Localizacion::create(['latitud' => 38.3850, 'longitud' => -0.5140, 'piso' => 0]);
+        Localizacion::create(['latitud' => 38.3850, 'longitud' => -0.5140, 'piso' => 1]);
     }
 }

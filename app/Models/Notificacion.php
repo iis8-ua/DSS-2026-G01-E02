@@ -20,8 +20,10 @@ class Notificacion extends Model
 
     protected $fillable = [
         'id',
+        'titulo',
         'texto',
         'vista',
+        'imagen',
         'incidencia_id',
         'user_id',
     ];
