@@ -11,7 +11,20 @@ class UsuarioController extends Controller
     //
     public function perfil(){
         $usuario = Auth::user();
-        return view('usuario', ['usuario' => $usuario]);
+
+        $reservas = collect();
+
+        if (str_contains(strtolower($usuario->tipo_usuario), 'alumno')) {
+            $reservas = \App\Models\Reserva::with('espacio')
+                ->where('alumno_id', $usuario->id)
+                ->orderBy('hora_inicio', 'desc')
+                ->get();
+        }
+
+        return view('usuario', [
+            'usuario' => $usuario,
+            'reservas' => $reservas,
+        ]);
     }
 
     public function create(){
