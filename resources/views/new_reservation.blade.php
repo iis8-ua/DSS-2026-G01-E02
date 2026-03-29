@@ -13,7 +13,10 @@
 
     <div class="row g-4">
         <div class="col-lg-8">
-            <x-calendar />
+            <x-calendar
+                :horariosDisponibles="$horariosDisponibles"
+                :reservasExistentes="$reservasExistentes"
+            />
         </div>
 
         <div class="col-lg-4">
@@ -21,7 +24,17 @@
                 <div class="card-body">
                     <h2 class="h5 mb-3">Resumen de la reserva</h2>
 
-                    <form method="POST" action="#">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0 ps-3">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('reservas.guardarNueva', $espacio) }}">
                         @csrf
 
                         <div class="mb-3">
@@ -51,6 +64,8 @@
                                 class="form-control"
                                 id="fecha"
                                 name="fecha"
+                                value="{{ old('fecha') }}"
+                                min="{{ now()->toDateString() }}"
                                 required
                             >
                         </div>
@@ -62,6 +77,7 @@
                                 class="form-control"
                                 id="hora_inicio"
                                 name="hora_inicio"
+                                value="{{ old('hora_inicio') }}"
                                 required
                             >
                         </div>
@@ -73,6 +89,7 @@
                                 class="form-control"
                                 id="hora_fin"
                                 name="hora_fin"
+                                value="{{ old('hora_fin') }}"
                                 required
                             >
                         </div>
