@@ -87,12 +87,11 @@
                         </button>
                     @else
                         @auth
-                            <a href="#" class="btn btn-outline-primary mt-2 w-100">
+                            <a href="{{ route('reservas.nueva', $espacio) }}" class="btn btn-outline-primary mt-2 w-100">
                                 Reservar Ahora
                             </a>
                         @else
-                            {{-- se va a mandar al login, no implementado aun--}}
-                            <a href="#" class="btn btn-outline-primary mt-2 w-100">
+                            <a href="{{ route('login') }}" class="btn btn-outline-primary mt-2 w-100">
                                 Reservar ahora
                             </a>
                         @endauth

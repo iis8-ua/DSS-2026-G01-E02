@@ -16,6 +16,8 @@ return new class extends Migration
             $table->decimal('latitud', 10, 7);
             $table->decimal('longitud', 10, 7);
             $table->integer('piso');
+
+            $table->unique(['latitud', 'longitud', 'piso']);
         });
     }
 

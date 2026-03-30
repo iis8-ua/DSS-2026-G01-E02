@@ -29,6 +29,7 @@
         .footer-ua {
             background-color: #f8f9fa;
             border-top: 4px solid #003366;
+            z-index: 10000;
         }
         .hover-blue:hover {
             color: #003366 !important;
@@ -88,8 +89,12 @@
         /*
             NOTIFICACIONES
         */
+        #notifications_container{
+            overflow-y: visible;
+        }
+
         .notification {
-            border: 1px solid #888888aa;
+            background-color: #dfdfdfff;
             border-radius: 8px;
             padding: 10px;
             width: 100%;
@@ -118,6 +123,14 @@
                     height: 100% !important;
                 }
             }
+        }
+
+        #notif-close-all {
+            border-radius: 8px;
+            background-color: #cccccc;
+            padding: 8px 16px;
+            border: none;
+            outline: none;
         }
 
     </style>
@@ -168,17 +181,6 @@
 
         }
     })
-
-    /**
-     * BOTÓN DE CIERRE DE NOTIFICACIÓN
-     */
-    const notifications = document.getElementsByClassName("notification");
-    Array.from(notifications).forEach(n => {
-        let button = n.querySelector("button");
-        button.addEventListener("click", () => {
-            n.remove();
-        })
-    });
 </script>
 
 @yield('scripts')

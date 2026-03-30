@@ -24,11 +24,11 @@ class EspacioSeeder extends Seeder
         $tipoSalaEstudio = TipoEspacio::where('nombre', 'Sala de Estudio')->first();
         $tipoDeportes    = TipoEspacio::firstOrCreate(['nombre' => 'Instalación Deportiva']);
 
-        $locOriginal   = Localizacion::where('latitud', 40.5)->where('longitud', -3.5)->where('piso', 2)->first();
-        $locPlantaBaja = Localizacion::where('latitud', 40.5)->where('longitud', -3.5)->where('piso', 0)->first();
-        $locFacultad   = Localizacion::where('latitud', 40.501)->where('longitud', -3.502)->where('piso', 1)->first();
-        $locBiblioteca = Localizacion::where('latitud', 40.505)->where('longitud', -3.495)->where('piso', 1)->first();
-        $locAulario    = Localizacion::where('latitud', 41.0)->where('longitud', -2.0)->where('piso', 1)->first();
+        $locOriginal   = Localizacion::where('latitud', 38.384)->where('longitud', -0.512)->where('piso', 2)->first();
+        $locPlantaBaja = Localizacion::where('latitud', 38.3845)->where('longitud', -0.5125)->where('piso', 0)->first();
+        $locFacultad   = Localizacion::where('latitud', 38.3835)->where('longitud', -0.5115)->where('piso', 1)->first();
+        $locBiblioteca = Localizacion::where('latitud', 38.3830)->where('longitud', -0.5130)->where('piso', 1)->first();
+        $locAulario    = Localizacion::where('latitud', 38.3850)->where('longitud', -0.5140)->where('piso', 1)->first();
 
         if ($tipoLab && $locOriginal) {
             $espacio=Espacio::create([

@@ -222,4 +222,17 @@ return [
             'required' => 'Debes seleccionar un solicitante.',
             'exists'   => 'El solicitante seleccionado no es válido.',
         ],
+        'user_id' => [
+            'required' => 'Debes seleccionar un usuario.',
+            'exists'   => 'El usuario seleccionado no existe en la base de datos.',
+        ],
+        'descripcion' => [
+            'required' => 'La descripción de la incidencia es obligatoria.',
+            'max'      => 'La descripción no puede superar los 1000 caracteres.',
+        ],
+        'foto' => [
+            'image' => 'El archivo subido debe ser una imagen.',
+            'mimes' => 'La imagen debe tener formato: jpeg, png o jpg.',
+            'max'   => 'La fotografía no puede pesar más de 2MB.',
+        ],
     ],];
