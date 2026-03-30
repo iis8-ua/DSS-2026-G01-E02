@@ -66,32 +66,26 @@
                                 name="fecha"
                                 value="{{ old('fecha') }}"
                                 min="{{ now()->toDateString() }}"
+                                max="{{ now()->addDays(5)->toDateString() }}"
                                 required
                             >
                         </div>
 
                         <div class="mb-3">
-                            <label for="hora_inicio" class="form-label">Hora de inicio</label>
-                            <input
-                                type="time"
+                            <label for="horario" class="form-label">Franja horaria</label>
+                            <select
                                 class="form-control"
-                                id="hora_inicio"
-                                name="hora_inicio"
-                                value="{{ old('hora_inicio') }}"
+                                id="horario"
+                                name="horario"
+                                value="{{ old('horario') }}"
                                 required
                             >
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="hora_fin" class="form-label">Hora de fin</label>
-                            <input
-                                type="time"
-                                class="form-control"
-                                id="hora_fin"
-                                name="hora_fin"
-                                value="{{ old('hora_fin') }}"
-                                required
-                            >
+                                @foreach ($horariosDisponibles as $horario)
+                                    <option>
+                                        {{ $horario->inicio->format('H:i') }} - {{ $horario->fin->format('H:i') }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">

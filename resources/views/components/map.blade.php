@@ -5,7 +5,6 @@
     $ua_zoomLevel = 17;
 @endphp
 
-
 <div id="leaflet-map" class="h-full w-full" style="height: 100vh; z-index: 1"></div>
 <link
     rel="stylesheet"
@@ -46,10 +45,12 @@
             if (loc.latitud && loc.longitud) {
                 const marker = L.marker([loc.latitud, loc.longitud]).addTo(map);
                     marker.bindPopup(`
-                    <strong>${loc.nombre}</strong><br />
-                    <a href="/reservas/nueva/${loc.id}">
-                        Reservar
-                    </a>
+                    <div class='d-flex flex-column justify-content-center'>
+                        <strong class='m-2'>${loc.nombre}</strong><br />
+                        <a class='btn btn-primary' style='color: white' href="/reservas/nueva/${loc.id}">
+                            Reservar
+                        </a>
+                    </div>
                 `);
             }
         });

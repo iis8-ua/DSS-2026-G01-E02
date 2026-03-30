@@ -25,6 +25,7 @@
                     <a class="nav-link" href="{{ route('incidencias.index') }}">Incidencias</a>
                 </li>
                 @endauth
+                
             </ul>
 
             <ul class="navbar-nav">

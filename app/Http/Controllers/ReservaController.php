@@ -105,30 +105,13 @@ class ReservaController extends Controller
     {
         $request->validate([
             'fecha' => 'required|date|after_or_equal:today',
-            'hora_inicio' => 'required|date_format:H:i',
-            'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
+            'horario' => 'required',
         ]);
 
-        $horaInicioTexto = $request->hora_inicio;
-        $horaFinTexto = $request->hora_fin;
+        $horario = explode(' - ',$request->horario);
 
-        $horarioValido = $espacio->horario()->get()->contains(function ($horario) use ($horaInicioTexto, $horaFinTexto) {
-            $inicioHorario = $horario->inicio->format('H:i');
-            $finHorario = $horario->fin->format('H:i');
-
-            return $horaInicioTexto >= $inicioHorario && $horaFinTexto <= $finHorario;
-        });
-
-        if (!$horarioValido) {
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'hora_inicio' => 'La franja seleccionada no está dentro del horario disponible del espacio.'
-                ]);
-        }
-
-        $inicio = $request->fecha . ' ' . $horaInicioTexto . ':00';
-        $fin = $request->fecha . ' ' . $horaFinTexto . ':00';
+        $inicio = $request->fecha . ' ' . $horario[0] . ':00';
+        $fin = $request->fecha . ' ' . $horario[1] . ':00';
 
         $solapa = Reserva::where('espacio_id', $espacio->id)
             ->where(function ($query) use ($inicio, $fin) {

@@ -25,12 +25,6 @@ Route::post('/notificacion/viewall', [NotificationController::class, 'viewAllNot
 Route::get('/catalogo', [EspacioController::class, 'catalogo'])->name('espacios.catalogo');
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
-Route::get('/blog', function () {
-    return view('blog', [
-        'incidencias' => [],
-    ]);
-})->name('blog');
-
 Route::get('/perfil', [UsuarioController::class, 'perfil'])
     ->middleware('auth')
     ->name('perfil');
@@ -72,3 +66,6 @@ Route::resource('localizaciones', LocalizacionController::class);
 Route::resource('horarios', HorarioController::class);
 Route::resource('incidencias', IncidenciaController::class);
 Route::resource('reservas', ReservaController::class);
+Route::resource('usuarios', UsuarioController::class);
+Route::get('/perfil/{usuario}/editar', [UsuarioController::class, 'editPerfil'])->name('usuario.edit-perfil');
+Route::put('/perfil/{usuario}/actualizar', [UsuarioController::class, 'updatePerfil'])->name('usuario.update-perfil');

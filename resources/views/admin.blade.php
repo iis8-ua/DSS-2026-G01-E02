@@ -22,7 +22,7 @@
                     </div>
                     <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalEspacios }}</h2>
                     <br>
-                    <a href="{{ route('espacios.index') }}" class="btn btn-primary w-100" style="background-color: #003366; border-color: #003366;">Gestionar Espacios</a>
+                    <a href="{{ route('espacios.index') }}" class="btn btn-outline-primary w-100" >Gestionar Espacios</a>
                 </div>
             </div>
         </div>
@@ -93,6 +93,19 @@
                     <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalIncidencias }}</h2>
                     <br>
                     <a href="{{ route('incidencias.index') }}" class="btn btn-outline-dark w-100">Gestionar Incidencias</a>
+                </div>
+            </div>
+        </div>
+        {{-- Usuarios --}}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-start border-4 border-info hover-shadow transition">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title text-muted mb-0 fw-bold">USUARIOS</h5>
+                    </div>
+                    <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalUsuarios }}</h2>
+                    <br>
+                    <a href="{{ route('usuarios.index') }}" class="btn btn-outline-info w-100">Gestionar Usuarios</a>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold text-dark" style="color: #003366"><i class="bi bi-person-circle text-primary me-2"></i>Mi Perfil</h2>
-        <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil"></i> Editar Perfil</a>
+        <a href="{{ route('usuario.edit-perfil', $usuario->id) }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil"></i> Editar Perfil</a>
     </div>
     {{-- crea el recuadro donde salen los datos personales del usuario --}}
     <div class="card shadow-sm border-0 mb-4">
