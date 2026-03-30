@@ -1,51 +1,60 @@
-@php
-    $days = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-    $calendarDays = range(1, 31);
-@endphp
+@props([
+    'horariosDisponibles' => collect(),
+    'reservasExistentes' => collect(),
+])
 
 <div class="card shadow-sm border-0">
     <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <button type="button" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-chevron-left"></i>
-            </button>
+        <h2 class="h5 mb-4 fw-bold">Disponibilidad del espacio</h2>
 
-            <h2 class="h5 mb-0 fw-bold">Marzo 2026</h2>
+        <div class="mb-4">
+            <h3 class="h6 fw-semibold">Horarios permitidos</h3>
 
-            <button type="button" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-chevron-right"></i>
-            </button>
+            @if($horariosDisponibles->isEmpty())
+                <p class="text-muted mb-0">Este espacio no tiene horarios configurados.</p>
+            @else
+                <div class="list-group">
+                    @foreach($horariosDisponibles as $horario)
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Disponible</span>
+                            <span class="fw-semibold">
+                                {{ $horario->inicio->format('H:i') }} - {{ $horario->fin->format('H:i') }}
+                            </span>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
-        <div class="row text-center fw-semibold text-muted mb-2">
-            @foreach($days as $day)
-                <div class="col">{{ $day }}</div>
-            @endforeach
+        <div class="mb-3">
+            <h3 class="h6 fw-semibold">Reservas ya registradas</h3>
+
+            @if($reservasExistentes->isEmpty())
+                <p class="text-success mb-0">Todavía no hay reservas para este espacio.</p>
+            @else
+                <div class="list-group">
+                    @foreach($reservasExistentes as $reserva)
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold">
+                                    {{ $reserva->hora_inicio->format('d/m/Y') }}
+                                </div>
+                                <small class="text-muted">
+                                    Estado: {{ $reserva->estado->value }}
+                                </small>
+                            </div>
+                            <span class="fw-semibold">
+                                {{ $reserva->hora_inicio->format('H:i') }} - {{ $reserva->hora_fin->format('H:i') }}
+                            </span>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
-        @foreach(array_chunk($calendarDays, 7) as $week)
-            <div class="row text-center mb-2">
-                @foreach($week as $dayNumber)
-                    <div class="col mb-2">
-                        <button
-                            type="button"
-                            class="btn btn-light border w-100"
-                            style="min-height: 48px;"
-                        >
-                            {{ $dayNumber }}
-                        </button>
-                    </div>
-                @endforeach
-
-                @for($i = count($week); $i < 7; $i++)
-                    <div class="col mb-2"></div>
-                @endfor
-            </div>
-        @endforeach
-
-        <div class="mt-3">
-            <span class="badge text-bg-success me-2">Disponible</span>
-            <span class="badge text-bg-secondary">No disponible</span>
+        <div class="mt-4">
+            <span class="badge text-bg-success me-2">Horario permitido</span>
+            <span class="badge text-bg-secondary">Reserva existente</span>
         </div>
     </div>
 </div>

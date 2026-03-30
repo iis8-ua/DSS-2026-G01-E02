@@ -11,14 +11,20 @@ class UsuarioController extends Controller
     //
     public function perfil(){
         $usuario = Auth::user();
-        /*$usuario = new Usuario();
-        $usuario->name = "Usuario";
-        $usuario->apellidos = "Apellido1 Apellido2";
-        $usuario->email = "usuario@ejemplo.com";
-        $usuario->password = "123456";
-        $usuario->dni = "00000000T";
-        $usuario->tipo_usuario = "gestor";*/
-        return view('usuario', ['usuario' => $usuario]);
+
+        $reservas = collect();
+
+        if (str_contains(strtolower($usuario->tipo_usuario), 'alumno')) {
+            $reservas = \App\Models\Reserva::with('espacio')
+                ->where('alumno_id', $usuario->id)
+                ->orderBy('hora_inicio', 'desc')
+                ->get();
+        }
+
+        return view('usuario', [
+            'usuario' => $usuario,
+            'reservas' => $reservas,
+        ]);
     }
 
     //funcion para listar a los usuarios en el admin
