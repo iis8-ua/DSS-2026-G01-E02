@@ -74,7 +74,7 @@ class UsuarioController extends Controller
             $data['password'] = Hash::make($request->password);
         }
         $usuario->update($data);
-        return redirect()->route('usuario.perfil')->with('success', 'Perfil actualizado correctamente.');
+        return redirect()->route('perfil')->with('success', 'Perfil actualizado correctamente.');
     }
     public function editPerfil(Usuario $usuario) {
         return view('usuarios.update-perfil', ['usuario' => $usuario]);

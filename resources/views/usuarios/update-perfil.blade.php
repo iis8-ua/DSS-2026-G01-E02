@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body p-4">
                     {{-- Apuntamos al método update y pasamos el ID del usuario --}}
-                    <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
+                    <form action="{{ route('usuario.update-perfil', $usuario->id) }}" method="POST">
                         @csrf
                         @method('PUT') {{-- Petición PUT para actualizar --}}
                         
@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ route('usuarios.index') }}" class="btn btn-light border">Cancelar</a>
+                            <a href="{{ route('perfil') }}" class="btn btn-light border">Cancelar</a>
                             <button type="submit" class="btn text-white" style="background-color: #003366;">Actualizar Perfil</button>
                         </div>
                     </form>
