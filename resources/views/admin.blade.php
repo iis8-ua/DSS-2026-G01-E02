@@ -22,7 +22,7 @@
                     </div>
                     <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalEspacios }}</h2>
                     <br>
-                    <a href="{{ route('espacios.index') }}" class="btn btn-primary w-100" style="background-color: #003366; border-color: #003366;">Gestionar Espacios</a>
+                    <a href="{{ route('espacios.index') }}" class="btn btn-outline-primary w-100" >Gestionar Espacios</a>
                 </div>
             </div>
         </div>
