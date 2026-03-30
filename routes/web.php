@@ -67,3 +67,4 @@ Route::resource('localizaciones', LocalizacionController::class);
 Route::resource('horarios', HorarioController::class);
 Route::resource('incidencias', IncidenciaController::class);
 Route::resource('usuarios', UsuarioController::class);
+Route::resource('reservas', ReservaController::class);

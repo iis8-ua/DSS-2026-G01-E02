@@ -52,7 +52,9 @@
                     <td>{{ $usuario->name }} {{ $usuario->apellidos }}</td>
                     <td>{{ $usuario->email }}</td>
                     <td>
-                        <span class="badge bg-info text-dark text-uppercase">{{ $usuario->tipo_usuario }}</span>
+                        <span class="badge bg-info text-dark text-uppercase">
+                            {{ $usuario->tipo_usuario == 'GESTOR_ESPACIOS' ? 'gestor' : $usuario->tipo_usuario }}
+                        </span>
                     </td>
                     <td class="text-end">
                         <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro que deseas eliminar este usuario?');">
