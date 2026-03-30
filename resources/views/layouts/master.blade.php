@@ -31,6 +31,22 @@
             overflow-x: hidden;
             overflow-y: auto;
             max-width: 100vw;
+            width: 100vw;
+            height: 100vw;
+        }
+
+        main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /*
+            MAPA
+        */
+        #leaflet-map {
+            width: 100% !important;
+            height: 100% !important;
         }
 
         /*
