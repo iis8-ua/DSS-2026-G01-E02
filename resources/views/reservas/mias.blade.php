@@ -54,13 +54,6 @@
                                         -
                                         {{ $reserva->hora_fin->format('H:i') }}
                                     </p>
-
-                                    @if(isset($reserva->espacio->localizacion) && $reserva->espacio->localizacion)
-                                        <p class="text-muted mb-0">
-                                            Localización:
-                                            {{ $reserva->espacio->localizacion->nombre }}
-                                        </p>
-                                    @endif
                                 </div>
 
                                 <div>
