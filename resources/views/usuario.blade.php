@@ -37,7 +37,7 @@
     </div>
 
     @if(str_contains(strtolower($usuario->tipo_usuario), 'alumno'))
-        @include('components.section_alumno')
+        @include('components.section_alumno', ['reservas' => $reservas ?? collect()])
     @else
         @include('components.section_personal')
     @endif

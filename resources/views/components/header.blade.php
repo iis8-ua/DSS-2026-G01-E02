@@ -19,10 +19,10 @@
                 </li>
                 @auth
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Mis Reservas</a>
+                    <a class="nav-link" href="{{ route('reservas.mias') }}">Mis Reservas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Incidencias</a>
+                    <a class="nav-link" href="{{ route('incidencias.index') }}">Incidencias</a>
                 </li>
                 @endauth
             </ul>

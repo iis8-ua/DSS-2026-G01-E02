@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\EstadoReserva;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
-use \App\Models\Espacio;
-use \App\Models\Usuario;
+use App\Models\Espacio;
+use App\Models\Usuario;
 
 class ReservaController extends Controller
 {
@@ -14,10 +14,8 @@ class ReservaController extends Controller
      * Listado de reservas para el administrador con buscador y paginación
      */
     public function index(Request $request){
-        // cargamos las relaciones
         $query = Reserva::with(['alumno', 'espacio']);
 
-        // buscador
         if ($request->filled('buscar')) {
             $busqueda = strtolower($request->input('buscar'));
 
@@ -41,17 +39,28 @@ class ReservaController extends Controller
             $query->orderBy("reservas.{$campoOrden}", $direccion);
         }
 
-        // paginación
         $reservas = $query->paginate(10)->appends($request->query());
 
         return view('reservas.index', compact('reservas'));
     }
 
     /**
+     * Mostrar reservas del usuario autenticado
+     */
+    public function misReservas()
+    {
+        $reservas = Reserva::with('espacio')
+            ->where('alumno_id', auth()->id())
+            ->orderBy('hora_inicio', 'desc')
+            ->get();
+
+        return view('reservas.mias', compact('reservas'));
+    }
+
+    /**
      * Muestra los detalles de una reserva específica
      */
     public function show(Reserva $reserva){
-        // Cargamos la vista de detalle
         return view('reservas.show', compact('reserva'));
     }
 
@@ -76,6 +85,79 @@ class ReservaController extends Controller
     }
 
     /**
+     * Formulario de nueva reserva desde el catálogo
+     */
+    public function nueva(Espacio $espacio)
+    {
+        $horariosDisponibles = $espacio->horario()->orderBy('inicio')->get();
+
+        $reservasExistentes = Reserva::where('espacio_id', $espacio->id)
+            ->orderBy('hora_inicio')
+            ->get();
+
+        return view('new_reservation', compact('espacio', 'horariosDisponibles', 'reservasExistentes'));
+    }
+
+    /**
+     * Guardar nueva reserva desde el catálogo
+     */
+    public function guardarNueva(Request $request, Espacio $espacio)
+    {
+        $request->validate([
+            'fecha' => 'required|date|after_or_equal:today',
+            'hora_inicio' => 'required|date_format:H:i',
+            'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
+        ]);
+
+        $horaInicioTexto = $request->hora_inicio;
+        $horaFinTexto = $request->hora_fin;
+
+        $horarioValido = $espacio->horario()->get()->contains(function ($horario) use ($horaInicioTexto, $horaFinTexto) {
+            $inicioHorario = $horario->inicio->format('H:i');
+            $finHorario = $horario->fin->format('H:i');
+
+            return $horaInicioTexto >= $inicioHorario && $horaFinTexto <= $finHorario;
+        });
+
+        if (!$horarioValido) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'hora_inicio' => 'La franja seleccionada no está dentro del horario disponible del espacio.'
+                ]);
+        }
+
+        $inicio = $request->fecha . ' ' . $horaInicioTexto . ':00';
+        $fin = $request->fecha . ' ' . $horaFinTexto . ':00';
+
+        $solapa = Reserva::where('espacio_id', $espacio->id)
+            ->where(function ($query) use ($inicio, $fin) {
+                $query->where('hora_inicio', '<', $fin)
+                      ->where('hora_fin', '>', $inicio);
+            })
+            ->exists();
+
+        if ($solapa) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'hora_inicio' => 'Ya existe una reserva en ese tramo horario.'
+                ]);
+        }
+
+        Reserva::create([
+            'alumno_id' => auth()->id(),
+            'espacio_id' => $espacio->id,
+            'hora_inicio' => $inicio,
+            'hora_fin' => $fin,
+            'estado' => EstadoReserva::PENDIENTE,
+        ]);
+
+        return redirect()->route('reservas.mias')
+            ->with('success', 'La reserva se ha creado correctamente.');
+    }
+
+    /**
      * Función para editar una reserva con un formulario
      */
     public function edit(Reserva $reserva){
@@ -87,8 +169,6 @@ class ReservaController extends Controller
      * Función para actualizar una reserva desde un formulario con validación
      */
     public function update(Request $request, Reserva $reserva){
-        // validamos los campos
-        // el espacio tiene que existir y la fecha ser correcta
         $request->validate([
             'estado'      => 'required|string',
             'espacio_id'  => 'required|exists:espacios,id',
@@ -96,7 +176,6 @@ class ReservaController extends Controller
             'hora_fin'    => 'required|date|after:hora_inicio',
         ]);
 
-        // recuperamos los datos importantes
         $datos = $request->only(['estado', 'espacio_id', 'hora_inicio', 'hora_fin']);
         $reserva->update($datos);
 
@@ -107,11 +186,9 @@ class ReservaController extends Controller
      * Función que te lleva al formulario para crear una nueva reserva
      */
     public function create(){
-        // obtenemos el espacio y el usuario
         $espacios = Espacio::orderBy('nombre')->get();
         $usuarios = Usuario::orderBy('name')->get();
 
-        // redirigimos a la vista con el formulario
         return view('reservas.create', compact('espacios', 'usuarios'));
     }
 
@@ -119,7 +196,6 @@ class ReservaController extends Controller
      * Guarda una nueva reserva en la base de datos
      */
     public function store(Request $request){
-        // validamos los datos
         $request->validate([
             'alumno_id'   => 'required|exists:usuarios,id',
             'espacio_id'  => 'required|exists:espacios,id',
@@ -128,8 +204,7 @@ class ReservaController extends Controller
             'estado'      => 'required|string',
         ]);
 
-        // creamos la reserva principal
-        $reserva = Reserva::create([
+        Reserva::create([
             'alumno_id'   => $request->alumno_id,
             'espacio_id'  => $request->espacio_id,
             'hora_inicio' => $request->hora_inicio,
@@ -137,20 +212,15 @@ class ReservaController extends Controller
             'estado'      => $request->estado,
         ]);
 
-        // Redirigimos al listado con un mensaje de éxito
         return redirect()->route('reservas.index')->with('success', 'La reserva se ha creado correctamente.');
     }
-
 
     /**
      * Función para borrar una reserva
      */
     public function destroy(Reserva $reserva){
-        // Eliminamos la reserva principal
         $reserva->delete();
 
-        // Redirigimos al listado con un mensaje de confirmación
         return redirect()->route('reservas.index')->with('success', 'La reserva ha sido eliminada correctamente.');
     }
-
 }

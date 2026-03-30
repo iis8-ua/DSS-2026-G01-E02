@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\HorarioController;
-use App\Models\Espacio;
-
 
 Route::get('/', [MapController::class, 'map'])
     ->middleware('auth')
@@ -37,6 +35,9 @@ Route::get('/perfil', [UsuarioController::class, 'perfil'])
     ->middleware('auth')
     ->name('perfil');
 
+Route::get('/mis-reservas', [ReservaController::class, 'misReservas'])
+    ->middleware('auth')
+    ->name('reservas.mias');
 
 Route::view('/login', 'login')
     ->middleware('guest')
@@ -49,9 +50,13 @@ Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-Route::get('/reservas/nueva/{espacio}', function (Espacio $espacio) {
-    return view('new_reservation', compact('espacio'));
-})->name('reservas.nueva');
+Route::get('/reservas/nueva/{espacio}', [ReservaController::class, 'nueva'])
+    ->middleware('auth')
+    ->name('reservas.nueva');
+
+Route::post('/reservas/nueva/{espacio}', [ReservaController::class, 'guardarNueva'])
+    ->middleware('auth')
+    ->name('reservas.guardarNueva');
 
 Route::view('/aviso-legal', 'aviso-legal')->name('legal.aviso');
 Route::view('/privacidad', 'privacidad')->name('legal.privacidad');
@@ -66,3 +71,4 @@ Route::resource('tipos-espacio', TipoEspacioController::class);
 Route::resource('localizaciones', LocalizacionController::class);
 Route::resource('horarios', HorarioController::class);
 Route::resource('incidencias', IncidenciaController::class);
+Route::resource('reservas', ReservaController::class);
