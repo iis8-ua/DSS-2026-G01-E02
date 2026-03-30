@@ -21,13 +21,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('reservas.mias') }}">Mis Reservas</a>
                 </li>
-
-                    @if(Auth::user()->tipo_usuario == "GESTOR_ESPACIOS")
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('incidencias.index') }}">Incidencias</a>
-                    </li>
-                    @endif
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('incidencias.index') }}">Incidencias</a>
+                </li>
                 @endauth
+                
             </ul>
 
             <ul class="navbar-nav">

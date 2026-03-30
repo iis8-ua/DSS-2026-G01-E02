@@ -8,15 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-
-    {{-- -
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <script src="https://cdn.tailwindcss.com"></script>
-    @endif
-
-    --}}
     <style>
         .navbar-ua {
             background-color: #003366;
@@ -103,9 +94,9 @@
             & button {
                 position: absolute;
                 right: 15%;
-                background-color: #e6624bff;
-                border: none;
-                outline: none;
+                background-color: #e6624bff !important;
+                border: none !important;
+                outline: none !important;
                 border-radius: 50%;
                 width: 20px;
                 height: 20px;

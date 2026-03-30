@@ -25,12 +25,6 @@ Route::post('/notificacion/viewall', [NotificationController::class, 'viewAllNot
 Route::get('/catalogo', [EspacioController::class, 'catalogo'])->name('espacios.catalogo');
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
-Route::get('/blog', function () {
-    return view('blog', [
-        'incidencias' => [],
-    ]);
-})->name('blog');
-
 Route::get('/perfil', [UsuarioController::class, 'perfil'])
     ->middleware('auth')
     ->name('perfil');

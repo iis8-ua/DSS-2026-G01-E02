@@ -43,7 +43,14 @@
                             @endif
                         </a>
                     </th>
+                    {{-- 
+                        Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
+                        hasta que tengamos la autenticación de administrador terminada, para poder hacer 
+                        demostraciones técnicas.
+                    --}}
+                    @if(Auth::user()->tipo_usuario == "GESTOR_ESPACIOS")
                     <th class="text-end" style="width: 150px;">Acciones</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -64,6 +71,13 @@
                         {{ $incidencia->descripcion }}
                     </td>
                     <td>{{ $incidencia->usuario->getFullName() ?? 'Usuario Desconocido' }}</td>
+
+                    {{-- 
+                        Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
+                        hasta que tengamos la autenticación de administrador terminada, para poder hacer 
+                        demostraciones técnicas.
+                    --}}
+                    @if(Auth::user()->tipo_usuario == "GESTOR_ESPACIOS")
                     <td class="text-end">
                         <form action="{{ route('incidencias.destroy', $incidencia->id) }}" method="POST" class="d-inline"
                               onsubmit="return confirm('¿Seguro que deseas eliminar esta incidencia? Si tiene foto, también se borrará.');">
@@ -77,6 +91,7 @@
                             </button>
                         </form>
                     </td>
+                    @endif
                 </tr>
                 @empty
                 <tr><td colspan="5" class="text-center text-muted py-4">No hay incidencias registradas.</td></tr>
