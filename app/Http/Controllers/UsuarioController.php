@@ -27,8 +27,92 @@ class UsuarioController extends Controller
         ]);
     }
 
+    //funcion para listar a los usuarios en el admin
+    public function index(Request $request){
+        $query = Usuario::query();
+
+        //para la busqueda por nombre, apellidos, email, dni
+        if ($request->filled('buscar')) {
+            $query->where('name', 'like', '%' . $request->input('buscar') . '%')
+                  ->orWhere('apellidos', 'like', '%' . $request->input('buscar') . '%')
+                  ->orWhere('email', 'like', '%' . $request->input('buscar') . '%')
+                  ->orWhere('dni', 'like', '%' . $request->input('buscar') . '%');
+        }
+
+        //ordenación alfabeticamente por el nombre
+        $campoOrden = $request->input('ordenar_por', 'name');
+        $direccion = $request->input('direccion', 'asc');
+        $query->orderBy($campoOrden, $direccion);
+
+        //paginación, 10  por pagina y con el append no se pierde la busqueda y ordenacion al pasar de pagina
+        $usuarios = $query->paginate(10)->appends($request->all());
+        //devolver los datos a la vista
+        return view('usuarios.index', compact('usuarios'));
+    }
+    //funcion editar usuario
+    public function edit(Usuario $usuario){
+        return view('usuarios.edit', ['usuario' => $usuario]);
+    }
+    public function updatePerfil(Request $request, Usuario $usuario){
+        //validamos los datos y verificamos los dni
+        $request->validate([
+            'dni' => 'required|string|max:15|unique:usuarios,dni,' . $usuario->id,
+            'nombre' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
+            'password' => 'nullable|string|min:6', // puede ser null
+        ]);
+        //se actualizan los datos
+        $data = [
+            'dni' => $request->dni,
+            'name' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
+        ];
+        //si hay nueva contraseña se encripta y se añade
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+        $usuario->update($data);
+        return redirect()->route('perfil')->with('success', 'Perfil actualizado correctamente.');
+    }
+    public function editPerfil(Usuario $usuario) {
+        return view('usuarios.update-perfil', ['usuario' => $usuario]);
+    }
+    //funcion para update usuario
+    public function update(Request $request, Usuario $usuario){
+        //validamos los datos y verificamos los dni
+        $request->validate([
+            'dni' => 'required|string|max:15|unique:usuarios,dni,' . $usuario->id,
+            'nombre' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
+            'password' => 'nullable|string|min:6', // puede ser null
+            'tipo_usuario' => 'required|string|in:alumno,gestor_espacios',
+        ]);
+        //se actualizan los datos
+        $data = [
+            'dni' => $request->dni,
+            'name' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
+            'tipo_usuario' => $request->tipo_usuario,
+        ];
+        //si hay nueva contraseña se encripta y se añade
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+        $usuario->update($data);
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
+    }
+    //funcion para eliminar al usuario
+    public function destroy(Usuario $usuario){
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
+    }
+    // función para llamar a la vista de crear usuarios desde el Admin
     public function create(){
-        return view('create-usuarios');
+        return view('usuarios.create');
     }
 
     // método para guardar el usuario en la base de datos
@@ -60,6 +144,6 @@ class UsuarioController extends Controller
         $usuario->save();
 
         // redirigimos a la vista del admin con un mensaje
-        return redirect()->route('admin')->with('success', 'Usuario añadido correctamente.');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario añadido correctamente.');
     }
 }

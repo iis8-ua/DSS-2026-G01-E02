@@ -96,6 +96,19 @@
                 </div>
             </div>
         </div>
+        {{-- Usuarios --}}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-start border-4 border-info hover-shadow transition">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title text-muted mb-0 fw-bold">USUARIOS</h5>
+                    </div>
+                    <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalUsuarios }}</h2>
+                    <br>
+                    <a href="{{ route('usuarios.index') }}" class="btn btn-outline-info w-100">Gestionar Usuarios</a>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

@@ -66,3 +66,6 @@ Route::resource('localizaciones', LocalizacionController::class);
 Route::resource('horarios', HorarioController::class);
 Route::resource('incidencias', IncidenciaController::class);
 Route::resource('reservas', ReservaController::class);
+Route::resource('usuarios', UsuarioController::class);
+Route::get('/perfil/{usuario}/editar', [UsuarioController::class, 'editPerfil'])->name('usuario.edit-perfil');
+Route::put('/perfil/{usuario}/actualizar', [UsuarioController::class, 'updatePerfil'])->name('usuario.update-perfil');
