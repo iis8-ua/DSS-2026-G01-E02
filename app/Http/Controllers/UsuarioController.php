@@ -47,6 +47,32 @@ class UsuarioController extends Controller
     public function edit(Usuario $usuario){
         return view('usuarios.edit', ['usuario' => $usuario]);
     }
+    public function updatePerfil(Request $request, Usuario $usuario){
+        //validamos los datos y verificamos los dni
+        $request->validate([
+            'dni' => 'required|string|max:15|unique:usuarios,dni,' . $usuario->id,
+            'nombre' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
+            'password' => 'nullable|string|min:6', // puede ser null
+        ]);
+        //se actualizan los datos
+        $data = [
+            'dni' => $request->dni,
+            'name' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
+        ];
+        //si hay nueva contraseña se encripta y se añade
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+        $usuario->update($data);
+        return redirect()->route('usuario.perfil')->with('success', 'Perfil actualizado correctamente.');
+    }
+    public function editPerfil(Usuario $usuario) {
+        return view('usuarios.update-perfil', ['usuario' => $usuario]);
+    }
     //funcion para update usuario
     public function update(Request $request, Usuario $usuario){
         //validamos los datos y verificamos los dni
