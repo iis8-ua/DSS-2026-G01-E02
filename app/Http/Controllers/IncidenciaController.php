@@ -139,4 +139,11 @@ class IncidenciaController extends Controller{
         $incidencia->delete();
         return redirect()->route('incidencias.index')->with('success', 'Incidencia eliminada del sistema.');
     }
+
+    /**
+     * Funcion para ver una incidencia
+     */
+    public function show(Incidencia $incidencia){
+        return view('incidencias.show', compact('incidencia'));
+    }
 }
