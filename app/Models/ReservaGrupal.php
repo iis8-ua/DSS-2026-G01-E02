@@ -24,7 +24,7 @@ class ReservaGrupal extends Model{
     //relacion con el alumno para ver los miembros del grupo que es muchos a muchos
     public function alumnos(){
         return $this->belongsToMany(
-            Alumno::class,
+            Usuario::class,
             'alumno_reserva_grupal',
             'reserva_grupal_id',
             'alumno_id'

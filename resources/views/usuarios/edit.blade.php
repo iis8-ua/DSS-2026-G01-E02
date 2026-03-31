@@ -15,7 +15,7 @@
                     <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
                         @csrf
                         @method('PUT') {{-- Petición PUT para actualizar --}}
-                        
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Nombre</label>
@@ -62,7 +62,8 @@
                                 <label class="form-label fw-bold">Tipo de Cuenta</label>
                                 <select name="tipo_usuario" class="form-select @error('tipo_usuario') is-invalid @enderror" required>
                                     <option value="alumno" {{ old('tipo_usuario', $usuario->tipo_usuario) == 'alumno' ? 'selected' : '' }}>Alumno</option>
-                                    <option value="gestor" {{ old('tipo_usuario', $usuario->tipo_usuario) == 'gestor' ? 'selected' : '' }}>Gestor / Admin</option>
+                                    <option value="gestor" {{ old('tipo_usuario', $usuario->tipo_usuario) == 'gestor' ? 'selected' : '' }}>Gestor</option>
+                                    <option value="admin" {{ old('tipo_usuario', $usuario->tipo_usuario) == 'admin' ? 'selected' : '' }}>Admin</option>
                                 </select>
                                 @error('tipo_usuario')
                                     <div class="invalid-feedback">{{ $message }}</div>

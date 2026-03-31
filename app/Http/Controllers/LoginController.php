@@ -15,6 +15,11 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            if (Auth::user()->tipo_usuario === 'ADMIN') {
+                return redirect()->route('admin.index');
+            }
+
             return redirect()->route('inicio');
         }
 
@@ -23,7 +28,7 @@ class LoginController extends Controller
 
     public function logout(Request $request){
         Auth::logout();
-    
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

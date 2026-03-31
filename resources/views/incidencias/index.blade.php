@@ -5,28 +5,36 @@
 @section('content')
 <style>
     .btn-volver {
-        background-color: #f8f9fa; /* Gris muy clarito */
-        border: 1px solid #dee2e6; /* Borde sutil para que destaque sobre el blanco */
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
         color: #495057;
         transition: all 0.2s ease-in-out;
     }
     .btn-volver:hover {
-        background-color: #e9ecef; /* Se oscurece un poco el fondo */
-        color: #003366; /* El texto y el icono pasan a tu azul corporativo */
+        background-color: #e9ecef;
+        color: #003366;
         border-color: #c1c9d0;
-        transform: translateY(-2px); /* Da un pequeño "saltito" hacia arriba */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important; /* La sombra se hace más grande */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
     }
 </style>
 <div class="container my-5 flex-grow-1">
     <div class="bg-white p-5 rounded shadow-sm">
 
         <div class="d-flex justify-content-between align-items-center mb-4">
+                @if(Auth::user()->tipo_usuario == "ADMIN")
                 <a href="{{ route('admin.index') }}" class="btn btn-volver rounded-pill text-decoration-none mb-4 py-2 px-3 d-inline-flex align-items-center shadow-sm">
-                    <i class="bi bi-arrow-left fs-6 me-2"></i> 
+                    <i class="bi bi-arrow-left fs-6 me-2"></i>
                     <span style="font-size: 0.9rem;">Volver al panel</span>
                 </a>
+                @endif
+            @if(Auth::user()->tipo_usuario == "ADMIN")
             <h1 class="h3 mb-0" style="color: #003366;">Gestión de Incidencias</h1>
+            @endif
+
+            @if(Auth::user()->tipo_usuario != "ADMIN")
+            <h1 class="h3 mb-0" style="color: #003366;">Blog de Incidencias</h1>
+            @endif
             <a href="{{ route('incidencias.create') }}" class="btn text-white" style="background-color: #003366;">Añadir Nueva</a>
         </div>
 
@@ -67,8 +75,9 @@
                         hasta que tengamos la autenticación de administrador terminada, para poder hacer
                         demostraciones técnicas.
                     --}}
-                    {{--@if(Auth::user()->tipo_usuario == "GESTOR_ESPACIOS")--}}
+                    @if(Auth::user()->tipo_usuario == "ADMIN")
                     <th class="text-end" style="width: 150px;">Acciones</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -95,7 +104,7 @@
                         hasta que tengamos la autenticación de administrador terminada, para poder hacer
                         demostraciones técnicas.
                     --}}
-                    {{--@if(Auth::user()->tipo_usuario == "ADMIN") --}}
+                    @if(Auth::user()->tipo_usuario == "ADMIN")
                     <td class="text-end">
                         <form action="{{ route('incidencias.destroy', $incidencia->id) }}" method="POST" class="d-inline"
                               onsubmit="return confirm('¿Seguro que deseas eliminar esta incidencia? Si tiene foto, también se borrará.');">
@@ -114,6 +123,7 @@
                             </button>
                         </form>
                     </td>
+                    @endif
                 </tr>
                 @empty
                 <tr><td colspan="5" class="text-center text-muted py-4">No hay incidencias registradas.</td></tr>
