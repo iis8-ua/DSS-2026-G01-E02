@@ -40,6 +40,7 @@ class NotificacionTest extends TestCase
         // Arrange: inicializamos los datos
 
         $notificacion = Notificacion::create([
+            'titulo'  => 'Título de testing',
             'texto'   => 'Notificación de testing',
             'vista'   => false,
             'user_id' => $this->usuario->id
@@ -55,6 +56,7 @@ class NotificacionTest extends TestCase
     {
         // Arrange: creamos una incidencia y la vinculamos
         $notificacion = Notificacion::create([
+            'titulo'  => 'Título de testing',
             'texto' => 'Notificación de testing',
             'vista' => false,
             'incidencia_id' => $this->incidencia->id,
@@ -73,6 +75,7 @@ class NotificacionTest extends TestCase
     {
         // Arrange
         $notificacion = Notificacion::create([
+            'titulo'  => 'Título de testing',
             'texto' => 'Notificación de testing',
             'vista' => false,
             'incidencia_id' => $this->incidencia->id,
