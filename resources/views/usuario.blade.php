@@ -36,11 +36,12 @@
         </div>
     </div>
 
-    @if(str_contains(strtolower($usuario->tipo_usuario), 'alumno'))
+    @if(str_contains(strtolower($usuario->tipo_usuario), 'admin'))
+        @include('components.section_admin')
+    @elseif(str_contains(strtolower($usuario->tipo_usuario), 'alumno'))
         @include('components.section_alumno', ['reservas' => $reservas ?? collect()])
     @else
         @include('components.section_personal')
     @endif
-
 </div>
 @endsection
