@@ -112,6 +112,10 @@
                         <form action="{{ route('notificaciones.destroy', $notificacion->id) }}" method="POST" class="d-inline"
                               onsubmit="return confirm('¿Seguro que deseas eliminar esta notificación? Si tiene imagen, también se borrará.');">
 
+                            <a href="{{ route('notificaciones.show', $notificacion->id) }}" class="btn btn-sm btn-info text-white" title="Ver Detalles">
+                                <i class="bi bi-eye"></i>
+                            </a>
+
                             <a href="{{ route('notificaciones.edit', $notificacion->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                 <i class="bi bi-pencil"></i>
                             </a>

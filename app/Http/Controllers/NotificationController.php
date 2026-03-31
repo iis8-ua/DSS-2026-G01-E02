@@ -144,4 +144,11 @@ class NotificationController extends Controller{
         $notificacion->delete();
         return redirect()->route('notificaciones.index')->with('success', 'Notificación eliminada del sistema.');
     }
+
+    /**
+     * Funcion para ver una notificacion
+     */
+    public function show(Notificacion $notificacion){
+        return view('notificaciones.show', compact('notificacion'));
+    }
 }
