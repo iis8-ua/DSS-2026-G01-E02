@@ -5,7 +5,7 @@
 @section('content')
 <div class="container my-5 flex-grow-1">
     <div class="row justify-content-center">
-        <div class="col-md-8"> 
+        <div class="col-md-8">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white border-bottom-0 pt-4 pb-0 text-center">
                     <h1 class="h4 mb-0" style="color: #003366;">Añadir Usuario</h1>
@@ -13,7 +13,7 @@
                 <div class="card-body p-4">
                     <form action="{{ route('usuarios.store') }}" method="POST">
                         @csrf
-                        
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Nombre</label>
@@ -61,7 +61,8 @@
                                 <select name="tipo_usuario" class="form-select @error('tipo_usuario') is-invalid @enderror">
                                     <option value="">Selecciona un rol...</option>
                                     <option value="alumno" {{ old('tipo_usuario') == 'alumno' ? 'selected' : '' }}>Alumno</option>
-                                    <option value="gestor" {{ old('tipo_usuario') == 'gestor' ? 'selected' : '' }}>Gestor / Admin</option>
+                                    <option value="gestor" {{ old('tipo_usuario') == 'gestor' ? 'selected' : '' }}>Gestor </option>
+                                    <option value="admin" {{ old('tipo_usuario') == 'admin' ? 'selected' : '' }}>Admin </option>
                                 </select>
                                 @error('tipo_usuario')
                                     <div class="invalid-feedback">{{ $message }}</div>

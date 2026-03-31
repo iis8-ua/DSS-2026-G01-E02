@@ -88,7 +88,7 @@ class UsuarioController extends Controller
             'apellidos' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
             'password' => 'nullable|string|min:6', // puede ser null
-            'tipo_usuario' => 'required|string|in:alumno,gestor_espacios',
+            'tipo_usuario' => 'required|string|in:alumno,gestor_espacios,admin',
         ]);
         //se actualizan los datos
         $data = [
@@ -131,15 +131,15 @@ class UsuarioController extends Controller
         // creamos el usuario y asignamos los valores
         $usuario = new Usuario();
         $usuario->dni = $request->dni;
-        
-        $usuario->name = $request->nombre; 
+
+        $usuario->name = $request->nombre;
         $usuario->apellidos = $request->apellidos;
         $usuario->email = $request->email;
 
         // encriptamos la contraseña antes de guardarla
-        $usuario->password = Hash::make($request->password); 
+        $usuario->password = Hash::make($request->password);
         $usuario->tipo_usuario = $request->tipo_usuario;
-        
+
         // Guardamos en la base de datos
         $usuario->save();
 
