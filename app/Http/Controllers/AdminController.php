@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Incidencia;
+use App\Models\Notificacion;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Espacio;
@@ -15,7 +16,6 @@ class AdminController extends Controller
 {
     public function index()
     {
-        // Obtenemos solo los totales para el Dashboard
         $totalUsuarios = Usuario::count();
         $totalEspacios = Espacio::count();
         $totalReservas = Reserva::count();
@@ -23,6 +23,7 @@ class AdminController extends Controller
         $totalLocalizaciones = Localizacion::count();
         $totalHorarios = Horario::count();
         $totalIncidencias=Incidencia::count();
+        $totalNotificaciones = Notificacion::count();
 
         return view('admin', compact(
             'totalUsuarios',
@@ -32,6 +33,7 @@ class AdminController extends Controller
             'totalLocalizaciones',
             'totalHorarios',
             'totalIncidencias',
+            'totalNotificaciones',
         ));
     }
 }

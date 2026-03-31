@@ -110,6 +110,22 @@
             </div>
         </div>
 
+        {{-- Notificaciones --}}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-start border-4 border-secondary hover-shadow transition">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title text-muted mb-0 fw-bold">NOTIFICACIONES</h5>
+                    </div>
+                    <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalNotificaciones }}</h2>
+                    <br>
+                    <a href="{{ route('notificaciones.index') }}" class="btn btn-outline-secondary w-100">Gestionar Notificaciones</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     </div>
 </div>
 
