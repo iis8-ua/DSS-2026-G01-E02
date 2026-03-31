@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Incidencia;
 use App\Models\Notificacion;
+use App\Models\ReservaGrupal;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Espacio;
@@ -24,6 +25,7 @@ class AdminController extends Controller
         $totalHorarios = Horario::count();
         $totalIncidencias=Incidencia::count();
         $totalNotificaciones = Notificacion::count();
+        $totalReservasGrupales = ReservaGrupal::count();
 
         return view('admin', compact(
             'totalUsuarios',
@@ -34,6 +36,7 @@ class AdminController extends Controller
             'totalHorarios',
             'totalIncidencias',
             'totalNotificaciones',
+            'totalReservasGrupales'
         ));
     }
 }

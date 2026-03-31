@@ -6,6 +6,7 @@ use App\Http\Controllers\LocalizacionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ReservaGrupalController;
 use App\Http\Controllers\TipoEspacioController;
 use App\Http\Controllers\ReservaController;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,10 @@ Route::resource('incidencias', IncidenciaController::class);
 
 Route::resource('notificaciones', NotificationController::class)->parameters([
     'notificaciones' => 'notificacion'
+]);
+
+Route::resource('reservas-grupales', ReservaGrupalController::class)->parameters([
+    'reservas-grupales' => 'reservasGrupal'
 ]);
 
 Route::resource('reservas', ReservaController::class);

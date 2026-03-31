@@ -1,7 +1,5 @@
 @extends('layouts.master')
-
 @section('title', 'Panel de Administración')
-
 @section('content')
 <div class="container my-5 flex-grow-1">
 
@@ -79,6 +77,20 @@
                     <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalReservas }}</h2>
                     <br>
                     <a href="{{ route('reservas.index') }}" class="btn btn-outline-info w-100">Gestionar Reservas</a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Reservas Grupales --}}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-start border-4 border-light hover-shadow transition">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title text-muted mb-0 fw-bold">RESERVAS GRUPALES</h5>
+                    </div>
+                    <h2 class="display-5 fw-bold text-dark mb-1">{{ $totalReservasGrupales }}</h2>
+                    <br>
+                    <a href="{{ route('reservas-grupales.index') }}" class="btn btn-outline-secondary w-100">Gestionar Reservas Grupales</a>
                 </div>
             </div>
         </div>
