@@ -8,11 +8,11 @@ class Admin extends Usuario{
         parent::boot();
 
         static::addGlobalScope('admins', function(Builder $builder){
-            $builder->where('tipo_usuario', 'ADMIN');
+            $builder->where('tipo_usuario', self::class);
         });
 
         static::creating(function ($model) {
-            $model->tipo_usuario = 'ADMIN';
+            $model->tipo_usuario = self::class;
         });
 
     }
