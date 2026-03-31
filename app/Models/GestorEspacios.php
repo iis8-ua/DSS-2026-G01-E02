@@ -13,11 +13,11 @@ class GestorEspacios extends Usuario{
 
         //global scope para poner solo lo de los gestores de espacios
         static::addGlobalScope('gestores_espacios', function(Builder $builder){
-            $builder->where('tipo_usuario', self::class);
+            $builder->where('tipo_usuario', 'GESTOR_ESPACIOS');
         });
 
         static::creating(function ($model) {
-            $model->tipo_usuario = self::class;
+            $model->tipo_usuario = 'GESTOR_ESPACIOS';
         });
 
     }

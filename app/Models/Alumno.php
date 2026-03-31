@@ -16,11 +16,11 @@ class Alumno extends Usuario{
 
         //global scope para poner  solo lo de los alumnos
         static::addGlobalScope('alumnos', function(Builder $builder){
-            $builder->where('tipo_usuario', self::class);
+            $builder->where('tipo_usuario', 'ALUMNO');
         });
 
         static::creating(function ($model) {
-            $model->tipo_usuario = self::class;
+            $model->tipo_usuario = 'ALUMNO';
         });
 
     }
