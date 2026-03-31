@@ -48,7 +48,7 @@
                                 <select name="espacio_id" class="form-select @error('espacio_id') is-invalid @enderror">
                                     @foreach($espacios as $esp)
                                     <option value="{{ $esp->id }}" {{ old('espacio_id', $reserva->espacio_id) == $esp->id ? 'selected' : '' }}>
-                                    {{ $esp->nombre }} (Aforo: {{ $esp->aforo }} - Piso: {{ $esp->loc_piso }})
+                                    {{ $esp->nombre }} (Aforo: {{ $esp->aforo }} - Piso: {{ $esp->localizacion?->piso ?? 'Sin asignar' }})
                                     </option>
                                     @endforeach
                                 </select>
