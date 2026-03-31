@@ -55,5 +55,14 @@ class UsuarioSeeder extends Seeder
             'dni'          => '99887766E',
             'tipo_usuario' => 'GESTOR_ESPACIOS',
         ]);
+
+        Usuario::create([
+            'name'         => 'Admin',
+            'apellidos'    => 'Admin Admin',
+            'email'        => 'admin@email.com',
+            'password'     => Hash::make('12345678'),
+            'dni'          => '11111111A',
+            'tipo_usuario' => 'ADMIN',
+        ]);
     }
 }
