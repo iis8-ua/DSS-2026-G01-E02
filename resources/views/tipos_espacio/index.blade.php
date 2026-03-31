@@ -3,10 +3,29 @@
 @section('title', 'Gestión de Tipos de Espacio')
 
 @section('content')
+<style>
+    .btn-volver {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #495057;
+        transition: all 0.2s ease-in-out;
+    }
+    .btn-volver:hover {
+        background-color: #e9ecef;
+        color: #003366;
+        border-color: #c1c9d0;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+    }
+</style>
 <div class="container my-5 flex-grow-1">
     <div class="bg-white p-5 rounded shadow-sm">
 
         <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="{{ route('admin.index') }}" class="btn btn-volver rounded-pill text-decoration-none mb-4 py-2 px-3 d-inline-flex align-items-center shadow-sm">
+                <i class="bi bi-arrow-left fs-6 me-2"></i>
+                <span style="font-size: 0.9rem;">Volver al panel</span>
+            </a>
             <h1 class="h3 mb-0" style="color: #003366;">Gestión de Tipos de Espacio</h1>
             <a href="{{ route('tipos-espacio.create') }}" class="btn btn-primary" style="background-color: #003366; border-color: #003366;">Crear Nuevo</a>
         </div>
