@@ -72,7 +72,7 @@
                     <td>{{ $usuario->email }}</td>
                     <td>
                         <span class="badge bg-info text-dark text-uppercase">
-                            {{ $usuario->tipo_usuario == 'GESTOR_ESPACIOS' ? 'gestor' : $usuario->tipo_usuario }}
+                            {{ strtolower($usuario->tipo_usuario) === 'gestor_espacios' ? 'gestor' : $usuario->tipo_usuario }}
                         </span>
                     </td>
                     <td class="text-end">

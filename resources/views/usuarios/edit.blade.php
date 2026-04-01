@@ -62,7 +62,8 @@
                                 <label class="form-label fw-bold">Tipo de Cuenta</label>
                                 <select name="tipo_usuario" class="form-select @error('tipo_usuario') is-invalid @enderror" required>
                                     <option value="alumno" {{ old('tipo_usuario', $usuario->tipo_usuario) == 'alumno' ? 'selected' : '' }}>Alumno</option>
-                                    <option value="gestor" {{ old('tipo_usuario', $usuario->tipo_usuario) == 'gestor' ? 'selected' : '' }}>Gestor</option>
+                                    
+                                    <option value="gestor_espacios" {{ (old('tipo_usuario', $usuario->tipo_usuario) == 'gestor_espacios' || old('tipo_usuario', $usuario->tipo_usuario) == 'gestor') ? 'selected' : '' }}>Gestor</option>
                                     <option value="admin" {{ old('tipo_usuario', $usuario->tipo_usuario) == 'admin' ? 'selected' : '' }}>Admin</option>
                                 </select>
                                 @error('tipo_usuario')
