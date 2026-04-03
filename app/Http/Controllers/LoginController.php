@@ -16,8 +16,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->tipo_usuario === 'ADMIN') {
+            if (Auth::user()->tipo_usuario === 'admin') {
                 return redirect()->route('admin.index');
+            }
+            else if (Auth::user()->tipo_usuario === 'GESTOR_ESPACIOS') {
+                return redirect()->route('gestor.reservas.pendientes');
             }
 
             return redirect()->route('inicio');
