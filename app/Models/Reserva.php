@@ -6,47 +6,59 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Enums\EstadoReserva;
+use App\Models\Usuario;
+use App\Models\Espacio;
+use App\Models\Horario;
 
-class Reserva extends Model{
+class Reserva extends Model
+{
     use HasFactory, HasUuids;
 
     // ID no autoincremental
     public $incrementing = false;
     protected $keyType = 'string';
+    public $timestamps = false;
 
     protected $fillable = [
         'espacio_id',
-        'user_id',
-        'fecha_inicio',
-        'fecha_fin',
+        'alumno_id',
+        'hora_inicio',
+        'hora_fin',
         'estado'];
 
-    // Relación con el detalle grupal
-    public function reservaGrupal(){
-        return $this->hasOne(ReservaGrupal::class, 'reserva_id');
-    }
-
     // usuario asociado a la reserva
-    public function usuario(){
-        return $this->belongsTo(Usuario::class, 'user_id');
+    public function alumno()
+    {
+        return $this->belongsTo(Usuario::class, 'alumno_id');
     }
 
     // espacio asociado a la reserva
-    public function espacio(){
-        return $this->belongsTo(Espacio::class);
+    public function espacio()
+    {
+        return $this->belongsTo(Espacio::class, 'espacio_id');
     }
 
-    //relacion con el horario
-    public function horario(){
-        return $this->belongsTo(Horario::class, 'fecha_inicio', 'inicio')
-            ->where('fin', $this->fecha_fin);
-    }
 
-    protected function casts(): array{
+    protected function casts(): array
+    {
         return [
-            'fecha_inicio' => 'datetime',
-            'fecha_fin' => 'datetime',
+            'hora_inicio' => 'datetime',
+            'hora_fin' => 'datetime',
             'estado' => EstadoReserva::class,
         ];
+    }
+
+    //para cancelar una reserva
+    public function cancelar()
+    {
+        $this->estado = EstadoReserva::CANCELADA;
+        $this->save();
+    }
+
+    //abrir una reserva
+    public function abrirReserva()
+    {
+        $this->estado = EstadoReserva::ACEPTADA;
+        $this->save();
     }
 }

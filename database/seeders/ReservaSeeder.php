@@ -28,48 +28,41 @@ class ReservaSeeder extends Seeder
 
             $reserva1 = Reserva::create([
                 'espacio_id'   => $labQuimica->id,
-                'user_id'      => $alumno1->id,
-                'fecha_inicio' => $labQuimica->horario_inicio,
-                'fecha_fin'    => $labQuimica->horario_fin,
+                'alumno_id'      => $alumno1->id,
+                'hora_inicio' => '2026-09-01 08:00:00',
+                'hora_fin'    => '2026-09-01 10:00:00',
                 'estado'       => EstadoReserva::ACEPTADA,
             ]);
 
-            ReservaGrupal::create([
+            $reservaGrupal1 = ReservaGrupal::create([
                 'reserva_id' => $reserva1->id,
                 'aforo_max'  => 20,
             ]);
 
-            DB::table('reserva_grupal_user')->insert([
-                ['reserva_grupal_id' => $reserva1->id, 'user_id' => $alumno2->id, 'created_at' => now(), 'updated_at' => now()]
-            ]);
+            $reservaGrupal1->addAlumno($alumno2);
 
             Reserva::create([
                 'espacio_id'   => $salaEstudio->id,
-                'user_id'      => $alumno2->id,
-                'fecha_inicio' => $salaEstudio->horario_inicio,
-                'fecha_fin'    => $salaEstudio->horario_fin,
+                'alumno_id'      => $alumno2->id,
+                'hora_inicio' => '2026-09-02 16:00:00',
+                'hora_fin'    => '2026-09-02 20:00:00',
                 'estado'       => EstadoReserva::PENDIENTE,
             ]);
 
             $reserva3 = Reserva::create([
                 'espacio_id'   => $aulaMagna->id,
-                'user_id'      => $alumno1->id,
-                'fecha_inicio' => $aulaMagna->horario_inicio,
-                'fecha_fin'    => $aulaMagna->horario_fin,
+                'alumno_id'      => $alumno1->id,
+                'hora_inicio' => '2026-09-05 17:00:00',
+                'hora_fin'    => '2026-09-05 20:00:00',
                 'estado'       => EstadoReserva::RECHAZADA,
             ]);
 
-            ReservaGrupal::create([
+            $reservaGrupal2= ReservaGrupal::create([
                 'reserva_id' => $reserva3->id,
                 'aforo_max'  => 100,
             ]);
 
-            DB::table('reserva_grupal_user')->insert([
-                'reserva_grupal_id' => $reserva3->id,
-                'user_id' => $alumno2->id,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+            $reservaGrupal2->addAlumno($alumno2);
 
         }
     }

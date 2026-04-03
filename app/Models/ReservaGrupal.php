@@ -21,9 +21,23 @@ class ReservaGrupal extends Model{
         return $this->belongsTo(Reserva::class, 'reserva_id');
     }
 
-    // relación Muchos a Muchos para los miembros del grupo.
-    public function miembros(){
-        return $this->belongsToMany(Usuario::class, 'reserva_grupal_user', 'reserva_grupal_id', 'user_id')
-                    ->withTimestamps();
+    //relacion con el alumno para ver los miembros del grupo que es muchos a muchos
+    public function alumnos(){
+        return $this->belongsToMany(
+            Usuario::class,
+            'alumno_reserva_grupal',
+            'reserva_grupal_id',
+            'alumno_id'
+        )->withTimestamps();
+    }
+
+    //Para añadir alumnos a la reserva
+    public function addAlumno(Usuario $alumno) {
+        $this->alumnos()->attach($alumno->id);
+    }
+
+    //eliminar alumnos de la reserva
+    public function removeAlumno(Usuario $alumno) {
+        $this->alumnos()->detach($alumno->id);
     }
 }

@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Horario extends Model
 {
-    use HasFactory;
+    use HasUuids;
 
     protected $table = 'horarios';
-
-    public $incrementing = false;
-    protected $keyType = 'array';
+    public $timestamps = false;
 
     protected $fillable = [
         'inicio',
@@ -24,21 +21,6 @@ class Horario extends Model
         'inicio' => 'datetime',
         'fin' => 'datetime',
     ];
-
-    protected function setKeysForSaveQuery($query)
-    {
-        $query
-            ->where('inicio', '=', $this->getAttribute('inicio'))
-            ->where('fin', '=', $this->getAttribute('fin'));
-
-        return $query;
-    }
-
-    public function reservas(): HasMany
-    {
-        return $this->hasMany(Reserva::class, 'fecha_inicio', 'inicio');
-    }
-
 
     public function colisiona(Horario $otro): bool
     {

@@ -13,17 +13,19 @@ return new class extends Migration
     {
         Schema::create('notificaciones', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->text('titulo');
             $table->text('texto');
             $table->boolean('vista')->default(false);
+            $table->string('imagen')->nullable();
 
             $table->foreignUuid('user_id')
                 ->constrained('usuarios')
-                ->cascadeOnDelete();
+                ->onDelete("cascade");
 
             $table->foreignUuid('incidencia_id')
                 ->nullable()
                 ->constrained('incidencias')
-                ->cascadeOnDelete();
+                ->onDelete("set null");
         });
     }
 
