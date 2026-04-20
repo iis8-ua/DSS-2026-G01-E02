@@ -235,4 +235,7 @@ return [
             'mimes' => 'La imagen debe tener formato: jpeg, png o jpg.',
             'max'   => 'La fotografía no puede pesar más de 2MB.',
         ],
+        'alumnos' => [
+            'max' => 'El número de alumnos asignados no puede superar el aforo máximo establecido.',
+        ],
     ],];

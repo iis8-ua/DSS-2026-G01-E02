@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EspacioController;
+use App\Http\Controllers\GestorEspaciosController;
 use App\Http\Controllers\LocalizacionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ReservaGrupalController;
 use App\Http\Controllers\TipoEspacioController;
 use App\Http\Controllers\ReservaController;
 use Illuminate\Support\Facades\Route;
@@ -65,7 +67,20 @@ Route::resource('tipos-espacio', TipoEspacioController::class);
 Route::resource('localizaciones', LocalizacionController::class);
 Route::resource('horarios', HorarioController::class);
 Route::resource('incidencias', IncidenciaController::class);
+
+Route::resource('notificaciones', NotificationController::class)->parameters([
+    'notificaciones' => 'notificacion'
+]);
+
+Route::resource('reservas-grupales', ReservaGrupalController::class)->parameters([
+    'reservas-grupales' => 'reservasGrupal'
+]);
+
 Route::resource('reservas', ReservaController::class);
 Route::resource('usuarios', UsuarioController::class);
 Route::get('/perfil/{usuario}/editar', [UsuarioController::class, 'editPerfil'])->name('usuario.edit-perfil');
 Route::put('/perfil/{usuario}/actualizar', [UsuarioController::class, 'updatePerfil'])->name('usuario.update-perfil');
+
+Route::get('/gestor/reservas/pendientes', [GestorEspaciosController::class, 'pendientes'])->name('gestor.reservas.pendientes');
+Route::patch('/gestor/reservas/{reserva}/aceptar', [GestorEspaciosController::class, 'aceptar'])->name('gestor.reservas.aceptar');
+Route::patch('/gestor/reservas/{reserva}/rechazar', [GestorEspaciosController::class, 'rechazar'])->name('gestor.reservas.rechazar');
