@@ -33,7 +33,7 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Aforo máximo</label>
-                            <input type="number" name="aforo_max" min="1"
+                            <input type="number" name="aforo_max" min="1" max="10000"
                                    class="form-control @error('aforo_max') is-invalid @enderror"
                                    placeholder="Número máximo de participantes..."
                                    value="{{ old('aforo_max') }}">

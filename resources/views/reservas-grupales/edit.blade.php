@@ -34,7 +34,7 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Aforo máximo</label>
-                            <input type="number" name="aforo_max" min="1"
+                            <input type="number" name="aforo_max" min="1" max="10000"
                                    class="form-control @error('aforo_max') is-invalid @enderror"
                                    value="{{ old('aforo_max', $reservasGrupal->aforo_max) }}">
                             @error('aforo_max')<div class="invalid-feedback">{{ $message }}</div>@enderror
