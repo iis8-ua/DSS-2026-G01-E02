@@ -22,7 +22,7 @@ class GestorEspaciosController extends Controller
 
     public function aceptar(Reserva $reserva)
     {
-        if (Auth::user()->tipo_usuario !== 'GESTOR_ESPACIOS') {
+        if (Auth::user()->tipo_usuario == 'ALUMNO') {
             abort(403);
         }
 
@@ -34,7 +34,7 @@ class GestorEspaciosController extends Controller
 
     public function rechazar(Reserva $reserva)
     {
-        if (Auth::user()->tipo_usuario !== 'GESTOR_ESPACIOS') {
+        if (Auth::user()->tipo_usuario == 'ALUMNO') {
             abort(403);
         }
 

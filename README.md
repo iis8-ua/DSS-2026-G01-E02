@@ -14,10 +14,11 @@
 * MySQL
 * EloquentORM
 * [draw.io](https://draw.io)
+* Bootstrap
 
 ## Estado del proyecto
 
-En desarrollo, actualmente implementado los modelos de la capa de negocio y acceso a datos. Futuramente, incluirá una versión visual como aplicación web, cuando la capa de presentación esté desarollada.
+En desarrollo, actualmente implementado versión visual de la aplicación web. Casi terminado, solo queda la parte de la autenticación de los usuarios y la fase de prueba del software
 
 ## Despliegue local
 
@@ -48,4 +49,4 @@ FLUSH PRIVILEGES;
 
 ## Contribuciones
 
-Cada integrante tiene su propia rama a partir de la rama `devel`. Todas las contribuciones a `devel` o `master` se realizan mediante **pull requests**. Para la organización del equipo, utilizamos [issues](https://github.com/iis8-ua/DSS-2026-G01-E02/issues) de GitHub.
+Cada integrante tiene su propia rama a partir de la rama `devel`. Todas las contribuciones a `devel` o `master` se realizan mediante **pull requests**. Para la organización del equipo, utilizamos [proyects](https://github.com/users/iis8-ua/projects/2) de GitHub.
