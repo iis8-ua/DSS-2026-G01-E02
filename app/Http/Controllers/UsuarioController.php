@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
-    //
     public function perfil(){
         $usuario = Auth::user();
 
@@ -27,7 +26,6 @@ class UsuarioController extends Controller
         ]);
     }
 
-    //funcion para listar a los usuarios en el admin
     public function index(Request $request){
         $query = Usuario::query();
 
@@ -115,7 +113,6 @@ class UsuarioController extends Controller
         return view('usuarios.create');
     }
 
-    // método para guardar el usuario en la base de datos
     public function store(Request $request)
     {
         // validamos que los datos que llegan del formulario son correctos

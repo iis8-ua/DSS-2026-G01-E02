@@ -46,6 +46,13 @@ Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
+Route::view('/register', 'register')
+    ->middleware('guest')
+    ->name('register');
+
+Route::post('/register', [LoginController::class, 'register'])
+    ->middleware('guest');
+
 Route::get('/reservas/nueva/{espacio}', [ReservaController::class, 'nueva'])
     ->middleware('auth')
     ->name('reservas.nueva');

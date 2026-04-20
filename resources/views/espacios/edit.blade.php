@@ -26,7 +26,7 @@
 
                             <div class="col-md-3">
                                 <label class="form-label fw-bold">Aforo Máximo</label>
-                                <input type="number" name="aforo"
+                                <input type="number" name="aforo" min="0" max="9999"
                                        value="{{ old('aforo', $espacio->aforo) }}"
                                        class="form-control @error('aforo') is-invalid @enderror">
                                 @error('aforo')<div class="invalid-feedback">{{ $message }}</div>@enderror
