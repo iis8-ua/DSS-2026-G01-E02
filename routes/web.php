@@ -44,6 +44,7 @@ Route::middleware(['auth', 'es.usuario'])->group(function () {
     Route::get('/mis-reservas', [ReservaController::class, 'misReservas'])->name('reservas.mias');
     Route::get('/reservas/nueva/{espacio}', [ReservaController::class, 'nueva'])->name('reservas.nueva');
     Route::post('/reservas/nueva/{espacio}', [ReservaController::class, 'guardarNueva'])->name('reservas.guardarNueva');
+    Route::resource('incidencias', IncidenciaController::class);
 });
 
 
@@ -55,7 +56,6 @@ Route::middleware(['auth', 'es.admin'])->group(function () {
     Route::resource('tipos-espacio', TipoEspacioController::class);
     Route::resource('localizaciones', LocalizacionController::class);
     Route::resource('horarios', HorarioController::class);
-    Route::resource('incidencias', IncidenciaController::class);
     Route::resource('notificaciones', NotificationController::class)->parameters([
         'notificaciones' => 'notificacion'
     ]);
