@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reserva;
 use App\Models\Usuario;
 use App\Models\ReservaGrupal;
+use App\Services\ReservaGrupalService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -78,14 +79,10 @@ class ReservaGrupalController extends Controller
     {
         $this->validarReservaGrupal($request);
 
-        $reservaGrupal = ReservaGrupal::create([
+        ReservaGrupalService::crear([
             'reserva_id' => $request->reserva_id,
             'aforo_max'  => $request->aforo_max,
-        ]);
-
-        if ($request->filled('alumnos')) {
-            $reservaGrupal->alumnos()->sync($request->alumnos);
-        }
+        ], $request->alumnos ?? []);
 
         return redirect()->route('reservas-grupales.index')->with('success', 'Reserva grupal creada correctamente.');
     }
@@ -135,9 +132,7 @@ class ReservaGrupalController extends Controller
      */
     public function destroy(ReservaGrupal $reservasGrupal)
     {
-        $reservasGrupal->alumnos()->detach();
-        $reservasGrupal->delete();
-
+        ReservaGrupalService::eliminar($reservasGrupal);
         return redirect()->route('reservas-grupales.index')->with('success', 'Reserva grupal eliminada del sistema.');
     }
 }
