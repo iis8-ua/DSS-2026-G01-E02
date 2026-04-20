@@ -19,6 +19,8 @@ use App\Http\Controllers\HorarioController;
 //Rutas que son publicas
 Route::view('/login', 'login')->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest');
+Route::view('/register', 'register')->middleware('guest')->name('register');
+Route::post('/register', [LoginController::class, 'register'])->middleware('guest');
 Route::view('/aviso-legal', 'aviso-legal')->name('legal.aviso');
 Route::view('/privacidad', 'privacidad')->name('legal.privacidad');
 Route::view('/accesibilidad', 'accesibilidad')->name('legal.accesibilidad');
