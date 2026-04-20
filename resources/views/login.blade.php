@@ -48,6 +48,10 @@
                             </div>
                         @enderror
 
+                        <p>
+                            ¿No tienes una cuenta? <a href="{{ route('register') }}">Crea una ahora.</a>
+                        </p>
+
                         <button type="submit" class="btn btn-primary w-100">
                             Entrar
                         </button>
