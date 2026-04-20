@@ -45,9 +45,11 @@
                         <a href="{{ route('incidencias.index') }}" class="btn btn-light border">
                             Volver al listado
                         </a>
-                        <a href="{{ route('incidencias.edit', $incidencia->id) }}" class="btn text-white" style="background-color: #003366;">
-                            Editar Incidencia
-                        </a>
+                        @if(Auth::user()->tipo_usuario == "ADMIN")
+                            <a href="{{ route('incidencias.edit', $incidencia->id) }}" class="btn text-white" style="background-color: #003366;">
+                                Editar Incidencia
+                            </a>
+                        @endif
                     </div>
 
                 </div>

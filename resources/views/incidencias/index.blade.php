@@ -104,7 +104,7 @@
                         hasta que tengamos la autenticación de administrador terminada, para poder hacer
                         demostraciones técnicas.
                     --}}
-                    @if(Auth::user()->tipo_usuario == "admin")
+
                     <td class="text-end">
                         <form action="{{ route('incidencias.destroy', $incidencia->id) }}" method="POST" class="d-inline"
                               onsubmit="return confirm('¿Seguro que deseas eliminar esta incidencia? Si tiene foto, también se borrará.');">
@@ -113,17 +113,19 @@
                                 <i class="bi bi-eye"></i>
                             </a>
 
-                            <a href="{{ route('incidencias.edit', $incidencia->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Borrar">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            @if(Auth::user()->tipo_usuario == "ADMIN")
+                                <a href="{{ route('incidencias.edit', $incidencia->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Borrar">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            @endif
+
                         </form>
                     </td>
-                    @endif
                 </tr>
                 @empty
                 <tr><td colspan="5" class="text-center text-muted py-4">No hay incidencias registradas.</td></tr>
