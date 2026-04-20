@@ -19,19 +19,23 @@
 
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold">Latitud</label>
-                                <input type="text" name="latitud" value="{{ old('latitud', $localizacion->latitud) }}" class="form-control @error('latitud') is-invalid @enderror">
+                                <input type="text"
+                                       oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8)"
+                                       name="latitud" value="{{ old('latitud', $localizacion->latitud) }}" class="form-control @error('latitud') is-invalid @enderror">
                                 @error('latitud')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold">Longitud</label>
-                                <input type="text" name="longitud" value="{{ old('longitud', $localizacion->longitud) }}" class="form-control @error('longitud') is-invalid @enderror">
+                                <input type="text"
+                                       oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8)"
+                                       name="longitud" value="{{ old('longitud', $localizacion->longitud) }}" class="form-control @error('longitud') is-invalid @enderror">
                                 @error('longitud')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold">Piso</label>
-                                <input type="number" name="piso" value="{{ old('piso', $localizacion->piso) }}" class="form-control @error('piso') is-invalid @enderror">
+                                <input type="number" min="-10" max="100" name="piso" value="{{ old('piso', $localizacion->piso) }}" class="form-control @error('piso') is-invalid @enderror">
                                 @error('piso')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
