@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\HorarioController;
+use App\Http\Controllers\PasswordResetController;
 
 
 //Rutas que son publicas
@@ -75,3 +76,11 @@ Route::middleware(['auth', 'es.gestor'])->group(function () {
     Route::patch('/gestor/reservas/{reserva}/aceptar', [GestorEspaciosController::class, 'aceptar'])->name('gestor.reservas.aceptar');
     Route::patch('/gestor/reservas/{reserva}/rechazar', [GestorEspaciosController::class, 'rechazar'])->name('gestor.reservas.rechazar');
 });
+
+
+
+// rutas para la recuperación de la contraseña
+Route::get('forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [PasswordResetController::class, 'reset'])->name('password.update');

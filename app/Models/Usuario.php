@@ -1,9 +1,12 @@
 <?php
 namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Notifications\Notifiable;
 
 class Usuario extends User{
-    use HasUuids;
+    use HasUuids, Notifiable, CanResetPassword;
     protected $primaryKey = 'id';
     protected $table = 'usuarios';
 
