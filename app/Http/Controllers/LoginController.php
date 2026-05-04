@@ -5,6 +5,8 @@ use App\Models\Usuario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -65,5 +67,35 @@ class LoginController extends Controller
             return redirect()->route('inicio');
         }
         return back()->withErrors(['email' => 'Registro exitoso pero hubo un error al iniciar sesión.']);
+    }
+    
+    public function redirectToGoogle(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            $usuario = Usuario::where('email', $googleUser->getEmail())->first();
+
+            if (!$usuario) {
+                $usuario = new Usuario();
+                $usuario->name = $googleUser->user['given_name'] ?? $googleUser->getName();
+                $usuario->apellidos = $googleUser->user['family_name'] ?? 'Google User';
+                $usuario->email = $googleUser->getEmail();
+                
+                $usuario->dni = 'G-' . rand(1000000, 9999999); 
+                $usuario->password = Hash::make(Str::random(24));
+                $usuario->tipo_usuario = 'alumno';
+                $usuario->save();
+            }
+
+            Auth::login($usuario);
+            return redirect()->route('inicio');
+
+        } catch (\Exception $e) {
+            return redirect()->route('login')->withErrors(['email' => 'Hubo un problema con Google.']);
+        }
     }
 }
