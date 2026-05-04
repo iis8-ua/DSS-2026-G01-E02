@@ -68,7 +68,7 @@ class LoginController extends Controller
         }
         return back()->withErrors(['email' => 'Registro exitoso pero hubo un error al iniciar sesión.']);
     }
-    
+
     public function redirectToGoogle(){
         return Socialite::driver('google')->redirect();
     }
@@ -84,10 +84,10 @@ class LoginController extends Controller
                 $usuario->name = $googleUser->user['given_name'] ?? $googleUser->getName();
                 $usuario->apellidos = $googleUser->user['family_name'] ?? 'Google User';
                 $usuario->email = $googleUser->getEmail();
-                
-                $usuario->dni = 'G-' . rand(1000000, 9999999); 
+
+                $usuario->dni = 'G-' . rand(1000000, 9999999);
                 $usuario->password = Hash::make(Str::random(24));
-                $usuario->tipo_usuario = 'alumno';
+                $usuario->tipo_usuario = 'ALUMNO';
                 $usuario->save();
             }
 

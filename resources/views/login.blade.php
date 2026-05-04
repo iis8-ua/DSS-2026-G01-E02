@@ -56,8 +56,9 @@
                             Entrar
                         </button>
                     </form>
-                    
+
                     <div class="text-center">
+                        <br>
                         <p class="text-muted mb-2">O también puedes:</p>
                         <a href="{{ route('google.login') }}" class="btn btn-outline-dark w-100">
                             <i class="bi bi-google text-danger me-2"></i> Iniciar sesión con Google
