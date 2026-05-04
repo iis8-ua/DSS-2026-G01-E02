@@ -21,7 +21,6 @@ return new class extends Migration
 
             //Relacion con Localizacion
             $table->foreignUuid('localizacion_id')
-                ->unique()
                 ->constrained('localizacions')
                 ->onDelete('cascade');
 
