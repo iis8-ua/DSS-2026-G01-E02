@@ -26,7 +26,8 @@ Route::view('/privacidad', 'privacidad')->name('legal.privacidad');
 Route::view('/accesibilidad', 'accesibilidad')->name('legal.accesibilidad');
 Route::view('/cookies', 'cookies')->name('legal.cookies');
 Route::get('/catalogo', [EspacioController::class, 'catalogo'])->name('espacios.catalogo');
-
+Route::get('/auth/google', [LoginController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 
 //Rutas para cualquier usuario que esta iniciado sesion
 Route::middleware(['auth', 'es.usuario'])->group(function () {
