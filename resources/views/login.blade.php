@@ -40,6 +40,7 @@
                                 placeholder="Introduce tu contraseña"
                                 required
                             >
+                            <a href="{{ route('password.request') }}" class="text-muted">¿Has olvidado tu contraseña?</a>
                         </div>
 
                         @error('email')
