@@ -14,7 +14,12 @@
                             Accede a tu cuenta para gestionar tus reservas.
                         </p>
                     </div>
-
+                    
+                    @if (session('status'))
+                        <div class="alert alert-success mb-4 text-center">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
