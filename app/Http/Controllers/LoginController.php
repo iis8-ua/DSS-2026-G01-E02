@@ -53,7 +53,7 @@ class LoginController extends Controller
                 $letras = "TRWAGMYFPDXBNJZSQVHLCKE";
                 $numero = (int) substr($value, 0, 8);
                 $letra = strtoupper(substr($value, -1));
-                
+
                 // Si la letra calculada no coincide con la escrita, da error
                 if ($letras[$numero % 23] !== $letra) {
                     $fail('La letra del DNI introducido no es correcta.');
@@ -95,6 +95,23 @@ class LoginController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
+    private function dniEsInvalido($dni)
+    {
+        if (!preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
+            return true;
+        }
+
+        $numero = substr($dni, 0, 8);
+        $letra = substr($dni, -1);
+
+        $letrasValidas = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+        $indice = $numero % 23;
+        $letraCorrecta = $letrasValidas[$indice];
+
+        return $letra !== $letraCorrecta;
+    }
+
     public function handleGoogleCallback()
     {
         try {
@@ -107,14 +124,19 @@ class LoginController extends Controller
                 $usuario->apellidos = $googleUser->user['family_name'] ?? 'Google User';
                 $usuario->email = $googleUser->getEmail();
 
-                $usuario->dni = 'G-' . rand(1000000, 9999999);
+                $usuario->dni = rand(10000000, 99999999) . 'G';
                 $usuario->password = Hash::make(Str::random(24));
                 $usuario->tipo_usuario = 'ALUMNO';
                 $usuario->save();
             }
 
             Auth::login($usuario);
-            return redirect()->route('inicio');
+
+            if (!$this->dniEsInvalido($usuario->dni)) {
+                return redirect()->route('inicio');
+            }
+
+            return redirect()->route('usuario.edit-perfil', ['usuario' => $usuario->id]);
 
         } catch (\Exception $e) {
             return redirect()->route('login')->withErrors(['email' => 'Hubo un problema con Google.']);

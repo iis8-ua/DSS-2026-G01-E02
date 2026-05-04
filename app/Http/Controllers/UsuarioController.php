@@ -74,8 +74,31 @@ class UsuarioController extends Controller
         $usuario->update($data);
         return redirect()->route('perfil')->with('success', 'Perfil actualizado correctamente.');
     }
+
+    private function dniEsInvalido($dni)
+    {
+        if (!preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
+            return true;
+        }
+
+        $numero = substr($dni, 0, 8);
+        $letra = substr($dni, -1);
+
+        $letrasValidas = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+        $indice = $numero % 23;
+        $letraCorrecta = $letrasValidas[$indice];
+
+        return $letra !== $letraCorrecta;
+    }
+
     public function editPerfil(Usuario $usuario) {
-        return view('usuarios.update-perfil', ['usuario' => $usuario]);
+        $dniInvalido = $this->dniEsInvalido($usuario->dni);
+
+        return view('usuarios.update-perfil', [
+            'usuario' => $usuario,
+            'dniInvalido' => $dniInvalido
+        ]);
     }
     //funcion para update usuario
     public function update(Request $request, Usuario $usuario){
