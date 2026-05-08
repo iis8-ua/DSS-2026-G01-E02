@@ -47,6 +47,7 @@ Route::middleware(['auth', 'es.usuario'])->group(function () {
     Route::get('/reservas/nueva/{espacio}', [ReservaController::class, 'nueva'])->name('reservas.nueva');
     Route::post('/reservas/nueva/{espacio}', [ReservaController::class, 'guardarNueva'])->name('reservas.guardarNueva');
     Route::resource('incidencias', IncidenciaController::class);
+    Route::delete('/perfil/cerrar-cuenta', [UsuarioController::class, 'cerrarCuenta'])->name('usuario.cerrar-cuenta');
 });
 
 

@@ -2,11 +2,12 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\Notifiable;
 
 class Usuario extends User{
-    use HasUuids, Notifiable, CanResetPassword;
+    use HasUuids, Notifiable, CanResetPassword, SoftDeletes;
     protected $primaryKey = 'id';
     protected $table = 'usuarios';
 

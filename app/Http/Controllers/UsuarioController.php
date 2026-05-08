@@ -166,4 +166,35 @@ class UsuarioController extends Controller
         // redirigimos a la vista del admin con un mensaje
         return redirect()->route('usuarios.index')->with('success', 'Usuario añadido correctamente.');
     }
+
+    public function cerrarCuenta(Request $request)
+    {
+    $request->validate([
+        'password' => 'required|string',
+    ]);
+
+    $usuario = Auth::user();
+
+    if (!str_contains(strtolower($usuario->tipo_usuario), 'alumno')) {
+        abort(403, 'No tienes permiso para realizar esta acción.');
+    }
+
+    if (!Hash::check($request->password, $usuario->password)) {
+        return back()->withErrors([
+            'password' => 'La contraseña introducida no es correcta.',
+        ]);
+    }
+
+    Auth::logout();
+
+    $usuario->delete();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()
+        ->route('login')
+        ->with('success', 'Tu cuenta se ha cerrado correctamente.');
+    }
+
 }
