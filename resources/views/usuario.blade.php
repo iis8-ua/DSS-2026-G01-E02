@@ -43,5 +43,63 @@
     @else
         @include('components.section_personal')
     @endif
+
+    <div class="card shadow-sm border-danger mt-4">
+    <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+        <h4 class="text-danger fw-bold">
+            <i class="bi bi-exclamation-triangle me-2"></i>Cierre de cuenta
+        </h4>
+    </div>
+
+    <div class="card-body">
+        <p class="text-muted mb-3">
+            Desde este apartado puedes cerrar tu cuenta. Esta operación desactivará tu acceso
+            al sistema, pero conservará la información necesaria para mantener la trazabilidad
+            de reservas, incidencias e historial asociado.
+        </p>
+
+        <div class="alert alert-warning">
+            <strong>Advertencia:</strong> una vez cerrada la cuenta, no podrás iniciar sesión
+            con tus credenciales actuales. Esta acción no elimina físicamente tus datos del sistema.
+        </div>
+
+        @error('password')
+            <div class="alert alert-danger">
+                {{ $message }}
+            </div>
+        @enderror
+
+        <form method="POST"
+              action="{{ route('usuario.cerrar-cuenta') }}"
+              onsubmit="return confirm('¿Seguro que quieres cerrar tu cuenta? Esta acción desactivará tu acceso al sistema.');">
+            @csrf
+            @method('DELETE')
+
+            <div class="mb-3">
+                <label for="password" class="form-label fw-bold">
+                    Confirma tu contraseña
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    class="form-control"
+                    placeholder="Introduce tu contraseña actual"
+                    required
+                >
+
+                <small class="text-muted">
+                    Por seguridad, necesitamos verificar tu identidad antes de cerrar la cuenta.
+                </small>
+            </div>
+
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-person-x me-1"></i>Cerrar cuenta
+            </button>
+        </form>
+    </div>
+</div>
+
 </div>
 @endsection
