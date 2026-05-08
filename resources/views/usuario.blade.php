@@ -44,6 +44,7 @@
         @include('components.section_personal')
     @endif
 
+    @if(str_contains(strtolower($usuario->tipo_usuario), 'alumno'))
     <div class="card shadow-sm border-danger mt-4">
     <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
         <h4 class="text-danger fw-bold">
@@ -100,6 +101,8 @@
         </form>
     </div>
 </div>
+    @endif
 
 </div>
 @endsection
+

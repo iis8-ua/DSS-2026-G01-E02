@@ -175,6 +175,10 @@ class UsuarioController extends Controller
 
     $usuario = Auth::user();
 
+    if (!str_contains(strtolower($usuario->tipo_usuario), 'alumno')) {
+        abort(403, 'No tienes permiso para realizar esta acción.');
+    }
+
     if (!Hash::check($request->password, $usuario->password)) {
         return back()->withErrors([
             'password' => 'La contraseña introducida no es correcta.',
@@ -192,5 +196,5 @@ class UsuarioController extends Controller
         ->route('login')
         ->with('success', 'Tu cuenta se ha cerrado correctamente.');
     }
-    
+
 }

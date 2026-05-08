@@ -1,17 +1,13 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Usuario extends User
-{
+class Usuario extends User{
     use HasUuids, Notifiable, CanResetPassword, SoftDeletes;
-
     protected $primaryKey = 'id';
     protected $table = 'usuarios';
 
@@ -24,22 +20,25 @@ class Usuario extends User
         'email',
         'password',
         'dni',
-        'tipo_usuario',
+        'tipo_usuario'
+
     ];
 
+    //se inicializa el modelo y la herencia a sigle
     protected static function boot()
     {
         parent::boot();
 
+        // Asignar el tipo de usuario automáticamente al crear un nuevo usuario
         static::creating(function ($model) {
             if (empty($model->tipo_usuario)) {
                 $model->tipo_usuario = self::class;
             }
         });
     }
-
-    public function getFullName(): string
-    {
+    //get nombre completo
+    public function getFullName(): string {
         return $this->name . ' ' . $this->apellidos;
     }
+
 }
