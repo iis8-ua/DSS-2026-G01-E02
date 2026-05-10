@@ -57,7 +57,7 @@ class UsuarioController extends Controller
             'dni' => 'required|string|max:15|unique:usuarios,dni,' . $usuario->id,
             'nombre' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
+            'email' => 'required|email:rfc,dns|unique:usuarios,email,' . $usuario->id,
             'password' => 'nullable|string|min:6', // puede ser null
         ]);
         //se actualizan los datos
@@ -107,7 +107,7 @@ class UsuarioController extends Controller
             'dni' => 'required|string|max:15|unique:usuarios,dni,' . $usuario->id,
             'nombre' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
+            'email' => 'required|email:rfc,dns|unique:usuarios,email,' . $usuario->id,
             'password' => 'nullable|string|min:6', // puede ser null
             'tipo_usuario' => 'required|string|in:alumno,gestor_espacios,admin',
         ]);
