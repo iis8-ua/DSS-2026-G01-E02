@@ -143,7 +143,7 @@ class UsuarioController extends Controller
             'dni' => 'required|string|max:15|unique:usuarios,dni',
             'nombre' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios,email',
+            'email' => 'required|email:rfc,dns|unique:usuarios,email',
             'password' => 'required|string|min:6',
             'tipo_usuario' => 'required|string',
         ]);
