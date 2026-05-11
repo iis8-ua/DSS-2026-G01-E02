@@ -6,6 +6,7 @@ use App\Models\Usuario;
 use Illuminate\Http\Request;
 use App\Models\Incidencia;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 class IncidenciaController extends Controller{
     /**
@@ -28,7 +29,6 @@ class IncidenciaController extends Controller{
     {
         $request->validate([
             'descripcion' => 'required|string|max:1000',
-            'user_id'     => 'required|exists:usuarios,id',
             'foto'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
     }
@@ -70,8 +70,7 @@ class IncidenciaController extends Controller{
      */
     public function create()
     {
-        $usuarios = Usuario::orderBy('name')->get();
-        return view('incidencias.create', compact('usuarios'));
+        return view('incidencias.create');
     }
 
     /**
@@ -81,7 +80,8 @@ class IncidenciaController extends Controller{
     {
         $this->validarIncidencia($request);
 
-        $datos = $request->only(['descripcion', 'user_id']);
+        $datos = $request->only(['descripcion']);
+        $datos['user_id'] = Auth::id();
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');

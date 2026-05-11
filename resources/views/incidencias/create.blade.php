@@ -16,15 +16,13 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Usuario</label>
-                            <select name="user_id" class="form-select @error('user_id') is-invalid @enderror">
-                                <option value="">Seleccione un usuario...</option>
-                                @foreach($usuarios as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                {{ $user->getFullName() }} ({{ $user->email }})
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('user_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            <input 
+                                type="text" 
+                                class="form-control bg-light" 
+                                id="usuario" 
+                                value="{{ Auth::user()->name }} {{ Auth::user()->apellidos }}" 
+                                disabled
+                            >
                         </div>
 
                         <div class="mb-3">
