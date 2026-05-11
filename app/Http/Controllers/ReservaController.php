@@ -113,6 +113,15 @@ class ReservaController extends Controller
         $inicio = $request->fecha . ' ' . $horario[0] . ':00';
         $fin = $request->fecha . ' ' . $horario[1] . ':00';
 
+        // comprobamos si la hora ya ha pasado
+        if (\Carbon\Carbon::parse($inicio)->isPast()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'horario' => 'No puedes reservar en un horario que ya ha pasado.'
+                ]);
+        }
+
         $solapa = Reserva::where('espacio_id', $espacio->id)
             ->whereNotIn('estado', [
                 EstadoReserva::CANCELADA,
