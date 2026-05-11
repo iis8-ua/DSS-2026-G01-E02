@@ -62,7 +62,7 @@ class LoginController extends Controller
             ],
             'nombre' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios,email',
+            'email' => 'required|email:rfc,dns|unique:usuarios,email',
             'password' => 'required|string|min:6',
         ], [
             // Mensajes de error

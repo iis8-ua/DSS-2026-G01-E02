@@ -46,6 +46,7 @@ Route::middleware(['auth', 'es.usuario'])->group(function () {
     Route::get('/mis-reservas', [ReservaController::class, 'misReservas'])->name('reservas.mias');
     Route::get('/reservas/nueva/{espacio}', [ReservaController::class, 'nueva'])->name('reservas.nueva');
     Route::post('/reservas/nueva/{espacio}', [ReservaController::class, 'guardarNueva'])->name('reservas.guardarNueva');
+    Route::patch('/reservas/{reserva}/cancelar', [ReservaController::class, 'cancelar'])->name('reservas.cancelar');
     Route::resource('incidencias', IncidenciaController::class);
     Route::delete('/perfil/cerrar-cuenta', [UsuarioController::class, 'cerrarCuenta'])->name('usuario.cerrar-cuenta');
 });

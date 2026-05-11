@@ -60,6 +60,17 @@
                                     <span class="badge bg-secondary fs-6">
                                         {{ $reserva->estado->value }}
                                     </span>
+                                    @if(strtolower($reserva->estado->value) === 'pendiente')
+                                        <div class="mt-2">
+                                            <form action="{{ route('reservas.cancelar', $reserva) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres cancelar esta reserva?');">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    Cancelar
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
