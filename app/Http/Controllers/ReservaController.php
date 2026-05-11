@@ -114,6 +114,10 @@ class ReservaController extends Controller
         $fin = $request->fecha . ' ' . $horario[1] . ':00';
 
         $solapa = Reserva::where('espacio_id', $espacio->id)
+            ->whereNotIn('estado', [
+                EstadoReserva::CANCELADA,
+                EstadoReserva::RECHAZADA
+            ])
             ->where(function ($query) use ($inicio, $fin) {
                 $query->where('hora_inicio', '<', $fin)
                       ->where('hora_fin', '>', $inicio);
@@ -205,5 +209,23 @@ class ReservaController extends Controller
         $reserva->delete();
 
         return redirect()->route('reservas.index')->with('success', 'La reserva ha sido eliminada correctamente.');
+    }
+    /**
+     * cancelar reserva
+     */
+    public function cancelar(Reserva $reserva){
+        if ($reserva->alumno_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para realizar esta accion.');
+        }
+
+        if ($reserva->estado !== EstadoReserva::PENDIENTE) {
+            return back()->withErrors(['error' => 'Solo puedes cancelar reservas que aún estén pendientes.']);
+        }
+
+        $reserva->estado = EstadoReserva::CANCELADA; 
+        
+        $reserva->save();
+
+        return redirect()->route('reservas.mias')->with('success', 'Has cancelado tu solicitud de reserva correctamente.');
     }
 }
