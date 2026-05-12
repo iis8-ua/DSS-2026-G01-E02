@@ -116,7 +116,11 @@ class LoginController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->user();
-            $usuario = Usuario::where('email', $googleUser->getEmail())->first();
+            $usuario = Usuario::withTrashed()->where('email', $googleUser->getEmail())->first();
+
+            if ($usuario && $usuario->trashed()) {
+                $usuario->restore();
+            }
 
             if (!$usuario) {
                 $usuario = new Usuario();
