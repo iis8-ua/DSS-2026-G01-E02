@@ -79,7 +79,7 @@
                 <tr>
                     <td>
                         @if($notificacion->imagen)
-                        <img src="{{ asset('images/notificaciones/' . $notificacion->imagen) }}"
+                        <img src="{{ asset($notificacion->incidencia_id ? 'images/incidencias/' . $notificacion->imagen : 'images/notificaciones/' . $notificacion->imagen) }}"
                              alt="Imagen notificación"
                              style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;"
                              class="shadow-sm">

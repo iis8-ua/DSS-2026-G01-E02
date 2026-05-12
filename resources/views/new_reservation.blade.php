@@ -25,36 +25,24 @@
                     <h2 class="h5 mb-3">Resumen de la reserva</h2>
 
                     @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="mb-0 ps-3">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    <div class="alert alert-danger">
+                        <ul class="mb-0 ps-3">
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @endif
 
-                    <form method="POST" action="{{ route('reservas.guardarNueva', $espacio) }}">
-                        @csrf
-
+                    <form method="GET" action="{{ route('reservas.nueva', $espacio) }}">
                         <div class="mb-3">
                             <label class="form-label">Espacio</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                value="{{ $espacio->nombre }}"
-                                readonly
-                            >
+                            <input type="text" class="form-control" value="{{ $espacio->nombre }}" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Aforo</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                value="{{ $espacio->aforo }} personas"
-                                readonly
-                            >
+                            <input type="text" class="form-control" value="{{ $espacio->aforo }} personas" readonly>
                         </div>
 
                         <div class="mb-3">
@@ -64,34 +52,57 @@
                                 class="form-control"
                                 id="fecha"
                                 name="fecha"
-                                value="{{ old('fecha') }}"
+                                value="{{ $fecha ?? old('fecha') }}"
                                 min="{{ now()->toDateString() }}"
                                 max="{{ now()->addDays(5)->toDateString() }}"
                                 required
                             >
                         </div>
 
+                        <button type="submit" class="btn btn-secondary w-100 mb-3">
+                            Ver disponibilidad
+                        </button>
+                    </form>
+                    
+                    @if (isset($fecha) && $fecha)
+
+                    <form method="POST" action="{{ route('reservas.guardarNueva', $espacio) }}">
+                        @csrf
+                        <input type="hidden" name="fecha" value="{{ $fecha }}">
+
                         <div class="mb-3">
                             <label for="horario" class="form-label">Franja horaria</label>
-                            <select
-                                class="form-control"
-                                id="horario"
-                                name="horario"
-                                value="{{ old('horario') }}"
-                                required
-                            >
+                            <select class="form-control" id="horario" name="horario" required>
                                 @foreach ($horariosDisponibles as $horario)
-                                    <option>
-                                        {{ $horario->inicio->format('H:i') }} - {{ $horario->fin->format('H:i') }}
-                                    </option>
+                                @php
+                                $ocupado = $horariosOcupados->contains(function ($reserva) use ($horario) {
+                                return $reserva->hora_inicio->format('H:i') === $horario->inicio->format('H:i')
+                                && $reserva->hora_fin->format('H:i') === $horario->fin->format('H:i');
+                                });
+                                @endphp
+                                @if (!$ocupado)
+                                <option value="{{ $horario->inicio->format('H:i') }} - {{ $horario->fin->format('H:i') }}">
+                                    {{ $horario->inicio->format('H:i') }} - {{ $horario->fin->format('H:i') }}
+                                </option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">
+                        <button type="submit" class="btn btn-primary w-100 mb-2">
                             Confirmar reserva
                         </button>
                     </form>
+
+                    <form method="GET" action="{{ route('reservas.nuevaGrupal', $espacio) }}">
+                        <input type="hidden" name="fecha" value="{{ $fecha }}">
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            Hacer reserva grupal
+                        </button>
+                    </form>
+
+                    @endif
+
                 </div>
             </div>
         </div>

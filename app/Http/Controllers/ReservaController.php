@@ -87,15 +87,24 @@ class ReservaController extends Controller
     /**
      * Formulario de nueva reserva desde el catálogo
      */
-    public function nueva(Espacio $espacio)
+    public function nueva(Espacio $espacio, Request $request)
     {
         $horariosDisponibles = $espacio->horario()->orderBy('inicio')->get();
+        $fecha = $request->input('fecha');
 
-        $reservasExistentes = Reserva::where('espacio_id', $espacio->id)
-            ->orderBy('hora_inicio')
-            ->get();
+        $reservasExistentes = collect();
+        $horariosOcupados = collect();
 
-        return view('new_reservation', compact('espacio', 'horariosDisponibles', 'reservasExistentes'));
+        if ($fecha) {
+            $reservasExistentes = Reserva::where('espacio_id', $espacio->id)
+                ->whereDate('hora_inicio', $fecha)
+                ->whereNotIn('estado', [EstadoReserva::CANCELADA, EstadoReserva::RECHAZADA])
+                ->get();
+
+            $horariosOcupados = $reservasExistentes->where('estado', EstadoReserva::ACEPTADA);
+        }
+
+        return view('new_reservation', compact('espacio', 'horariosDisponibles', 'reservasExistentes', 'horariosOcupados', 'fecha'));
     }
 
     /**
@@ -231,8 +240,8 @@ class ReservaController extends Controller
             return back()->withErrors(['error' => 'Solo puedes cancelar reservas que aún estén pendientes.']);
         }
 
-        $reserva->estado = EstadoReserva::CANCELADA; 
-        
+        $reserva->estado = EstadoReserva::CANCELADA;
+
         $reserva->save();
 
         return redirect()->route('reservas.mias')->with('success', 'Has cancelado tu solicitud de reserva correctamente.');

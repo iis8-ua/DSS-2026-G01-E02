@@ -20,7 +20,7 @@ class NotificacionSeeder extends Seeder
                     'titulo' => "Bienvenido",
                     'texto' => "Hola {$user->name}, bienvenido al sistema.",
                     'vista' => true,
-                    'imagen'  => 'bienvenida.jpg',
+                    'imagen'  => 'bienvenida' . $index . '.jpg',
                     'user_id' => $user->id,
                 ]);
                 if ($index === 0 && $incidencia) {
@@ -30,6 +30,7 @@ class NotificacionSeeder extends Seeder
                         'vista' => false,
                         'user_id' => $user->id,
                         'incidencia_id' => $incidencia->id,
+                        'imagen' => $incidencia->foto
                     ]);
                 }
             }

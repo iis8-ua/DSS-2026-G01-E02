@@ -75,17 +75,20 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">Franjas Horarias</label>
-                                <select name="horarios_ids[]" multiple
-                                        class="form-select @error('horarios_ids') is-invalid @enderror"
-                                        style="height: 120px;">
+                                <div class="border rounded p-2 @error('horarios_ids') is-invalid @enderror" style="max-height: 120px; overflow-y: auto;">
                                     @foreach($horarios as $hor)
-                                    <option value="{{ $hor->id }}"
-                                            {{ in_array($hor->id, old('horarios_ids', $horariosActivos)) ? 'selected' : '' }}>
-                                        {{ \Carbon\Carbon::parse($hor->inicio)->format('H:i') }} - {{ \Carbon\Carbon::parse($hor->fin)->format('H:i') }}
-                                    </option>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="horarios_ids[]"
+                                               value="{{ $hor->id }}"
+                                               id="horario_{{ $hor->id }}"
+                                               {{ in_array($hor->id, old('horarios_ids', $horariosActivos)) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="horario_{{ $hor->id }}">
+                                            {{ \Carbon\Carbon::parse($hor->inicio)->format('H:i') }} - {{ \Carbon\Carbon::parse($hor->fin)->format('H:i') }}
+                                        </label>
+                                    </div>
                                     @endforeach
-                                </select>
-                                <div class="form-text">Mantén Ctrl para seleccionar varias franjas.</div>
+                                </div>
                                 @error('horarios_ids')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>

@@ -27,6 +27,15 @@ class GestorEspacios extends Usuario{
     public function aceptarReserva(Reserva $reserva): void{
         $reserva->estado = EstadoReserva::ACEPTADA;
         $reserva->save();
+
+        Reserva::where('espacio_id', $reserva->espacio_id)
+            ->where('id', '!=', $reserva->id)
+            ->where('estado', 'PENDIENTE')
+            ->where(function ($query) use ($reserva) {
+                $query->where('hora_inicio', '<', $reserva->hora_fin->toDateTimeString())
+                    ->where('hora_fin', '>', $reserva->hora_inicio->toDateTimeString());
+            })
+            ->update(['estado' => 'RECHAZADA']);
     }
 
     public function rechazarReserva(Reserva $reserva): void{
