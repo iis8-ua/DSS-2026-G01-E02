@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\EstadoReserva;
 use App\Models\Reserva;
+use App\Models\ReservaGrupal;
 use Illuminate\Http\Request;
 use App\Models\Espacio;
 use App\Models\Usuario;
@@ -54,7 +55,11 @@ class ReservaController extends Controller
             ->orderBy('hora_inicio', 'desc')
             ->get();
 
-        return view('reservas.mias', compact('reservas'));
+        $reservasGrupales = ReservaGrupal::whereIn('reserva_id', $reservas->pluck('id'))
+            ->get()
+            ->keyBy('reserva_id');
+
+        return view('reservas.mias', compact('reservas', 'reservasGrupales'));
     }
 
     /**
