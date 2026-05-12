@@ -34,9 +34,7 @@
                     </div>
                     @endif
 
-                    {{-- Paso 1: elegir fecha --}}
                     <form method="GET" action="{{ route('reservas.nueva', $espacio) }}">
-
                         <div class="mb-3">
                             <label class="form-label">Espacio</label>
                             <input type="text" class="form-control" value="{{ $espacio->nombre }}" readonly>
@@ -65,9 +63,9 @@
                             Ver disponibilidad
                         </button>
                     </form>
-
-                    {{-- Paso 2: elegir horario y confirmar, solo si hay fecha --}}
+                    
                     @if (isset($fecha) && $fecha)
+
                     <form method="POST" action="{{ route('reservas.guardarNueva', $espacio) }}">
                         @csrf
                         <input type="hidden" name="fecha" value="{{ $fecha }}">
@@ -82,7 +80,6 @@
                                 && $reserva->hora_fin->format('H:i') === $horario->fin->format('H:i');
                                 });
                                 @endphp
-
                                 @if (!$ocupado)
                                 <option value="{{ $horario->inicio->format('H:i') }} - {{ $horario->fin->format('H:i') }}">
                                     {{ $horario->inicio->format('H:i') }} - {{ $horario->fin->format('H:i') }}
@@ -92,10 +89,18 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">
+                        <button type="submit" class="btn btn-primary w-100 mb-2">
                             Confirmar reserva
                         </button>
                     </form>
+
+                    <form method="GET" action="{{ route('reservas.nuevaGrupal', $espacio) }}">
+                        <input type="hidden" name="fecha" value="{{ $fecha }}">
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            Hacer reserva grupal
+                        </button>
+                    </form>
+
                     @endif
 
                 </div>
