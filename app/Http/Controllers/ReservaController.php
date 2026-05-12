@@ -231,8 +231,8 @@ class ReservaController extends Controller
             return back()->withErrors(['error' => 'Solo puedes cancelar reservas que aún estén pendientes.']);
         }
 
-        $reserva->estado = EstadoReserva::CANCELADA; 
-        
+        $reserva->estado = EstadoReserva::CANCELADA;
+
         $reserva->save();
 
         return redirect()->route('reservas.mias')->with('success', 'Has cancelado tu solicitud de reserva correctamente.');
