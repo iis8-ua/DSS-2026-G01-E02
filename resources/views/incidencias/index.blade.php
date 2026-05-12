@@ -22,12 +22,12 @@
     <div class="bg-white p-5 rounded shadow-sm">
 
         <div class="d-flex justify-content-between align-items-center mb-4">
-                @if(Auth::user()->tipo_usuario == "admin")
-                <a href="{{ route('admin.index') }}" class="btn btn-volver rounded-pill text-decoration-none mb-4 py-2 px-3 d-inline-flex align-items-center shadow-sm">
-                    <i class="bi bi-arrow-left fs-6 me-2"></i>
-                    <span style="font-size: 0.9rem;">Volver al panel</span>
-                </a>
-                @endif
+            @if(Auth::user()->tipo_usuario == "admin")
+            <a href="{{ route('admin.index') }}" class="btn btn-volver rounded-pill text-decoration-none mb-4 py-2 px-3 d-inline-flex align-items-center shadow-sm">
+                <i class="bi bi-arrow-left fs-6 me-2"></i>
+                <span style="font-size: 0.9rem;">Volver al panel</span>
+            </a>
+            @endif
             @if(Auth::user()->tipo_usuario == "admin")
             <h1 class="h3 mb-0" style="color: #003366;">Gestión de Incidencias</h1>
             @endif
@@ -71,9 +71,9 @@
                         </a>
                     </th>
                     {{--
-                        Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
-                        hasta que tengamos la autenticación de administrador terminada, para poder hacer
-                        demostraciones técnicas.
+                    Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
+                    hasta que tengamos la autenticación de administrador terminada, para poder hacer
+                    demostraciones técnicas.
                     --}}
                     @if(Auth::user()->tipo_usuario == "admin")
                     <th class="text-end" style="width: 150px;">Acciones</th>
@@ -97,12 +97,12 @@
                     <td class="text-start text-truncate" style="max-width: 250px;" title="{{ $incidencia->descripcion }}">
                         {{ $incidencia->descripcion }}
                     </td>
-                    <td>{{ $incidencia->usuario->getFullName() ?? 'Usuario Desconocido' }}</td>
+                    <td>{{ $incidencia->usuario?->getFullName() ?? 'Usuario Desconocido' }}</td>
 
                     {{--
-                        Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
-                        hasta que tengamos la autenticación de administrador terminada, para poder hacer
-                        demostraciones técnicas.
+                    Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
+                    hasta que tengamos la autenticación de administrador terminada, para poder hacer
+                    demostraciones técnicas.
                     --}}
 
                     <td class="text-end">
@@ -114,14 +114,14 @@
                             </a>
 
                             @if(Auth::user()->tipo_usuario == "ADMIN")
-                                <a href="{{ route('incidencias.edit', $incidencia->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Borrar">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <a href="{{ route('incidencias.edit', $incidencia->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Borrar">
+                                <i class="bi bi-trash"></i>
+                            </button>
                             @endif
 
                         </form>
