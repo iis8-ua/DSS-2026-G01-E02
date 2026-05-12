@@ -28,7 +28,7 @@ class ReservaGrupal extends Model{
             'alumno_reserva_grupal',
             'reserva_grupal_id',
             'alumno_id'
-        )->withTimestamps();
+        )->withTrashed()->withTimestamps();
     }
 
     //Para añadir alumnos a la reserva

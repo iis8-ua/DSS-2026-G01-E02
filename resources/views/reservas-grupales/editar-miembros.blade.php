@@ -80,8 +80,8 @@
                                         {{ in_array($alumno->id, $alumnosSeleccionados) ? 'checked' : '' }}
                                     >
                                     <label class="form-check-label" for="alumno_{{ $alumno->id }}">
-                                        {{ $alumno->name }}
-                                        <span class="text-muted small">{{ $alumno->email }}</span>
+                                        {{ $alumno?->name ?? 'Usuario eliminado' }}
+                                        <span class="text-muted small">{{ $alumno?->email ?? '' }}</span>
                                     </label>
                                 </div>
                                 @endif

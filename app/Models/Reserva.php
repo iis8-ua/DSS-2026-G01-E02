@@ -29,7 +29,7 @@ class Reserva extends Model
     // usuario asociado a la reserva
     public function alumno()
     {
-        return $this->belongsTo(Usuario::class, 'alumno_id');
+        return $this->belongsTo(Usuario::class, 'alumno_id')->withTrashed();
     }
 
     // espacio asociado a la reserva
