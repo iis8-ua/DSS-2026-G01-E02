@@ -49,6 +49,8 @@ Route::middleware(['auth', 'es.usuario'])->group(function () {
     Route::patch('/reservas/{reserva}/cancelar', [ReservaController::class, 'cancelar'])->name('reservas.cancelar');
     Route::get('/reservas/nueva/{espacio}/grupal', [ReservaGrupalController::class, 'nuevaGrupal'])->name('reservas.nuevaGrupal');
     Route::post('/reservas/nueva/{espacio}/grupal', [ReservaGrupalController::class, 'guardarNuevaGrupal'])->name('reservas.guardarNuevaGrupal');
+    Route::get('/reservas-grupales/{reservasGrupal}/miembros', [ReservaGrupalController::class, 'editarMiembros'])->name('reservas-grupales.editarMiembros');
+    Route::patch('/reservas-grupales/{reservasGrupal}/miembros', [ReservaGrupalController::class, 'actualizarMiembros'])->name('reservas-grupales.actualizarMiembros');
     Route::resource('incidencias', IncidenciaController::class);
     Route::delete('/perfil/cerrar-cuenta', [UsuarioController::class, 'cerrarCuenta'])->name('usuario.cerrar-cuenta');
 });

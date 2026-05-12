@@ -214,4 +214,26 @@ class ReservaGrupalController extends Controller
         return redirect()->route('reservas.mias')
             ->with('success', 'La reserva grupal se ha creado correctamente.');
     }
+
+    public function editarMiembros(ReservaGrupal $reservasGrupal)
+    {
+        $reservasGrupal->load(['reserva.espacio', 'alumnos']);
+        $alumnos = Usuario::where('tipo_usuario', 'ALUMNO')->orderBy('name')->get();
+        $alumnosSeleccionados = $reservasGrupal->alumnos->pluck('id')->toArray();
+
+        return view('reservas-grupales.editar-miembros', compact('reservasGrupal', 'alumnos', 'alumnosSeleccionados'));
+    }
+
+    public function actualizarMiembros(Request $request, ReservaGrupal $reservasGrupal)
+    {
+        $request->validate([
+            'alumnos'   => 'required|array|min:2|max:' . $reservasGrupal->aforo_max,
+            'alumnos.*' => 'exists:usuarios,id',
+        ]);
+
+        $reservasGrupal->alumnos()->sync($request->alumnos);
+
+        return redirect()->route('reservas.mias')
+            ->with('success', 'Los miembros de la reserva grupal se han actualizado correctamente.');
+    }
 }

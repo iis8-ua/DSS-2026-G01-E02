@@ -61,15 +61,21 @@
                                         {{ $reserva->estado->value }}
                                     </span>
                                     @if(strtolower($reserva->estado->value) === 'pendiente')
-                                        <div class="mt-2">
-                                            <form action="{{ route('reservas.cancelar', $reserva) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres cancelar esta reserva?');">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                    Cancelar
-                                                </button>
-                                            </form>
-                                        </div>
+                                    <div class="mt-2 d-flex gap-2">
+                                        <form action="{{ route('reservas.cancelar', $reserva) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres cancelar esta reserva?');">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                Cancelar
+                                            </button>
+                                        </form>
+
+                                        @if($reservasGrupales->has($reserva->id))
+                                        <a href="{{ route('reservas-grupales.editarMiembros', $reservasGrupales->get($reserva->id)) }}" class="btn btn-outline-secondary btn-sm">
+                                            Editar miembros
+                                        </a>
+                                        @endif
+                                    </div>
                                     @endif
                                 </div>
                             </div>
