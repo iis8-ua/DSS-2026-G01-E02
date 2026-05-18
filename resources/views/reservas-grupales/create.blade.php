@@ -33,7 +33,7 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Aforo máximo</label>
-                            <input type="number" name="aforo_max" min="1"
+                            <input type="number" name="aforo_max" min="1" max="10000"
                                    class="form-control @error('aforo_max') is-invalid @enderror"
                                    placeholder="Número máximo de participantes..."
                                    value="{{ old('aforo_max') }}">
@@ -42,15 +42,20 @@
 
                         <div class="mb-4">
                             <label class="form-label fw-bold">Alumnos del grupo <span class="text-muted fw-normal">(Opcional)</span></label>
-                            <select name="alumnos[]" class="form-select @error('alumnos') is-invalid @enderror" multiple size="7">
+                            <div class="border rounded p-2 @error('alumnos') is-invalid @enderror" style="max-height: 180px; overflow-y: auto;">
                                 @foreach($alumnos as $alumno)
-                                <option value="{{ $alumno->id }}"
-                                        {{ in_array($alumno->id, old('alumnos', [])) ? 'selected' : '' }}>
-                                    {{ $alumno->getFullName() }} ({{ $alumno->email }})
-                                </option>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           name="alumnos[]"
+                                           value="{{ $alumno->id }}"
+                                           id="alumno_{{ $alumno->id }}"
+                                           {{ in_array($alumno->id, old('alumnos', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="alumno_{{ $alumno->id }}">
+                                        {{ $alumno->getFullName() }} ({{ $alumno->email }})
+                                    </label>
+                                </div>
                                 @endforeach
-                            </select>
-                            <div class="form-text">Mantén pulsado Ctrl (o Cmd en Mac) para seleccionar varios alumnos.</div>
+                            </div>
                             @error('alumnos')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 

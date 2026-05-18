@@ -14,7 +14,13 @@
                             Accede a tu cuenta para gestionar tus reservas.
                         </p>
                     </div>
-
+                    
+                    @if (session('status'))
+                        <div class="alert alert-success mb-4 text-center">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -40,6 +46,8 @@
                                 placeholder="Introduce tu contraseña"
                                 required
                             >
+                            <br>
+                            <a href="{{ route('password.request') }}" class="text-muted">¿Has olvidado tu contraseña?</a>
                         </div>
 
                         @error('email')
@@ -48,10 +56,22 @@
                             </div>
                         @enderror
 
+                        <p>
+                            ¿No tienes una cuenta? <a href="{{ route('register') }}">Crea una ahora.</a>
+                        </p>
+
                         <button type="submit" class="btn btn-primary w-100">
                             Entrar
                         </button>
                     </form>
+
+                    <div class="text-center">
+                        <br>
+                        <p class="text-muted mb-2">O también puedes:</p>
+                        <a href="{{ route('google.login') }}" class="btn btn-outline-dark w-100">
+                            <i class="bi bi-google text-danger me-2"></i> Iniciar sesión con Google
+                        </a>
+                    </div>
 
                     <div class="text-center mt-4">
                         <a href="{{ route('espacios.catalogo') }}" class="text-decoration-none">

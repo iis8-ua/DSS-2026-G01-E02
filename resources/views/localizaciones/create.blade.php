@@ -17,19 +17,27 @@
                         <div class="row mb-4">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold">Latitud</label>
-                                <input type="text" name="latitud" value="{{ old('latitud') }}" class="form-control @error('latitud') is-invalid @enderror" placeholder="Ej. 38.3845">
+                                <input type="text"
+                                       oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8)"
+                                       name="latitud"
+                                       value="{{ old('latitud') }}"
+                                       class="form-control @error('latitud') is-invalid @enderror" placeholder="Ej. 38.3845">
                                 @error('latitud')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold">Longitud</label>
-                                <input type="text" name="longitud" value="{{ old('longitud') }}" class="form-control @error('longitud') is-invalid @enderror" placeholder="Ej. -0.5132">
+                                <input type="text"
+                                       oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8)"
+                                       name="longitud"
+                                       value="{{ old('longitud') }}"
+                                       class="form-control @error('longitud') is-invalid @enderror" placeholder="Ej. -0.5132">
                                 @error('longitud')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold">Piso</label>
-                                <input type="number" name="piso" value="{{ old('piso') }}" class="form-control @error('piso') is-invalid @enderror" placeholder="Ej. 2">
+                                <input type="number" min="-10" max="100" name="piso" value="{{ old('piso') }}" class="form-control @error('piso') is-invalid @enderror" placeholder="Ej. 2">
                                 @error('piso')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>

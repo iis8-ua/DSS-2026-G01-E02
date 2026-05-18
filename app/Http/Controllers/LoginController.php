@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -16,7 +20,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->tipo_usuario === 'admin') {
+            if (Auth::user()->tipo_usuario === 'ADMIN') {
                 return redirect()->route('admin.index');
             }
             else if (Auth::user()->tipo_usuario === 'GESTOR_ESPACIOS') {
@@ -36,5 +40,127 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('login');
+    }
+
+    public function register(Request $request){
+        $request->validate([
+            'dni' => [
+                'required',
+                'string',
+                'regex:/^[0-9]{8}[A-Za-z]$/',
+                function ($attribute, $value, $fail) {
+                    $letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+                    $numero = (int) substr($value, 0, 8);
+                    $letra = strtoupper(substr($value, -1));
+                    if ($letras[$numero % 23] !== $letra) {
+                        $fail('La letra del DNI introducido no es correcta.');
+                    }
+                },
+                function ($attribute, $value, $fail) {
+                    $existe = Usuario::withTrashed()
+                        ->where('dni', $value)
+                        ->whereNull('deleted_at')
+                        ->exists();
+                    if ($existe) {
+                        $fail('Este DNI ya está registrado con una cuenta.');
+                    }
+                },
+            ],
+            'nombre' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'email' => 'required|email:rfc,dns',
+            'password' => 'required|string|min:6',
+        ], [
+            'dni.regex' => 'El formato del DNI debe ser de 8 números seguidos de una letra.',
+            'email.email' => 'El correo electrónico no es válido o el dominio no existe.',
+        ]);
+
+        $usuario = Usuario::withTrashed()->where('email', $request->email)->first();
+
+        if ($usuario && !$usuario->trashed()) {
+            return back()->withErrors(['email' => 'Ya existe una cuenta registrada con este correo.']);
+        }
+
+        if ($usuario && $usuario->trashed()) {
+            $usuario->restore();
+            $usuario->name = $request->nombre;
+            $usuario->apellidos = $request->apellidos;
+            $usuario->dni = $request->dni;
+            $usuario->password = Hash::make($request->password);
+            $usuario->save();
+        }
+        else {
+            $usuario = new Usuario();
+            $usuario->dni = $request->dni;
+            $usuario->name = $request->nombre;
+            $usuario->apellidos = $request->apellidos;
+            $usuario->email = $request->email;
+            $usuario->password = Hash::make($request->password);
+            $usuario->tipo_usuario = 'ALUMNO';
+            $usuario->save();
+        }
+
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('inicio');
+        }
+        return back()->withErrors(['email' => 'Registro exitoso pero hubo un error al iniciar sesión.']);
+    }
+
+    public function redirectToGoogle(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    private function dniEsInvalido($dni)
+    {
+        if (!preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
+            return true;
+        }
+
+        $numero = substr($dni, 0, 8);
+        $letra = substr($dni, -1);
+
+        $letrasValidas = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+        $indice = $numero % 23;
+        $letraCorrecta = $letrasValidas[$indice];
+
+        return $letra !== $letraCorrecta;
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            $usuario = Usuario::withTrashed()->where('email', $googleUser->getEmail())->first();
+
+            if ($usuario && $usuario->trashed()) {
+                $usuario->restore();
+            }
+
+            if (!$usuario) {
+                $usuario = new Usuario();
+                $usuario->name = $googleUser->user['given_name'] ?? $googleUser->getName();
+                $usuario->apellidos = $googleUser->user['family_name'] ?? 'Google User';
+                $usuario->email = $googleUser->getEmail();
+
+                $usuario->dni = rand(10000000, 99999999) . 'G';
+                $usuario->password = Hash::make(Str::random(24));
+                $usuario->tipo_usuario = 'ALUMNO';
+                $usuario->save();
+            }
+
+            Auth::login($usuario);
+
+            if (!$this->dniEsInvalido($usuario->dni)) {
+                return redirect()->route('inicio');
+            }
+
+            return redirect()->route('usuario.edit-perfil', ['usuario' => $usuario->id]);
+
+        } catch (\Exception $e) {
+            return redirect()->route('login')->withErrors(['email' => 'Hubo un problema con Google.']);
+        }
     }
 }

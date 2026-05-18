@@ -6,6 +6,7 @@ use App\Models\Espacio;
 use App\Models\Horario;
 use App\Models\Localizacion;
 use App\Models\TipoEspacio;
+use App\Services\EspacioService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -102,8 +103,7 @@ class EspacioController extends Controller
             $datos['imagen'] = $nombreArchivo;
         }
 
-        $espacio = Espacio::create($datos);
-        $espacio->horario()->sync($request->horarios_ids);
+        EspacioService::crear($datos, $request->horarios_ids);
 
         return redirect()->route('espacios.index')->with('success', 'Espacio creado correctamente.');
     }
@@ -146,8 +146,7 @@ class EspacioController extends Controller
             $datos['imagen'] = $nombreArchivo;
         }
 
-        $espacio->update($datos);
-        $espacio->horario()->sync($request->horarios_ids);
+        EspacioService::actualizar($espacio, $datos, $request->horarios_ids);
 
         return redirect()->route('espacios.index')->with('success', 'Espacio actualizado correctamente.');
     }

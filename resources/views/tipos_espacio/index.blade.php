@@ -30,7 +30,6 @@
             <a href="{{ route('tipos-espacio.create') }}" class="btn btn-primary" style="background-color: #003366; border-color: #003366;">Crear Nuevo</a>
         </div>
 
-        {{-- esta es la parte del buscador --}}
         <form method="GET" action="{{ route('tipos-espacio.index') }}" class="mb-4">
             <div class="input-group">
                 <input type="text" name="buscar" value="{{ request('buscar') }}" class="form-control" placeholder="Buscar por nombre...">
@@ -39,7 +38,6 @@
             </div>
         </form>
 
-        {{-- parte de la ordenación--}}
         <div class="table-responsive">
             <table class="table table-hover table-bordered align-middle">
                 <thead class="table-light">
@@ -58,7 +56,8 @@
                 <tr>
                     <td>{{ $tipo->nombre }}</td>
                     <td class="text-end">
-                        <form action="{{ route('tipos-espacio.destroy', $tipo->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro que deseas eliminar este tipo de espacio?');">
+                        <form action="{{ route('tipos-espacio.destroy', $tipo->id) }}" method="POST" class="d-inline"
+                              onsubmit="return confirm('¿Seguro que deseas eliminar el tipo {{ $tipo->nombre }}?\n\nSe eliminarán también todos los espacios asociados a este tipo.');">
                             <a href="{{ route('tipos-espacio.edit', $tipo->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                 <i class="bi bi-pencil"></i> Editar
                             </a>
@@ -77,7 +76,6 @@
             </table>
         </div>
 
-        {{--parte de la paginacion--}}
         <div class="d-flex justify-content-center mt-4">
             {{ $tipos->links() }}
         </div>

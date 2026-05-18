@@ -24,7 +24,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('incidencias.index') }}">Incidencias</a>
                 </li>
-                @if(Auth::user()->tipo_usuario === 'GESTOR_ESPACIOS')
+                @if(Auth::user()->tipo_usuario !== 'ALUMNO')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('gestor.reservas.pendientes') }}">
                         Reservas Pendientes

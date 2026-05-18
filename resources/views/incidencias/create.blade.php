@@ -16,6 +16,8 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Usuario</label>
+
+                            @if(Auth::user()->tipo_usuario === 'ADMIN')
                             <select name="user_id" class="form-select @error('user_id') is-invalid @enderror">
                                 <option value="">Seleccione un usuario...</option>
                                 @foreach($usuarios as $user)
@@ -24,6 +26,14 @@
                                 </option>
                                 @endforeach
                             </select>
+                            @else
+                            <input type="text"
+                                   class="form-control bg-light"
+                                   value="{{ Auth::user()->getFullName() }} ({{ Auth::user()->email }})"
+                                   disabled>
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                            @endif
+
                             @error('user_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 

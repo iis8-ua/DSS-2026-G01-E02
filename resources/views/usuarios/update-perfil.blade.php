@@ -3,6 +3,19 @@
 @section('title', 'Editar Usuario')
 
 @section('content')
+
+@if($dniInvalido)
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    Swal.fire({
+        title: 'Información',
+        text: 'El DNI generado es provisional. Revísalo y actualízalo si es necesario.',
+        icon: 'info',
+        confirmButtonText: 'Entendido'
+    });
+</script>
+@endif
+
 <div class="container my-5 flex-grow-1">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -11,11 +24,10 @@
                     <h1 class="h4 mb-0" style="color: #003366;">Editar Perfil: {{ $usuario->name }}</h1>
                 </div>
                 <div class="card-body p-4">
-                    {{-- Apuntamos al método update y pasamos el ID del usuario --}}
                     <form action="{{ route('usuario.update-perfil', $usuario->id) }}" method="POST">
                         @csrf
                         @method('PUT') {{-- Petición PUT para actualizar --}}
-                        
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Nombre</label>

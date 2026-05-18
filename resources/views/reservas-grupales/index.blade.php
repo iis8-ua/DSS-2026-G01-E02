@@ -9,7 +9,7 @@
         transition: all 0.2s ease-in-out;
     }
     .btn-volver:hover {
-        background-color: #e9ecef;
+        background-c->withTrashed();olor: #e9ecef;
         color: #003366;
         border-color: #c1c9d0;
         transform: translateY(-2px);
@@ -72,14 +72,14 @@
                 <tr>
                     <td class="fw-bold text-muted">{{ substr($rg->reserva_id, 0, 8) }}...</td>
                     <td>{{ $rg->reserva->espacio->nombre ?? '—' }}</td>
-                    <td>{{ $rg->reserva->alumno->getFullName() ?? '—' }}</td>
+                    <td>{{ $rg->reserva->alumno?->getFullName() ?? '—' }}</td>
                     <td>{{ \Carbon\Carbon::parse($rg->reserva->hora_inicio)->format('d/m/Y H:i') }}</td>
                     <td>{{ $rg->aforo_max }}</td>
                     <td>
                         @if($rg->alumnos->count() > 0)
                         <div class="d-flex flex-wrap justify-content-center gap-1">
                             @foreach($rg->alumnos->take(3) as $alumno)
-                            <span class="badge bg-primary">{{ $alumno->getFullName() }}</span>
+                            <span class="badge bg-primary">{{ $alumno?->getFullName() ?? 'Usuario eliminado' }}</span>
                             @endforeach
                             @if($rg->alumnos->count() > 3)
                             <span class="badge bg-secondary">+{{ $rg->alumnos->count() - 3 }} más</span>

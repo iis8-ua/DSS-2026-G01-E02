@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\EstadoReserva;
 use App\Models\Reserva;
+use App\Models\ReservaGrupal;
 use Illuminate\Http\Request;
 use App\Models\Espacio;
 use App\Models\Usuario;
@@ -54,7 +55,11 @@ class ReservaController extends Controller
             ->orderBy('hora_inicio', 'desc')
             ->get();
 
-        return view('reservas.mias', compact('reservas'));
+        $reservasGrupales = ReservaGrupal::whereIn('reserva_id', $reservas->pluck('id'))
+            ->get()
+            ->keyBy('reserva_id');
+
+        return view('reservas.mias', compact('reservas', 'reservasGrupales'));
     }
 
     /**
@@ -87,15 +92,24 @@ class ReservaController extends Controller
     /**
      * Formulario de nueva reserva desde el catálogo
      */
-    public function nueva(Espacio $espacio)
+    public function nueva(Espacio $espacio, Request $request)
     {
         $horariosDisponibles = $espacio->horario()->orderBy('inicio')->get();
+        $fecha = $request->input('fecha');
 
-        $reservasExistentes = Reserva::where('espacio_id', $espacio->id)
-            ->orderBy('hora_inicio')
-            ->get();
+        $reservasExistentes = collect();
+        $horariosOcupados = collect();
 
-        return view('new_reservation', compact('espacio', 'horariosDisponibles', 'reservasExistentes'));
+        if ($fecha) {
+            $reservasExistentes = Reserva::where('espacio_id', $espacio->id)
+                ->whereDate('hora_inicio', $fecha)
+                ->whereNotIn('estado', [EstadoReserva::CANCELADA, EstadoReserva::RECHAZADA])
+                ->get();
+
+            $horariosOcupados = $reservasExistentes->where('estado', EstadoReserva::ACEPTADA);
+        }
+
+        return view('new_reservation', compact('espacio', 'horariosDisponibles', 'reservasExistentes', 'horariosOcupados', 'fecha'));
     }
 
     /**
@@ -113,7 +127,20 @@ class ReservaController extends Controller
         $inicio = $request->fecha . ' ' . $horario[0] . ':00';
         $fin = $request->fecha . ' ' . $horario[1] . ':00';
 
+        // comprobamos si la hora ya ha pasado
+        if (\Carbon\Carbon::parse($inicio)->isPast()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'horario' => 'No puedes reservar en un horario que ya ha pasado.'
+                ]);
+        }
+
         $solapa = Reserva::where('espacio_id', $espacio->id)
+            ->whereNotIn('estado', [
+                EstadoReserva::CANCELADA,
+                EstadoReserva::RECHAZADA
+            ])
             ->where(function ($query) use ($inicio, $fin) {
                 $query->where('hora_inicio', '<', $fin)
                       ->where('hora_fin', '>', $inicio);
@@ -205,5 +232,23 @@ class ReservaController extends Controller
         $reserva->delete();
 
         return redirect()->route('reservas.index')->with('success', 'La reserva ha sido eliminada correctamente.');
+    }
+    /**
+     * cancelar reserva
+     */
+    public function cancelar(Reserva $reserva){
+        if ($reserva->alumno_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para realizar esta accion.');
+        }
+
+        if ($reserva->estado !== EstadoReserva::PENDIENTE) {
+            return back()->withErrors(['error' => 'Solo puedes cancelar reservas que aún estén pendientes.']);
+        }
+
+        $reserva->estado = EstadoReserva::CANCELADA;
+
+        $reserva->save();
+
+        return redirect()->route('reservas.mias')->with('success', 'Has cancelado tu solicitud de reserva correctamente.');
     }
 }

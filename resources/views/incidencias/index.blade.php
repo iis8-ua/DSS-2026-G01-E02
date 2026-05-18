@@ -22,12 +22,12 @@
     <div class="bg-white p-5 rounded shadow-sm">
 
         <div class="d-flex justify-content-between align-items-center mb-4">
-                @if(Auth::user()->tipo_usuario == "admin")
-                <a href="{{ route('admin.index') }}" class="btn btn-volver rounded-pill text-decoration-none mb-4 py-2 px-3 d-inline-flex align-items-center shadow-sm">
-                    <i class="bi bi-arrow-left fs-6 me-2"></i>
-                    <span style="font-size: 0.9rem;">Volver al panel</span>
-                </a>
-                @endif
+            @if(Auth::user()->tipo_usuario == "admin")
+            <a href="{{ route('admin.index') }}" class="btn btn-volver rounded-pill text-decoration-none mb-4 py-2 px-3 d-inline-flex align-items-center shadow-sm">
+                <i class="bi bi-arrow-left fs-6 me-2"></i>
+                <span style="font-size: 0.9rem;">Volver al panel</span>
+            </a>
+            @endif
             @if(Auth::user()->tipo_usuario == "admin")
             <h1 class="h3 mb-0" style="color: #003366;">Gestión de Incidencias</h1>
             @endif
@@ -71,9 +71,9 @@
                         </a>
                     </th>
                     {{--
-                        Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
-                        hasta que tengamos la autenticación de administrador terminada, para poder hacer
-                        demostraciones técnicas.
+                    Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
+                    hasta que tengamos la autenticación de administrador terminada, para poder hacer
+                    demostraciones técnicas.
                     --}}
                     @if(Auth::user()->tipo_usuario == "admin")
                     <th class="text-end" style="width: 150px;">Acciones</th>
@@ -97,14 +97,14 @@
                     <td class="text-start text-truncate" style="max-width: 250px;" title="{{ $incidencia->descripcion }}">
                         {{ $incidencia->descripcion }}
                     </td>
-                    <td>{{ $incidencia->usuario->getFullName() ?? 'Usuario Desconocido' }}</td>
+                    <td>{{ $incidencia->usuario?->getFullName() ?? 'Usuario Desconocido' }}</td>
 
                     {{--
-                        Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
-                        hasta que tengamos la autenticación de administrador terminada, para poder hacer
-                        demostraciones técnicas.
+                    Esta acción será de administrador: lo dejamos como gestor de espacios temporalmente
+                    hasta que tengamos la autenticación de administrador terminada, para poder hacer
+                    demostraciones técnicas.
                     --}}
-                    @if(Auth::user()->tipo_usuario == "admin")
+
                     <td class="text-end">
                         <form action="{{ route('incidencias.destroy', $incidencia->id) }}" method="POST" class="d-inline"
                               onsubmit="return confirm('¿Seguro que deseas eliminar esta incidencia? Si tiene foto, también se borrará.');">
@@ -113,6 +113,7 @@
                                 <i class="bi bi-eye"></i>
                             </a>
 
+                            @if(Auth::user()->tipo_usuario == "ADMIN")
                             <a href="{{ route('incidencias.edit', $incidencia->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                 <i class="bi bi-pencil"></i>
                             </a>
@@ -121,9 +122,10 @@
                             <button type="submit" class="btn btn-sm btn-outline-danger" title="Borrar">
                                 <i class="bi bi-trash"></i>
                             </button>
+                            @endif
+
                         </form>
                     </td>
-                    @endif
                 </tr>
                 @empty
                 <tr><td colspan="5" class="text-center text-muted py-4">No hay incidencias registradas.</td></tr>

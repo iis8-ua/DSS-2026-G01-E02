@@ -21,12 +21,11 @@ return new class extends Migration
 
             //Relacion con Localizacion
             $table->foreignUuid('localizacion_id')
-                ->unique()
                 ->constrained('localizacions')
                 ->onDelete('cascade');
 
             //Relacion con el tipo espacio
-            $table->foreignUuid('tipo_espacio_id')->constrained('tipo_espacios');
+            $table->foreignUuid('tipo_espacio_id')->constrained('tipo_espacios')->onDelete('cascade');
         });
     }
 
